@@ -1,11 +1,13 @@
 package com.revature.user;
 
+import com.revature.role.Role;
+
 public class User {
 	
 	private int id;
 	private String username;
 	private String password;
-	private int roleId;
+	private Role role;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -15,12 +17,22 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(int id, String username, String password, int roleId, String firstName, String lastName, String email) {
+	public User(int id, String username, String password, Role role, String firstName, String lastName, String email) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
-		this.roleId = roleId;
+		this.role = role;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
+
+	public User(String username, String password, Role role, String firstName, String lastName, String email) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.role = role;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -28,8 +40,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", roleId=" + roleId + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", email=" + email + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
 	}
 
 	@Override
@@ -41,7 +53,7 @@ public class User {
 		result = prime * result + id;
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + roleId;
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -77,7 +89,10 @@ public class User {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (roleId != other.roleId)
+		if (role == null) {
+			if (other.role != null)
+				return false;
+		} else if (!role.equals(other.role))
 			return false;
 		if (username == null) {
 			if (other.username != null)
@@ -111,12 +126,12 @@ public class User {
 		this.password = password;
 	}
 
-	public int getRoleId() {
-		return roleId;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public String getFirstName() {
@@ -142,6 +157,6 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	
 }
