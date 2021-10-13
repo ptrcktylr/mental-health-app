@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/security/login/login.component';
-import { SignupComponent } from './components/security/signup/signup.component';
 import { PatientHistoryComponent } from './components/patients/patient-history/patient-history.component';
 import { PatientNewComponent } from './components/patients/patient-new/patient-new.component';
 import { PatientProgressComponent } from './components/patients/patient-progress/patient-progress.component';
@@ -18,8 +16,6 @@ import { ProfessionalAddPatientComponent } from './components/professionals/prof
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    SignupComponent,
     PatientHistoryComponent,
     PatientNewComponent,
     PatientProgressComponent,
