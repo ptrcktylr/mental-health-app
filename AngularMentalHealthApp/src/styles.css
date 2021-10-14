@@ -1,13 +1,17 @@
 .my-navbar{
-    background-color: rgb(124, 132, 148, .75);
+    background-color: rgb(124, 132, 148, .8);
 }
 .my-card{
-    background-color: rgb(124, 132, 148, .75);
+    background-color: rgb(124, 132, 148, .8);
     color: #f7f8f9;
 }
 
 .normalWords{
     color: #D7DBE2;
+}
+
+.darkWords{
+    color: #25282c;
 }
 
 #normalWords{
@@ -39,4 +43,8 @@ body{
 .btn:hover{
     background-color: #32353b;
     color: #f7f8f9;
+}
+
+#error{
+    color: #f7f8f9;;
 }
