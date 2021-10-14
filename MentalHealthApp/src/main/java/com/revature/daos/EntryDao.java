@@ -149,6 +149,26 @@ public class EntryDao {
 		return null;
 	}
 	
+	// finds public entry from entry id
+	public Entry findEntryById(int entryId) {
+		Session ses = HibernateUtil.getSession();
+		String HQL = "FROM Entry E WHERE E.id = :entry_id AND E.isPublic = true";
+		
+		Query query = ses.createQuery(HQL);
+		query.setParameter("entry_id", entryId);
+		
+		try {
+			Entry entry = (Entry) query.getSingleResult();
+			HibernateUtil.closeSession();
+			return entry;
+		} catch (NoResultException nre) {
+			System.out.println("Could not get entry with id " + entryId);
+		}
+		
+		HibernateUtil.closeSession();
+		return null;
+	}
+	
 	// insert entry
 	public Entry insertEntry(Entry entry, User user) {
 		
