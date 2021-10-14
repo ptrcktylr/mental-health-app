@@ -1,8 +1,8 @@
 package com.revature.models;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,13 +12,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="entries")
 public class Entry {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 	
@@ -28,9 +30,10 @@ public class Entry {
 	@Column(name="body", nullable=false, columnDefinition="TEXT")
 	private String body;
 	
-	@Column(name="date_posted", nullable=false, 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="date_posted", nullable=false,
 			columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
-	private Timestamp datePosted;
+	private Date datePosted;
 	
 	@Column(name="is_public", nullable=false)
 	private boolean isPublic;
@@ -38,20 +41,18 @@ public class Entry {
 	@Column(name="tags")
 	private String tags;
 	
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="author_id", nullable=false)
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
 	private User author;
 	
-	@Column(name="sentiment")
+	@Column(name="sentiment", nullable=false)
 	private int sentiment;
 	
-	// no args constructor
 	public Entry() {
 		super();
 	}
 
-	// all args constructor
-	public Entry(int id, String title, String body, Timestamp datePosted, boolean isPublic, String tags, User author,
+	public Entry(int id, String title, String body, Date datePosted, boolean isPublic, String tags, User author,
 			int sentiment) {
 		super();
 		this.id = id;
@@ -64,8 +65,7 @@ public class Entry {
 		this.sentiment = sentiment;
 	}
 
-	// all args constructor without id
-	public Entry(String title, String body, Timestamp datePosted, boolean isPublic, String tags, User author,
+	public Entry(String title, String body, Date datePosted, boolean isPublic, String tags, User author,
 			int sentiment) {
 		super();
 		this.title = title;
@@ -75,6 +75,23 @@ public class Entry {
 		this.tags = tags;
 		this.author = author;
 		this.sentiment = sentiment;
+	}
+
+	public Entry(String title, String body, boolean isPublic, String tags, int sentiment) {
+		super();
+		this.title = title;
+		this.body = body;
+		this.isPublic = isPublic;
+		this.tags = tags;
+		this.sentiment = sentiment;
+	}
+
+	public Entry(String title, String body, boolean isPublic, String tags) {
+		super();
+		this.title = title;
+		this.body = body;
+		this.isPublic = isPublic;
+		this.tags = tags;
 	}
 
 	public int getId() {
@@ -101,11 +118,11 @@ public class Entry {
 		this.body = body;
 	}
 
-	public Timestamp getDatePosted() {
+	public Date getDatePosted() {
 		return datePosted;
 	}
 
-	public void setDatePosted(Timestamp datePosted) {
+	public void setDatePosted(Date datePosted) {
 		this.datePosted = datePosted;
 	}
 
@@ -201,8 +218,8 @@ public class Entry {
 
 	@Override
 	public String toString() {
-		return "Entry [id=" + id + ", title=" + title + ", body=" + body + ", datePosted=" + datePosted
-				+ ", isPublic=" + isPublic + ", tags=" + tags + ", author=" + author + ", sentiment=" + sentiment + "]";
+		return "Entry [id=" + id + ", title=" + title + ", body=" + body + ", datePosted=" + datePosted + ", isPublic="
+				+ isPublic + ", tags=" + tags + ", author=" + author + ", sentiment=" + sentiment + "]";
 	}
 	
 }

@@ -2,7 +2,6 @@ package com.revature.models;
 
 import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,7 +17,7 @@ import javax.persistence.Table;
 public class Reply {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 	
@@ -29,14 +28,14 @@ public class Reply {
 			columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
 	private Timestamp datePosted;
 	
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="author_id", nullable=false)
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
 	private User author;
 	
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="entry_id", nullable=false)
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="entry_id", referencedColumnName="id", nullable=false)
 	private Entry entry;
-
+	
 	public Reply() {
 		super();
 	}
@@ -150,7 +149,4 @@ public class Reply {
 				+ entry + "]";
 	}
 	
-	
-	
-
 }
