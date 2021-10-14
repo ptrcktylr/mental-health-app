@@ -24,29 +24,29 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: "patient-history",
+    path: "patient/history",
     component: PatientHistoryComponent
   },
   {
-    path: "patient-new",
+    path: "patient/new",
     component: PatientNewComponent
   },
   {
-    path: "patient-progress",
+    path: "patient/progress",
     component: PatientProgressComponent
   },
   {
-    path: "my-patients",
+    path: "professional/my-patients",
     component: ProfessionalMyPatientsComponent
   },
   {
-    path: "all-patients",
+    path: "professional/all-patients",
     component: ProfessionalAllPatientsComponent
   },
   {
     path: "view-public",
     component: ViewPublicComponent
-  },
+  }
 ];
 
 @NgModule({
