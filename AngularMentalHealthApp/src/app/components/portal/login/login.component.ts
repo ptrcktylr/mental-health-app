@@ -21,10 +21,10 @@ export class LoginComponent implements OnInit {
   login(): void{
     // code to make it functional until I have connection to the db
     if(this.username == "username" && this.password == "password"){
-      this.route.navigate(['/patient-history']);
+      this.route.navigate(['/patient/history']);
     }
     else if(this.username == "professional" && this.password == "password"){
-      this.route.navigate(['/my-patients']);
+      this.route.navigate(['professional/my-patients']);
     }
     else{
       this.error = "Username or Password not recognized.";
