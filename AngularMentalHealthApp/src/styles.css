@@ -1,1 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
+.my-navbar{
+    background-color: #3D5A20;
+}
+
+.normalWords{
+    color: #8CA479;
+}
+
+#normalWords{
+    color: #8CA479;
+}
+
+.normalWords:hover{
+    color: #ABC4A1;
+}
+
+.emphasisWords{
+    color: #ABC4A1;
+}
+
+body{
+    background-color: #D0DDD1;
+    color: #262C29;
+}
+
+.btn{
+    background-color: #3D5A20;
+    color: #bcd0b4;
+}
+
+.btn:hover{
+    color: #dde7d9;
+}
