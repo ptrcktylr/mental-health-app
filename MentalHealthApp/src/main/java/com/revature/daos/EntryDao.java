@@ -106,28 +106,7 @@ public class EntryDao {
 		return null;
 		
 	}
-	
-	// find all entries (public & private) from user
-	public List<Entry> findAllEntriesByUser(int userId) {
-		
-		Session ses = HibernateUtil.getSession();
-		String HQL = "FROM Entry E WHERE E.author.id = :user_id";
-		
-		Query query = ses.createQuery(HQL);
-		query.setParameter("user_id", userId);
-		
-		try {
-			List<Entry> entryList = query.getResultList();
-			HibernateUtil.closeSession();
-			return entryList;
-		} catch (NoResultException nre) {
-			System.out.println("No entries for patient with id of " + userId);
-		}
-		
-		HibernateUtil.closeSession();
-		return null;
-	}
-	
+
 	// find entry from entry id & user (author)
 	public Entry patientFindEntryById(int entryId, User user) {
 		Session ses = HibernateUtil.getSession();
