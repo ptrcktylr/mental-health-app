@@ -1,18 +1,48 @@
-package com.revature.entry;
+package com.revature.models;
 
 import java.sql.Timestamp;
 
-import com.revature.user.User;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="entries")
 public class Entry {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id")
 	private int id;
+	
+	@Column(name="title", nullable=false)
 	private String title;
+	
+	@Column(name="body", nullable=false, columnDefinition="TEXT")
 	private String body;
-	private Timestamp date_posted;
+	
+	@Column(name="date_posted", nullable=false, 
+			columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
+	private Timestamp datePosted;
+	
+	@Column(name="is_public", nullable=false)
 	private boolean isPublic;
+	
+	@Column(name="tags")
 	private String tags;
+	
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="author_id", nullable=false)
 	private User author;
+	
+	@Column(name="sentiment")
 	private int sentiment;
 	
 	// no args constructor
@@ -21,13 +51,13 @@ public class Entry {
 	}
 
 	// all args constructor
-	public Entry(int id, String title, String body, Timestamp date_posted, boolean isPublic, String tags, User author,
+	public Entry(int id, String title, String body, Timestamp datePosted, boolean isPublic, String tags, User author,
 			int sentiment) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.body = body;
-		this.date_posted = date_posted;
+		this.datePosted = datePosted;
 		this.isPublic = isPublic;
 		this.tags = tags;
 		this.author = author;
@@ -35,12 +65,12 @@ public class Entry {
 	}
 
 	// all args constructor without id
-	public Entry(String title, String body, Timestamp date_posted, boolean isPublic, String tags, User author,
+	public Entry(String title, String body, Timestamp datePosted, boolean isPublic, String tags, User author,
 			int sentiment) {
 		super();
 		this.title = title;
 		this.body = body;
-		this.date_posted = date_posted;
+		this.datePosted = datePosted;
 		this.isPublic = isPublic;
 		this.tags = tags;
 		this.author = author;
@@ -71,12 +101,12 @@ public class Entry {
 		this.body = body;
 	}
 
-	public Timestamp getDate_posted() {
-		return date_posted;
+	public Timestamp getDatePosted() {
+		return datePosted;
 	}
 
-	public void setDate_posted(Timestamp date_posted) {
-		this.date_posted = date_posted;
+	public void setDatePosted(Timestamp datePosted) {
+		this.datePosted = datePosted;
 	}
 
 	public boolean isPublic() {
@@ -117,7 +147,7 @@ public class Entry {
 		int result = 1;
 		result = prime * result + ((author == null) ? 0 : author.hashCode());
 		result = prime * result + ((body == null) ? 0 : body.hashCode());
-		result = prime * result + ((date_posted == null) ? 0 : date_posted.hashCode());
+		result = prime * result + ((datePosted == null) ? 0 : datePosted.hashCode());
 		result = prime * result + id;
 		result = prime * result + (isPublic ? 1231 : 1237);
 		result = prime * result + sentiment;
@@ -145,10 +175,10 @@ public class Entry {
 				return false;
 		} else if (!body.equals(other.body))
 			return false;
-		if (date_posted == null) {
-			if (other.date_posted != null)
+		if (datePosted == null) {
+			if (other.datePosted != null)
 				return false;
-		} else if (!date_posted.equals(other.date_posted))
+		} else if (!datePosted.equals(other.datePosted))
 			return false;
 		if (id != other.id)
 			return false;
@@ -171,7 +201,7 @@ public class Entry {
 
 	@Override
 	public String toString() {
-		return "Entry [id=" + id + ", title=" + title + ", body=" + body + ", date_posted=" + date_posted
+		return "Entry [id=" + id + ", title=" + title + ", body=" + body + ", datePosted=" + datePosted
 				+ ", isPublic=" + isPublic + ", tags=" + tags + ", author=" + author + ", sentiment=" + sentiment + "]";
 	}
 	
