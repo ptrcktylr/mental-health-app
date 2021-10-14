@@ -1,1 +1,24 @@
-<p>login works!</p>
+<nav class="navbar navbar-expand-sm shadow-sm my-navbar">
+    <a class="navbar-brand" href=""><h3><span id="normalWords">Senti</span><span class="emphasisWords">Mental Health</span></h3></a>
+</nav>
+<div class="d-flex p-2 justify-content-center">
+    <div id = "login" class="card">
+        <div class="card-body text-dark text-center">
+            <div class="form-group">
+                <label for="uname"><b>Username</b></label>
+                <input (click) = "resetError()" id="username" [(ngModel)] = "username" type="text" placeholder="Enter Username" name="uname" required>
+            </div>
+            <div class="form-group">
+                <label for="psw"><b>Password</b></label>
+                <input (click) = "resetError()" id = "password" [(ngModel)] = "password" type="password" placeholder="Enter Password" name="psw" required>
+            </div>
+            <div class="form-group">
+                <button (click) = "login()" id = "loginButton" class="btn">Login</button>
+            </div>
+        </div>
+        <div class="card-footer text-muted text-center">
+            <button id="createButton" routerLink="../register" class="btn">Create an account!</button>
+        </div>
+    </div>
+</div>
+<div class="text-center" id="error">{{error}}</div>

@@ -17,6 +17,7 @@ import { ViewPublicEntryComponent } from './components/public/view-public-entry/
 import { PatientNavComponent } from './components/navbars/patient-nav/patient-nav.component';
 import { ProfessionalNavComponent } from './components/navbars/professional-nav/professional-nav.component';
 import { LoginComponent } from './components/portal/login/login.component';
+import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/portal/register/register.component';
 import { FormsModule } from '@angular/forms';
 
@@ -41,8 +42,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
