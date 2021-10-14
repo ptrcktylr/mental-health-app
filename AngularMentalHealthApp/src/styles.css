@@ -1,33 +1,42 @@
 .my-navbar{
-    background-color: #3D5A20;
+    background-color: rgb(124, 132, 148, .75);
+}
+.my-card{
+    background-color: rgb(124, 132, 148, .75);
+    color: #f7f8f9;
 }
 
 .normalWords{
-    color: #8CA479;
+    color: #D7DBE2;
 }
 
 #normalWords{
-    color: #8CA479;
+    color: #acafb5;
 }
 
 .normalWords:hover{
-    color: #ABC4A1;
+    color: #f7f8f9;
 }
 
 .emphasisWords{
-    color: #ABC4A1;
+    color: #fbfbfc;
 }
 
 body{
-    background-color: #D0DDD1;
-    color: #262C29;
+    color: #f7f8f9;
+    background: url(assets/constellations-wallpaper.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .btn{
-    background-color: #3D5A20;
-    color: #bcd0b4;
+    background-color: #25282c;
+    color: #D7DBE2;
 }
 
 .btn:hover{
-    color: #dde7d9;
+    background-color: #32353b;
+    color: #f7f8f9;
 }
