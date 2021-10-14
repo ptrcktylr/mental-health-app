@@ -19,6 +19,7 @@ import { ProfessionalNavComponent } from './components/navbars/professional-nav/
 import { LoginComponent } from './components/portal/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/portal/register/register.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
