@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router'; 
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +28,9 @@ export class RegisterComponent implements OnInit {
   }
 
   make(): void{
-    if(this.fname!="" && this.lname!="" && this.email){
+    if(this.fname!="" && this.lname!="" && this.email!=""){
+      //check that email is unique
+      // if email isn't unique, this.error = "Email already in use."
       //code to create new user, then go back to login
       this.route.navigate(['/login']);
     }

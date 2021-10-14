@@ -4,6 +4,7 @@
 .my-card{
     background-color: rgb(124, 132, 148, .8);
     color: #f7f8f9;
+    width: 300px;
 }
 
 .normalWords{
@@ -46,5 +47,6 @@ body{
 }
 
 #error{
-    color: #f7f8f9;;
+    color: #f7f8f9;
+    background-color: #0C1019;
 }

@@ -20,6 +20,16 @@ import { LoginComponent } from './components/portal/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/portal/register/register.component';
 
+
+import { FusionChartsModule } from "angular-fusioncharts";
+// Import FusionCharts library and chart modules
+import * as FusionCharts from "fusioncharts";
+import * as charts from "fusioncharts/fusioncharts.charts";
+import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
+
+// Pass the fusioncharts library and chart modules
+FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +52,7 @@ import { RegisterComponent } from './components/portal/register/register.compone
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    FusionChartsModule,
     BrowserAnimationsModule
   ],
   providers: [],
