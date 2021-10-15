@@ -1,8 +1,12 @@
 package com.revature.services;
 
+import org.springframework.stereotype.Service;
+
 import com.revature.daos.UserDao;
 import com.revature.models.User;
 
+
+@Service
 public class LoginService {
 
 	public User userLogin(String username, String password) {

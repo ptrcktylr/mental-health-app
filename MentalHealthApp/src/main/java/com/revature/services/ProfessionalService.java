@@ -2,6 +2,8 @@ package com.revature.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.revature.daos.EntryDao;
 import com.revature.daos.ReplyDao;
 import com.revature.daos.UserDao;
@@ -9,6 +11,7 @@ import com.revature.models.Entry;
 import com.revature.models.Reply;
 import com.revature.models.User;
 
+@Service
 public class ProfessionalService {
 	
 	EntryDao EDao = new EntryDao();
@@ -20,7 +23,7 @@ public class ProfessionalService {
 		return UDao.findAllPatients();
 	}
 	
-	// get this patients entries
+	// //get this patients entries
 	public List<Entry> getPatientsEntries(User author, User professional) {
 		return EDao.professionalFindAllEntriesByAuthor(author, professional);
 	}

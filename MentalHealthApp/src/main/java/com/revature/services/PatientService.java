@@ -2,12 +2,15 @@ package com.revature.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.revature.daos.EntryDao;
 import com.revature.daos.ReplyDao;
 import com.revature.models.Entry;
 import com.revature.models.Reply;
 import com.revature.models.User;
 
+@Service
 public class PatientService {
 	
 	EntryDao EDao = new EntryDao();

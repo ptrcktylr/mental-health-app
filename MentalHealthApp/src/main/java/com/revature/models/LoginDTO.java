@@ -1,5 +1,8 @@
 package com.revature.models;
 
+import org.springframework.stereotype.Repository;
+
+
 public class LoginDTO {
 	
 	private String username;

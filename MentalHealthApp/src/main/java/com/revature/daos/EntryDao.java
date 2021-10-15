@@ -7,11 +7,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.revature.models.Entry;
 import com.revature.models.User;
 import com.revature.utils.HibernateUtil;
 
+@Repository
 public class EntryDao {
 
 	// find all entries

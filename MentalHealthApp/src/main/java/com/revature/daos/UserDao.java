@@ -7,10 +7,12 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import com.revature.models.User;
 import com.revature.utils.HibernateUtil;
 
+@Repository
 public class UserDao {
 
 	public List<User> findAllUsers() {
@@ -225,6 +227,22 @@ public class UserDao {
 		
 		// query using Hibernate session and User class
 		User user = ses.get(User.class, id);
+		
+		// close Session
+		HibernateUtil.closeSession();
+		
+		return user;
+		
+	}
+	
+	
+	public User findUserByUsername(String username) {
+		
+		// open Session to connect to database
+		Session ses = HibernateUtil.getSession();
+		
+		// query using Hibernate session and User class
+		User user = ses.get(User.class, username);
 		
 		// close Session
 		HibernateUtil.closeSession();

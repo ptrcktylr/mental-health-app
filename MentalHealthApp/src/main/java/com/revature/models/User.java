@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 @Entity
 @Table(name="users")

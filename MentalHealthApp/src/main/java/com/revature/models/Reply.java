@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.stereotype.Repository;
+
 @Entity
 @Table(name="replies")
 public class Reply {
