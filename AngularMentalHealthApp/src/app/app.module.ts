@@ -26,6 +26,7 @@ import { FusionChartsModule } from "angular-fusioncharts";
 import * as FusionCharts from "fusioncharts";
 import * as charts from "fusioncharts/fusioncharts.charts";
 import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
+import { ViewPublicComponent } from './components/public/view-public/view-public.component';
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
@@ -43,6 +44,7 @@ FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
     ProfessionalAddPatientComponent,
     PatientEntryComponent,
     ViewPublicEntryComponent,
+    ViewPublicComponent,
     PatientNavComponent,
     ProfessionalNavComponent,
     LoginComponent,

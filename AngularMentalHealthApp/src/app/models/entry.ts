@@ -10,4 +10,5 @@ export class Entry {
         public isPublic:boolean,
         public datePosted:String
     ){}
+
 }

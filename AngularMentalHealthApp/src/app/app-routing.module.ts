@@ -8,6 +8,7 @@ import { LoginComponent } from './components/portal/login/login.component';
 import { RegisterComponent } from './components/portal/register/register.component';
 import { ProfessionalAllPatientsComponent } from './components/professionals/professional-all-patients/professional-all-patients.component';
 import { ProfessionalMyPatientsComponent } from './components/professionals/professional-my-patients/professional-my-patients.component';
+import { ViewPublicEntryComponent } from './components/public/view-public-entry/view-public-entry.component';
 import { ViewPublicComponent } from './components/public/view-public/view-public.component';
 
 const routes: Routes = [
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: "view-public",
     component: ViewPublicComponent
+  },
+  {
+    path: "view-public/:id",
+    component: ViewPublicEntryComponent
   }
 ];
 

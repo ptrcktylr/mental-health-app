@@ -23,11 +23,18 @@ export class PatientEntryComponent implements OnInit {
   //newPost will proxy a Json class to POST send
   public newPost:any;
   
+//reply properties
+  public newReply:any = {};
+  public replyBody:String = "";
+
   //ghost properties
   public sub: any;
   entry1 = {entryId:1, header: "First", body: "One of the best things you can do is care for yourself. I get that some people believe they are the center of the universe and that the earth revolves around them. But sometimes, we are right.\n\nWe good ways to get things done. And most of the time, it doesn’t include waking up at 5 am. Our methods are often unique. For example, I saw someone put a paper clip on the end of a roll of tape. I immediately felt as powerful as an atom.", tags: "me", sentimentScore: 69, publicPost: true };
-
-
+  reply1 = {datePosted:"10/15/2021", author:{username:"Mr.Funsocks", isProfessional:true}, body:"Wow! Impressive..."}
+  reply2 = {datePosted:"10/16/2021", author:{username:"Peter", isProfessional:false}, body:"Interesting post you have here. I disagree with your opinions on Banana matters."}
+  replyArray = [this.reply1, this.reply2];
+  
+  
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -64,6 +71,11 @@ export class PatientEntryComponent implements OnInit {
     this.author = this.newPost.author;
     this.date = this.newPost.datePosted;
 
+  }
+
+  submitReply(){
+    this.newReply.body = this.replyBody;
+    console.log(this.newReply)
   }
 
 
