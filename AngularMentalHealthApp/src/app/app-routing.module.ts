@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PatientEntryComponent } from './components/patients/patient-entry/patient-entry.component';
 import { PatientHistoryComponent } from './components/patients/patient-history/patient-history.component';
 import { PatientNewComponent } from './components/patients/patient-new/patient-new.component';
 import { PatientProgressComponent } from './components/patients/patient-progress/patient-progress.component';
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: "patient/new",
     component: PatientNewComponent
+  },
+  {
+    path: "patient/history/:id",
+    component: PatientEntryComponent
   },
   {
     path: "patient/progress",
