@@ -18,6 +18,13 @@ import com.revature.services.UserService;
 public class MentalHealthAppApplication {
 
 	public static void main(String[] args) {
+		
+		UserDao udao = new UserDao();
+		String username = "jsmith";
+		String password = "password";
+		
+		System.out.println(udao.validLogin(username, password));
+		
 		SpringApplication.run(MentalHealthAppApplication.class, args);
 	}
 

@@ -22,7 +22,7 @@
 		<property name="hibernate.format_sql">true</property>
 		
 		<!-- DDL -->
-		<property name="hibernate.hbm2ddl.auto">create-drop</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
 		
 		
 		<!-- We need to map our Classes in order for them to be recognized by Hibernate -->

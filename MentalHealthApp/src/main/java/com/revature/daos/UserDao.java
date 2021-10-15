@@ -154,7 +154,7 @@ public class UserDao {
 		
 	}
 
-	public User validLogin(String username, String password) {
+	public Object validLogin(String username, String password) {
 		
 		// open Session to connect to database
 		Session ses = HibernateUtil.getSession();
@@ -169,9 +169,11 @@ public class UserDao {
 		
 		// return user if username & password current
 		try {
-			User user = (User) query.getSingleResult();
-			return user;
+			return query.getSingleResult();
 		} catch (NoResultException nre) {
+			System.out.println(username);
+			System.out.println(password);
+			nre.printStackTrace();
 			System.out.println("Failed to log in!"); // TODO, log this instead of printing
 		}
 		

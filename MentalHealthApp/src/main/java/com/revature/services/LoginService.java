@@ -9,7 +9,7 @@ import com.revature.models.User;
 @Service
 public class LoginService {
 
-	public User userLogin(String username, String password) {
+	public Object userLogin(String username, String password) {
 		UserDao UDao = new UserDao();
 		return UDao.validLogin(username, password);
 	}

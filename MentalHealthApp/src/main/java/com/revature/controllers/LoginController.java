@@ -20,8 +20,13 @@ import com.revature.services.LoginService;
 @CrossOrigin
 public class LoginController {
 	
+	private LoginService loginService;
+	
 	@Autowired
-	LoginService loginService;
+	public LoginController(LoginService loginService) {
+		super();
+		this.loginService = loginService;
+	}
 	
 	
 	@PostMapping("/login")
