@@ -15,8 +15,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 		Object loginedUsername = session.getAttribute("loginedUser");
 		if(loginedUsername != null){
 			
-			return true;
-			
+			return true;			
 		}else {
 		
 		request.setAttribute("msg","Please login!");

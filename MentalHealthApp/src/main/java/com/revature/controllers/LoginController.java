@@ -37,11 +37,11 @@ public class LoginController {
 		 }else {
 			 
 			 map.put("msg", "The username or password is incorrect.");
+			 map.put("status_code", 401);
+			 
 			 return "login";
 		 }
 	}
-	
-	
 	
 	
 	@PostMapping("/logout")
@@ -49,9 +49,9 @@ public class LoginController {
 		
 		HttpSession httpSession = request.getSession();
         httpSession.invalidate();
+        
         return "redirect:/login";
-			 
-		 }
-}
+        }
+	}
 
 

@@ -21,6 +21,7 @@ import com.revature.services.EntryService;
 import com.revature.services.PatientService;
 import com.revature.services.UserService;
 
+
 @RestController
 @CrossOrigin
 public class PatientController {
@@ -77,9 +78,9 @@ public class PatientController {
 		map.put("result", patientService.getPrivateEntry(entry_id, userService.findUserByUsername(loginedUsername.toString())));
 		map.put("status_code", 200);
 		
-		return map;
-		
+		return map;	
 	}
+	
 	
 	@ResponseBody
 	@GetMapping("/patient/entries")

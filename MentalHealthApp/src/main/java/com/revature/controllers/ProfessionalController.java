@@ -21,11 +21,11 @@ import com.revature.services.EntryService;
 import com.revature.services.ProfessionalService;
 import com.revature.services.UserService;
 
+
 @RestController
 @CrossOrigin
 public class ProfessionalController {
 	
-
 	@Autowired
 	ProfessionalService professionalService;
 	
@@ -40,7 +40,6 @@ public class ProfessionalController {
 			             @PathVariable("patient_id") Integer patient_id,
 			             HttpServletRequest request) {
 		
-		
 		HttpSession session = request.getSession();
 		Object loginedUsername = session.getAttribute("loginedUser");
 		
@@ -50,7 +49,6 @@ public class ProfessionalController {
 		
 		return map;
 	}
-	
 	
 	
 	@PostMapping("/professional/entry/{entry_id}/reply")
@@ -121,8 +119,7 @@ public class ProfessionalController {
 		map.put("result", professionalService.getAllEntries());
 		map.put("status_code", 200);
 		
-		return map;
-		
+		return map;		
 	}
 	
 	
@@ -137,9 +134,6 @@ public class ProfessionalController {
 		map.put("result", professionalService.removePatient(userService.findUserByUsername(loginedUsername.toString()), userService.findUserById(patient_id)));
 		map.put("status_code", 200);
 		
-		return map;
-
-		
-	}
-	
+		return map;		
+	}	
 }
