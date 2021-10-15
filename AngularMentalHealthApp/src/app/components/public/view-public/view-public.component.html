@@ -1,1 +1,32 @@
-<p>view-public works!</p>
+<app-patient-nav></app-patient-nav>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="text-center mb-5" style="color:black">My Journal Entries</h2>
+                    <table class="table text-center">
+                        <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Tags</th>
+                            <th scope="col">Sentiment Score</th>
+                            <th scope="col">View</th>
+                        </tr>
+                        </thead>
+                        <tbody id="entry-table-body">
+                            <tr *ngFor="let entry of entryArray">
+                                <td>{{entry.date}}</td> <!-- {{entry.date}}-->
+                                <td>{{entry.title}}</td>
+                                <td>{{entry.tags}}</td>
+                                <td>{{entry.sentiment}}</td>
+                                <td><button id="newReimbButton" class="btn btn-dark mx-4" [routerLink] = "['/patient/history', entry.entryId]">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

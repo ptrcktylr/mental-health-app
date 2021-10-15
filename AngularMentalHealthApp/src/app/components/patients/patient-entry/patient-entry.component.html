@@ -2,7 +2,7 @@
 
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-7">
+        <div class="col-lg-12 col-md-7">
             <div class="card">
                 <div class="card-body">
                     <div class="text mb-4" style="color:black">
@@ -14,7 +14,28 @@
                         <div><strong>Sentiment: </strong> {{sentimentScore}}</div>
                     </div>
                 </div>
-                <button class="btn btn-danger" [routerLink] = "['/patient/history']">Close</button>
+                <div class="row justify-content-center">
+                    <button class="btn btn-dark" [routerLink] = "['/patient/history']">Back</button>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <div class="text mb-4" style="color:black;" *ngFor="let reply of replyArray">
+                        <div>
+                        <div><strong>Date Posted: </strong>{{reply.datePosted}}</div>
+                        <div><strong>Author: </strong> {{reply.author.username}}</div>
+                        <div>{{reply.body}}</div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3" style="padding:10px">
+                        <textarea name="re_body" id="re_body" cols="30" rows="3" class="form-control" placeholder="Reply to the Post!"[(ngModel)]="replyBody"></textarea>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button class="btn btn-dark" (click) = "submitReply()">Reply</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

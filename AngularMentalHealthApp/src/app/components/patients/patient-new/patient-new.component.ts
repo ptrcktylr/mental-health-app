@@ -28,6 +28,7 @@ export class PatientNewComponent implements OnInit {
 
   ngOnInit(): void {
     this.newPost = new Entry(1,1,"", "","", 0,false,"");
+    console.log(this.newPost);
   }
 
   async addEntry():Promise<void>{
