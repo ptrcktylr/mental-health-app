@@ -7,8 +7,12 @@ export class Sentiment {
         public header:String,
         public body:String,
         public tags:String,
-        public sentimentScore:number
+        public sentimentScore:number,
+        public publicPost:boolean
+
 
     ){}
+
+    
 
 }
