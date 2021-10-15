@@ -11,10 +11,14 @@ import { SentpackService } from 'src/app/services/sentpack/sentpack.service';
 
 export class PatientNewComponent implements OnInit {
 
+  public entryId = 0;
+
+  //fields of sentiment
   public headerInput:String = "";
   public bodyInput:String = "";
   public tags:String = "";
   public publicPost:boolean = false;
+
   public message:String = "";
   //newPost will proxy a Json class to POST send
   public newPost:any;
@@ -23,10 +27,10 @@ export class PatientNewComponent implements OnInit {
   constructor(private das:DeepaiApiService, private sps: SentpackService) { }
 
   ngOnInit(): void {
-    this.newPost = new Sentiment(1,"","", "", 0,false);
+    this.newPost = new Sentiment(1,"","", "", 0,false,"");
   }
 
-  addEntry():void{
+  async addEntry():Promise<void>{
     //Check if fields are filled
     if(this.validatePost() == false){
       this.message = "Body and Text fields must be filled"
@@ -40,14 +44,15 @@ export class PatientNewComponent implements OnInit {
 
     this.newPost.header = this.headerInput;
     this.newPost.body = this.bodyInput;
-    this.newPost.tag = this.tags.toLowerCase();
-    this.newPost.publicPost = this.tags;
+    this.newPost.tags = this.tags.toLowerCase();
+    this.newPost.publicPost = this.publicPost;
 
     //Fill the sentimentScore field
     //this.getSentPackAnalysis();
-    this.getDeepapiAnalysis();
+    await this.getDeepapiAnalysis();
 
     //Renew the sections of the Page
+    console.log(this.newPost.sentimentScore);
     this.renewPost();
     console.log(this.newPost);
   }
@@ -93,7 +98,7 @@ export class PatientNewComponent implements OnInit {
       }
     }
     //console.log(total);
-    this.newPost.sentimentScore = total/scoreJson.output.length;
+    this.newPost.sentimentScore = total/scoreJson.output.length * 100;
   }
 
   //Sentimental analysis with SentPack service
@@ -101,9 +106,12 @@ export class PatientNewComponent implements OnInit {
 
     //we need set the score value here
     let scoreJson = this.sps.trySentPack(this.bodyInput);
-    let score = scoreJson.comparative;
-    console.log(score);
-    this.newPost.sentimentScore = score;
+
+    //console.log(scoreJson);
+
+    let total = scoreJson.tokens.length * 10;
+    let score = scoreJson.tokens.length * 5 + scoreJson.score; 
+    this.newPost.sentimentScore = Math.round(score/total * 100);
   }
 
 }
