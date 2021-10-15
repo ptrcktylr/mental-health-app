@@ -53,3 +53,12 @@ body{
 text {
     white-space: pre-wrap;
 }
+
+.tab{
+    text-indent: 45px;
+}
+
+.noMargin{
+    padding: 0px;
+    margin: 0px;
+}

@@ -1,2 +1,29 @@
 <app-professional-nav></app-professional-nav>
-<p>professional-my-patients works!</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-3">
+            <div class="card shadow my-card">
+                <div class="card-body">
+                    <div id="myPatients">
+                        <h1 class="mb-3">My Patients</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-3" *ngFor = "let patient of patients">
+            <div class="card shadow my-card">
+                <div class="card-body text-center">
+                    <div>
+                        <h3 (click)="changeToPatient(patient.id)" class="emphasisWords noMargin">{{patient.fname}} {{patient.lname}}</h3>
+                        <hr>
+                        <div class="normalWords noMargin">Mood of last post: {{patient.lastMood}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
