@@ -17,10 +17,10 @@
                         </thead>
                         <tbody id="entry-table-body">
                             <tr *ngFor="let entry of entryArray">
-                                <td>Not Available</td> <!-- {{entry.date}}-->
-                                <td>{{entry.header}}</td>
+                                <td>{{entry.date}}</td> <!-- {{entry.date}}-->
+                                <td>{{entry.title}}</td>
                                 <td>{{entry.tags}}</td>
-                                <td>{{entry.sentimentScore}}</td>
+                                <td>{{entry.sentiment}}</td>
                                 <td><button id="newReimbButton" class="btn btn-dark mx-4" [routerLink] = "['/patient/history', entry.entryId]">View</button></td>
                             </tr>
                         </tbody>

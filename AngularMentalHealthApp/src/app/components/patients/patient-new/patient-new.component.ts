@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Sentiment } from 'src/app/models/sentiment';
+import { Entry } from 'src/app/models/entry';
 import { DeepaiApiService } from 'src/app/services/deepai/deepai-api.service';
 import { SentpackService } from 'src/app/services/sentpack/sentpack.service';
 
@@ -27,7 +27,7 @@ export class PatientNewComponent implements OnInit {
   constructor(private das:DeepaiApiService, private sps: SentpackService) { }
 
   ngOnInit(): void {
-    this.newPost = new Sentiment(1,"","", "", 0,false,"");
+    this.newPost = new Entry(1,1,"", "","", 0,false,"");
   }
 
   async addEntry():Promise<void>{
@@ -42,17 +42,17 @@ export class PatientNewComponent implements OnInit {
     this.newPost.author = 1;
     //this.newPost.header = this.headerInput;
 
-    this.newPost.header = this.headerInput;
+    this.newPost.title = this.headerInput;
     this.newPost.body = this.bodyInput;
     this.newPost.tags = this.tags.toLowerCase();
-    this.newPost.publicPost = this.publicPost;
+    this.newPost.isPublic = this.publicPost;
 
     //Fill the sentimentScore field
     //this.getSentPackAnalysis();
     await this.getDeepapiAnalysis();
 
     //Renew the sections of the Page
-    console.log(this.newPost.sentimentScore);
+    console.log(this.newPost.sentiment);
     this.renewPost();
     console.log(this.newPost);
   }
@@ -98,7 +98,7 @@ export class PatientNewComponent implements OnInit {
       }
     }
     //console.log(total);
-    this.newPost.sentimentScore = total/scoreJson.output.length * 100;
+    this.newPost.sentiment = Math.round(total/scoreJson.output.length * 100);
   }
 
   //Sentimental analysis with SentPack service
@@ -111,7 +111,7 @@ export class PatientNewComponent implements OnInit {
 
     let total = scoreJson.tokens.length * 10;
     let score = scoreJson.tokens.length * 5 + scoreJson.score; 
-    this.newPost.sentimentScore = Math.round(score/total * 100);
+    this.newPost.sentiment = Math.round(score/total * 100);
   }
 
 }

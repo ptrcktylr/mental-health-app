@@ -5,7 +5,7 @@
         <div class="col-lg-5 col-md-7">
             <div class="card">
                 <div class="card-body">
-                    <div class="text-center mb-4">
+                    <div class="text mb-4" style="color:black">
                         <h2 class="mb-4">{{headerInput}}</h2>
                         <div><strong>Date Posted: </strong>{{date}}</div>
                         <div><strong>Author: </strong> {{author}}</div>
@@ -14,7 +14,7 @@
                         <div><strong>Sentiment: </strong> {{sentimentScore}}</div>
                     </div>
                 </div>
-                <button class="btn btn-danger" onclick="back()">Close</button>
+                <button class="btn btn-danger" [routerLink] = "['/patient/history']">Close</button>
             </div>
         </div>
     </div>
