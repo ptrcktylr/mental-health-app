@@ -12,9 +12,10 @@ public class LoginDTO {
 		super();
 	}
 
-	public LoginDTO(String username) {
+	public LoginDTO(String username, String password) {
 		super();
 		this.username = username;
+		this.password = password;
 	}
 
 	public String getUsername() {
