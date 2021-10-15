@@ -1,2 +1,28 @@
 <app-professional-nav></app-professional-nav>
-<div class="justify-content-center"><p>professional-all-patients works!</p></div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-3">
+            <div class="card shadow my-card">
+                <div class="card-body">
+                    <div id="allPatients">
+                        <h1 class="mb-3">All Patients</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-3" *ngFor = "let patient of patients">
+            <div class="card shadow my-card">
+                <div class="card-body text-center">
+                    <div>
+                        <h3 class="emphasisWords">{{patient.fname}} {{patient.lname}}</h3>
+                        <button (click) = "addPatient(patient.id)" class="btn">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
