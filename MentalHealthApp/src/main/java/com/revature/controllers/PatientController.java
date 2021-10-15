@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.Entry;
 import com.revature.models.Reply;
+import com.revature.models.User;
 import com.revature.services.EntryService;
 import com.revature.services.PatientService;
 import com.revature.services.UserService;
@@ -35,15 +36,22 @@ public class PatientController {
 	@Autowired
 	EntryService entryService;
 	
-	@PostMapping("/patient/entry")
-	public Map<String, Object> addEntry(@RequestBody Entry entry, 
-			                            HttpServletRequest request) {
+	
+	public User loginedUser(HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
 		Object loginedUsername = session.getAttribute("loginedUser");
 		
+		return userService.findUserByUsername(loginedUsername.toString());
+		
+	}
+	
+	@PostMapping("/patient/entry")
+	public Map<String, Object> addEntry(@RequestBody Entry entry, 
+			                            HttpServletRequest request) {
+		
 		Map<String, Object> map = new HashMap<>();
-		map.put("result", patientService.addEntry(entry, userService.findUserByUsername(loginedUsername.toString())));
+		map.put("result", patientService.addEntry(entry, loginedUser(request)));
 		map.put("status_code", 200);
 		
 		return map;
@@ -55,11 +63,8 @@ public class PatientController {
 			                            @PathVariable("entry_id") Integer entry_id,
 			                            HttpServletRequest request) {
 		
-		HttpSession session = request.getSession();
-		Object loginedUsername = session.getAttribute("loginedUser");
-		
 		Map<String, Object> map = new HashMap<>();
-		map.put("result", patientService.addReply(reply, entryService.findEntryById(entry_id), userService.findUserByUsername(loginedUsername.toString())));
+		map.put("result", patientService.addReply(reply, entryService.findEntryById(entry_id), loginedUser(request)));
 		map.put("status_code", 200);
 		
 		return map;
@@ -71,11 +76,8 @@ public class PatientController {
 	public Map<String, Object> getEntry(@PathVariable("entry_id") Integer entry_id,
 			                            HttpServletRequest request) {
 		
-		HttpSession session = request.getSession();
-		Object loginedUsername = session.getAttribute("loginedUser");
-		
 		Map<String, Object> map = new HashMap<>();
-		map.put("result", patientService.getPrivateEntry(entry_id, userService.findUserByUsername(loginedUsername.toString())));
+		map.put("result", patientService.getPrivateEntry(entry_id, loginedUser(request)));
 		map.put("status_code", 200);
 		
 		return map;	
@@ -86,11 +88,8 @@ public class PatientController {
 	@GetMapping("/patient/entries")
 	public Map<String, Object> getAllEntries(HttpServletRequest request) {
 		
-		HttpSession session = request.getSession();
-		Object loginedUsername = session.getAttribute("loginedUser");
-		
 		Map<String, Object> map = new HashMap<>();
-		map.put("result", patientService.getPatientsEntries(userService.findUserByUsername(loginedUsername.toString())));
+		map.put("result", patientService.getPatientsEntries(loginedUser(request)));
 		map.put("status_code", 200);
 		
 		return map;

@@ -35,16 +35,22 @@ public class ProfessionalController {
 	@Autowired
 	EntryService entryService;
 	
+	public User loginedUser(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		Object loginedUsername = session.getAttribute("loginedUser");
+		
+		return userService.findUserByUsername(loginedUsername.toString());
+		
+	}
+	
 	@PostMapping("/patient/{patient_id}/add")
 	public Map<String, Object> addPatient(@RequestBody User patientUser,
 			             @PathVariable("patient_id") Integer patient_id,
 			             HttpServletRequest request) {
 		
-		HttpSession session = request.getSession();
-		Object loginedUsername = session.getAttribute("loginedUser");
-		
 		Map<String, Object> map = new HashMap<>();
-		map.put("result", professionalService.addPatient(userService.findUserByUsername(loginedUsername.toString()), userService.findUserById(patient_id)));
+		map.put("result", professionalService.addPatient(loginedUser(request), userService.findUserById(patient_id)));
 		map.put("status_code", 200);
 		
 		return map;
@@ -55,12 +61,9 @@ public class ProfessionalController {
 	public Map<String, Object> addReply(@RequestBody Reply reply,
 			             @PathVariable("entry_id") Integer entry_id,
 			             HttpServletRequest request) {
-		
-		HttpSession session = request.getSession();
-		Object loginedUsername = session.getAttribute("loginedUser");
-		
+
 		Map<String, Object> map = new HashMap<>();
-		map.put("result", professionalService.addReply(reply, entryService.findEntryById(entry_id), userService.findUserByUsername(loginedUsername.toString())));		
+		map.put("result", professionalService.addReply(reply, entryService.findEntryById(entry_id), loginedUser(request)));		
 		map.put("status_code", 200);
 		
 		return map;	
@@ -84,11 +87,8 @@ public class ProfessionalController {
 	public Map<String, Object> getIndividualEntries(@PathVariable("patient_id") Integer patient_id,
 			                                        HttpServletRequest request) {
 		
-		HttpSession session = request.getSession();
-		Object loginedUsername = session.getAttribute("loginedUser");
-		
 		Map<String, Object> map = new HashMap<>();
-		map.put("result", professionalService.getPatientsEntries(userService.findUserById(patient_id), userService.findUserByUsername(loginedUsername.toString())));
+		map.put("result", professionalService.getPatientsEntries(userService.findUserById(patient_id), loginedUser(request)));
 		map.put("status_code", 200);
 		
 		return map;	
@@ -99,12 +99,9 @@ public class ProfessionalController {
 	@GetMapping("/professional/entry/{entry_id")
 	public Map<String, Object> getEntry(@PathVariable("entry_id") Integer entry_id,
 			              HttpServletRequest request) {
-		
-		HttpSession session = request.getSession();
-		Object loginedUsername = session.getAttribute("loginedUser");
-		
+
 		Map<String, Object> map = new HashMap<>();
-		map.put("result", professionalService.getPatientsEntry(entry_id, userService.findUserByUsername(loginedUsername.toString())));
+		map.put("result", professionalService.getPatientsEntry(entry_id, loginedUser(request)));
 		map.put("status_code", 200);
 		
 		return map;
@@ -127,11 +124,8 @@ public class ProfessionalController {
 	public Map<String, Object> removePatient(@PathVariable("patient_id") Integer patient_id,
 			                                 HttpServletRequest request) {
 		
-		HttpSession session = request.getSession();
-		Object loginedUsername = session.getAttribute("loginedUser");
-		
 		Map<String, Object> map = new HashMap<>();
-		map.put("result", professionalService.removePatient(userService.findUserByUsername(loginedUsername.toString()), userService.findUserById(patient_id)));
+		map.put("result", professionalService.removePatient(loginedUser(request), userService.findUserById(patient_id)));
 		map.put("status_code", 200);
 		
 		return map;		
