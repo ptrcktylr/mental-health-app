@@ -157,6 +157,10 @@ public class User {
 	public void addAssignedPatient(User assignedPatient) {
 		this.assignedPatients.add(assignedPatient);
 	}
+	
+	public void removeAssignedPatient(User assignedPatient) {
+		this.assignedPatients.remove(assignedPatient);
+	}
 
 	public Set<User> getAssignedProfessionals() {
 		return assignedProfessionals;
@@ -168,6 +172,10 @@ public class User {
 	
 	public void addAssignedProfessional(User assignedProfessional) {
 		this.assignedProfessionals.add(assignedProfessional);
+	}
+	
+	public void removeAssignedProfessional(User assignedProfessional) {
+		this.assignedProfessionals.remove(assignedProfessional);
 	}
 
 	
