@@ -1,12 +1,13 @@
 package com.revature.daos;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.revature.models.Entry;
 import com.revature.models.Reply;
@@ -61,18 +62,23 @@ public class ReplyDao {
 	}
 	
 	// insert a reply
-	public Reply insertReply(Reply reply, User user) {
+	public Reply insertReply(Reply reply, Entry entry, User user) {
 		
 		// open Session to connect to database
 		Session sess = HibernateUtil.getSession();
-				
+		
+		// add user to reply
 		reply.setAuthor(user);
-				
+		
 		// get current date
-		Timestamp date = new Timestamp(10);
-				
+		Date date = new Date();
+		
+		// add date to reply
 		reply.setDatePosted(date);
-				
+		
+		// add reply to entry
+		reply.setEntry(entry);
+		
 		// save entry to database
 		sess.save(reply);
 				
@@ -82,17 +88,66 @@ public class ReplyDao {
 	}
 	
 	// delete a reply
-	public void deleteReply(Reply reply) {
+	public boolean deleteReply(Reply reply, User author) {
 		
+		// open Session to connect to database
 		Session sess = HibernateUtil.getSession();
+		boolean success = false;
 		
+		// delete must happen within a transaction
+		Transaction tran = sess.beginTransaction();
+			
+		// create HQL
+		String HQL = "DELETE Reply R WHERE R = :reply AND R.author = :author";
+			
+		Query query = sess.createQuery(HQL);
+		query.setParameter("reply", reply);
+		query.setParameter("author", author);
+			
 		try {
-			sess.remove(reply);
+			// execute query
+			query.executeUpdate();
+			
+			// commit changes
+			tran.commit();
+			success = true;
 		}
-		catch(IllegalArgumentException e) {
-			System.out.println("No reply with id = " + reply.getId());
+		catch(Exception e) {
+			System.out.println("Unable to delete reply with id " + reply.getId());
 		}
 		
 		HibernateUtil.closeSession();
+		return success;
 	}
+	
+	public boolean professionalDeleteReply(Reply reply, User professional) {
+		Session ses = HibernateUtil.getSession();
+		boolean success = false;
+		
+		if (professional.isProfessional()) {
+			Transaction tran = ses.beginTransaction();
+			
+			String HQL = "DELETE Reply R WHERE R = :reply";
+			
+			Query query = ses.createQuery(HQL);
+			query.setParameter("reply", reply);
+			
+			try {
+				query.executeUpdate();
+				tran.commit();
+				success = true;
+			} catch (Exception e) {
+				System.out.println("Unable to delete reply with id " + reply.getId());
+			}
+			
+			return success;
+		} else {
+			System.out.println("Unable to delete reply with id " + reply.getId());
+			return success;
+		}
+		
+		
+	}
+
+	
 }

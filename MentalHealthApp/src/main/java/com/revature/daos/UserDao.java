@@ -191,24 +191,31 @@ public class UserDao {
 		return user;
 	}
 	
-	public void addPatient(User professional, User patient) {
+	public boolean addPatient(User professional, User patient) {
 		
 		Session ses = HibernateUtil.getSession();
-		ses.beginTransaction();
+		boolean success = false;
+		try {
+			ses.beginTransaction();
 		
-		// add patient to professional's set 
-		professional.addAssignedPatient(patient);
+			// add patient to professional's set 
+			professional.addAssignedPatient(patient);
 		
-		// add professional to patient's set
-		patient.addAssignedProfessional(professional);
+			// add professional to patient's set
+			patient.addAssignedProfessional(professional);
 		
-		ses.saveOrUpdate(professional);
+			ses.saveOrUpdate(professional);
 		
-		ses.getTransaction().commit();
+			ses.getTransaction().commit();
+			success = true;
+		} catch (Exception e) {
+			// TODO: log this
+		}
 		
 		// close Session
 		HibernateUtil.closeSession();
 		
+		return success;
 	}
 	
 	public User findUserById(int id) {
@@ -226,29 +233,59 @@ public class UserDao {
 		
 	}
 	
-	public void updateUser(User user) {
+	public boolean updateUser(User user) {
 		
 		// open Session to connect to database
 		Session ses = HibernateUtil.getSession();
+		boolean success = false;
 		
-		//update and delete must happen within a transaction
-		Transaction tran = ses.beginTransaction();
+		try {
+			//update and delete must happen within a transaction
+			Transaction tran = ses.beginTransaction();
 		
-		// assign query to a string
-		String HQL = "Update User SET username = '" + user.getUsername() 
-		+ "', password = '" + user.getPassword() 
-		+ "', is_professional = '" + user.isProfessional() 
-		+ "', first_name = '" + user.getFirstName() 
-		+ "', last_name = '" + user.getLastName() 
-		+ "', email = '" + user.getEmail() 
-		+ "' WHERE id = " + user.getId();
+			// assign query to a string
+			String HQL = "Update User SET username = '" + user.getUsername() 
+			+ "', password = '" + user.getPassword() 
+			+ "', is_professional = '" + user.isProfessional() 
+			+ "', first_name = '" + user.getFirstName() 
+			+ "', last_name = '" + user.getLastName() 
+			+ "', email = '" + user.getEmail() 
+			+ "' WHERE id = " + user.getId();
 		
-		Query q = ses.createQuery(HQL);
+			Query q = ses.createQuery(HQL);
 		
-		q.executeUpdate();
+			q.executeUpdate();
 		
-		tran.commit();
+			tran.commit();
+		} catch (Exception e) {
+			// TODO: log this
+		}
+		
 		HibernateUtil.closeSession();
+		return success;
+	}
+
+	
+	public boolean removePatient(User professional, User patient) {
+		
+		Session ses = HibernateUtil.getSession();
+		boolean success = false;
+		try {
+			ses.beginTransaction();
+		
+			professional.removeAssignedPatient(patient);
+			patient.removeAssignedProfessional(professional);
+		
+			ses.saveOrUpdate(professional);
+		
+			ses.getTransaction().commit();
+			success = true;
+		} catch (Exception e) {
+			// TODO: log this
+		}
+		
+		HibernateUtil.closeSession();
+		return success;
 	}
 	
 	
