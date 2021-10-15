@@ -1,13 +1,16 @@
 <app-patient-nav></app-patient-nav>
-<p>patient-progress works!</p>
-<h1>
-    Progress
-</h1>
-  
-  <fusioncharts
-    width="700"
-    height="400"
-    type="line"
-    [dataSource]="dataSource"
-  >
- </fusioncharts>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card my-card text-center">
+                <div>
+                    <h3>Progress</h3>
+                </div>
+                <div class="card-body">
+                    <fusioncharts width="100%" type="line" [dataSource]="dataSource"></fusioncharts>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

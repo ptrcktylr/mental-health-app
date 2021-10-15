@@ -5,16 +5,16 @@
 <div class="container mt-5">
       <div class="row justify-content-center">
           <div class="col-lg-8">
-              <div class="card shadow">
-                  <div class="card card-body">
+              <div class="card shadow my-card">
+                  <div class="card-body">
                         <div id="new-post-form">
-                            <h1 class="mb-3" style="color:dodgerblue">New Journal Entry</h1>
+                            <h1 class="mb-3">New Journal Entry</h1>
 
 
                             <br>
                             
                             <div class="form-group">
-                                <label for="ne_header" class="form-label">Journal Title</label>
+                                <label for="ne_header" class="form-label darkWords">Journal Title</label>
                                 <div class="input-group mb-3">
                                 <input name="ne_header" id="ne_header" cols="30" rows="3" class="form-control" placeholder="Title" [(ngModel)]="headerInput">
                                 </div>
@@ -23,7 +23,7 @@
                             <hr>
 
                             <div class="form-group">
-                                <label for="ne_body" class="form-label">Description</label>
+                                <label for="ne_body" class="form-label darkWords">Description</label>
                                 <div class="input-group mb-3">
                                     <textarea name="ne_body" id="ne_body" cols="30" rows="10" class="form-control" placeholder="What are you posting today?"[(ngModel)]="bodyInput"></textarea>
                                 </div>
@@ -38,7 +38,7 @@
     
                                 <div class="form-check col-sm-3">
                                     <input class="form-check-input" type="checkbox" value="" id="public_check_default" (change)="changePrivacy()" [checked]="publicPost">
-                                    <label class="form-check-label" for="public_check_default" style="color:slateblue">
+                                    <label class="form-check-label darkWords" for="public_check_default">
                                         Make me Public
                                     </label>
                                 </div>
@@ -49,12 +49,12 @@
                             <hr>
 
                             <div class="text-center mt-4">
-                                <button id="new_entry_button" class="btn btn-dark mx-4" (click)="addEntry()">Post</button>
+                                <button id="new_entry_button" class="btn mx-4" (click)="addEntry()">Post</button>
                             </div>
 
                             <br>
 
-                            <div class="text-center" id="message" style="color:chocolate">{{message}}</div>
+                            <div class="text-center error" id="message">{{message}}</div>
 
                         </div>
                   </div>

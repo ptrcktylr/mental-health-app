@@ -2,48 +2,60 @@
     <a class="navbar-brand" href=""><h3><span id="normalWords">Senti</span><span class="emphasisWords">Mental Health</span></h3></a>
 </nav>
 <div *ngIf="show">
-    <div class="d-flex p-2 justify-content-center align-items-center">
-        <div id = "keys" class="card my-card">
-            <div class="card-header text-center darkWords">
-                <h5>Create a New User</h5>
-            </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="uname"><b>Username</b></label>
-                    <input class="form-control" (click) = "resetError()" id="username" [(ngModel)] = "username" type="text" placeholder="Enter Username" name="uname" required>
-                </div>
-                <div class="form-group">
-                    <label for="psw"><b>Password</b></label>
-                    <input class="form-control"(click) = "resetError()" id = "password" [(ngModel)] = "password" type="text" placeholder="Enter Password" name="psw" required>
-                </div>
-                <div class="text-center">
-                    <button (click) = "next()" id = "nextButton" class="btn">Next</button>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-sm-3">
+                <div id = "keys" class="card my-card">
+                    <div class="card-header text-center darkWords">
+                        <h5>Create a New User</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="uname"><b>Username</b></label>
+                            <input class="form-control" (click) = "resetError()" id="username" [(ngModel)] = "username" type="text" placeholder="Enter Username" name="uname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="psw"><b>Password</b></label>
+                            <input class="form-control"(click) = "resetError()" id = "password" [(ngModel)] = "password" type="text" placeholder="Enter Password" name="psw" required>
+                        </div>
+                        <div class="text-center">
+                            <button (click) = "next()" id = "nextButton" class="btn">Next</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div *ngIf="!show">
-    <div class="d-flex p-2 justify-content-center align-items-center">
-        <div id = "info" class="card my-card">
-            <div class="card-header text-center darkWords">
-                <h5>Create a New User</h5>
-            </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="fname"><b>First Name</b></label>
-                    <input class="form-control" (click) = "resetError()" id="fname" [(ngModel)] = "fname" type="text" name="fname" required>
-                </div>
-                <div class="form-group">
-                    <label for="lname"><b>Last Name</b></label>
-                    <input class="form-control" (click) = "resetError()" id="lname" [(ngModel)] = "lname" type="text" name="lname" required>
-                </div>
-                <div class="form-group">
-                    <label for="email"><b>Email</b></label>
-                    <input class="form-control" (click) = "resetError()" id="email" [(ngModel)] = "email" type="text" name="email" required>
-                </div>
-                <div class="text-center">
-                    <button (click) = "make()" id = "makeButton" class="btn">Create User</button>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-sm-3">
+                <div id = "info" class="card my-card">
+                    <div class="card-header text-center darkWords">
+                        <h5>Create a New User</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="fname"><b>First Name</b></label>
+                            <input class="form-control" (click) = "resetError()" id="fname" [(ngModel)] = "fname" type="text" name="fname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lname"><b>Last Name</b></label>
+                            <input class="form-control" (click) = "resetError()" id="lname" [(ngModel)] = "lname" type="text" name="lname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email"><b>Email</b></label>
+                            <input class="form-control" (click) = "resetError()" id="email" [(ngModel)] = "email" type="text" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="isProfessional" name="isProfessional" value="isProfessional">
+                            <label class="darkWords" for="isProfessional"> <b>I am a Professional</b></label><br>
+                        </div> 
+                        <div class="text-center">
+                            <button (click) = "make()" id = "makeButton" class="btn">Create User</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
