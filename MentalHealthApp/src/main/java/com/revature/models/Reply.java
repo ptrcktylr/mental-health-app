@@ -1,6 +1,6 @@
 package com.revature.models;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="replies")
@@ -24,9 +26,10 @@ public class Reply {
 	@Column(name="body", nullable=false, columnDefinition="TEXT")
 	private String body;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="date_posted", nullable=false, 
 			columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
-	private Timestamp datePosted;
+	private Date datePosted;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
@@ -40,7 +43,7 @@ public class Reply {
 		super();
 	}
 
-	public Reply(int id, String body, Timestamp datePosted, User author, Entry entry) {
+	public Reply(int id, String body, Date datePosted, User author, Entry entry) {
 		super();
 		this.id = id;
 		this.body = body;
@@ -49,12 +52,17 @@ public class Reply {
 		this.entry = entry;
 	}
 
-	public Reply(String body, Timestamp datePosted, User author, Entry entry) {
+	public Reply(String body, Date datePosted, User author, Entry entry) {
 		super();
 		this.body = body;
 		this.datePosted = datePosted;
 		this.author = author;
 		this.entry = entry;
+	}
+
+	public Reply(String body) {
+		super();
+		this.body = body;
 	}
 
 	public int getId() {
@@ -73,11 +81,11 @@ public class Reply {
 		this.body = body;
 	}
 
-	public Timestamp getDatePosted() {
+	public Date getDatePosted() {
 		return datePosted;
 	}
 
-	public void setDatePosted(Timestamp datePosted) {
+	public void setDatePosted(Date datePosted) {
 		this.datePosted = datePosted;
 	}
 
@@ -148,5 +156,6 @@ public class Reply {
 		return "Reply [id=" + id + ", body=" + body + ", datePosted=" + datePosted + ", author=" + author + ", entry="
 				+ entry + "]";
 	}
+
 	
 }
