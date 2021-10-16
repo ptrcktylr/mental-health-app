@@ -1,4 +1,7 @@
+import { ɵparseCookieValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-professional-nav',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfessionalNavComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route:Router,private cookie:CookieService) { }
 
   ngOnInit(): void {
+  }
+
+  logout():void{
+    if(this.cookie.check('username')){
+      this.cookie.delete('username');
+    }
+    this.route.navigate(['/login']);
   }
 
 }

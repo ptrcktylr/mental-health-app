@@ -23,6 +23,7 @@
     "bootstrap": "^4.5.3",
     "deepai": "^1.0.17",
     "ngx-bootstrap": "^7.1.0",
+    "ngx-cookie-service": "^12.0.3",
     "rxjs": "~6.6.0",
     "sentiment": "^5.0.2",
     "tslib": "^2.3.0",
