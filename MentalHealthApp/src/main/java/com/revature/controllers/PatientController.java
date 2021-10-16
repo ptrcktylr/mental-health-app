@@ -233,4 +233,33 @@ public class PatientController {
 		}
 		
 	}
+	
+	@DeleteMapping("reply/{reply_id}")
+	public ResponseEntity<?> deleteReply(@PathVariable int reply_id, HttpSession session) {
+		
+		// get current patient's id
+		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
+		
+		// if patient is not logged in, return null
+		if (loggedInPatientId == null) {
+			System.out.println("Patient not logged in!");
+			return ResponseEntity.status(401).build();
+		}
+		
+		try {
+			Reply r = replyDao.getById(reply_id);
+			
+			if (r.getPatient() != patientDao.getById(loggedInPatientId)) {
+				System.out.println("Reply with id: " + reply_id + " doesn't belong to current patient");
+				return ResponseEntity.status(401).build();
+			} else {
+				replyDao.deleteById(reply_id);
+				return ResponseEntity.status(200).build();
+			}
+			
+		} catch (Exception exception) {
+			System.out.println("Reply with id: " + reply_id + " doesn't exist");
+			return ResponseEntity.status(404).build();
+		}
+	}
 }
