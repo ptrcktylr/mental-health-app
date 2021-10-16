@@ -1,110 +1,195 @@
 package com.revature.controllers;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
+import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.daos.EntryRepository;
+import com.revature.daos.PatientRepository;
+import com.revature.daos.ReplyRepository;
 import com.revature.models.Entry;
+import com.revature.models.Patient;
 import com.revature.models.Reply;
-import com.revature.models.User;
-import com.revature.services.EntryService;
-import com.revature.services.PatientService;
-import com.revature.services.UserService;
-
 
 @RestController
-@CrossOrigin
+@RequestMapping(value="/patient")
 public class PatientController {
 	
+	// patient dao
+	private PatientRepository patientDao;
+	
+	// entry dao
+	private EntryRepository entryDao;
+	
+	// reply dao
+	private ReplyRepository replyDao;
+	
+	// constructor injecting daos
 	@Autowired
-	PatientService patientService;
-	
-	@Autowired
-	UserService userService;
-	
-	@Autowired
-	EntryService entryService;
-	
-	
-	public User loginedUser(HttpServletRequest request) {
+	public PatientController(PatientRepository patientDao,
+							 EntryRepository entryDao,
+							 ReplyRepository replyDao
+							 ) {
 		
-		HttpSession session = request.getSession();
-		Object loginedUsername = session.getAttribute("loginedUser");
+		this.patientDao = patientDao;
 		
-		return userService.findUserByUsername(loginedUsername.toString());
+		this.entryDao = entryDao;
 		
-	}
-	
-	@PostMapping("/patient/entry")
-	public Map<String, Object> addEntry(@RequestBody Entry entry, 
-			                            HttpServletRequest request) {
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("result", patientService.addEntry(entry, loginedUser(request)));
-		map.put("status_code", 200);
-		
-		return map;
+		this.replyDao = replyDao;
 	}
 	
 	
-	@PostMapping("/patient/entry/{entry_id}/reply")
-	public Map<String, Object> addReply(@RequestBody Reply reply,
-			                            @PathVariable("entry_id") Integer entry_id,
-			                            HttpServletRequest request) {
+	// register new user
+	@PostMapping("/register")
+	public ResponseEntity<Patient> registerPatient(@RequestBody Patient p) {
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("result", patientService.addReply(reply, entryService.findEntryById(entry_id), loginedUser(request)));
-		map.put("status_code", 200);
+		try {
+			patientDao.save(p);
+		} catch (Exception exception) {
+			System.out.println("Failed to register new patient");
+			exception.printStackTrace();
+			return ResponseEntity.status(400).body(null);
+		}
 		
-		return map;
+		return ResponseEntity.status(201).body(p);
 	}
 	
-	
-	@ResponseBody
-	@GetMapping("/patient/entry/{entry_id}")
-	public Map<String, Object> getEntry(@PathVariable("entry_id") Integer entry_id,
-			                            HttpServletRequest request) {
+	// add new entry
+	@PostMapping("/entry")
+	public ResponseEntity<Entry> addEntry(@RequestBody Entry e, HttpSession session) {
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("result", patientService.getPrivateEntry(entry_id, loginedUser(request)));
-		map.put("status_code", 200);
+		try {
+			// set logged in patient to entry owner
+			Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
+			e.setPatient(patientDao.getById(loggedInPatientId));
+			
+			// set current date to entry date posted
+			Date currentDate = new Date();
+			e.setDatePosted(currentDate);
+			
+			entryDao.save(e);
+			
+		} catch (Exception exception) {
+			System.out.println("Failed to add new entry");
+			exception.printStackTrace();
+			return ResponseEntity.status(400).body(null);
+		}
 		
-		return map;	
+		return ResponseEntity.status(201).body(e);
 	}
 	
-	
-	@ResponseBody
-	@GetMapping("/patient/entries")
-	public Map<String, Object> getAllEntries(HttpServletRequest request) {
+	// get single entry
+	@GetMapping("/entry/{entry_id}")
+	public ResponseEntity<Entry> getEntry(@PathVariable int entry_id, HttpSession session) {
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("result", patientService.getPatientsEntries(loginedUser(request)));
-		map.put("status_code", 200);
+		try {
+			// get the entry
+			Entry e = entryDao.findById(entry_id).get();
+			
+			// get the current patient's id
+			Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
+			
+			// if user doesn't own this entry
+			if (loggedInPatientId == null || e.getPatient().getId() != loggedInPatientId) {
+				// if not public return null
+				if (!e.isPublic()) {
+					System.out.println("Entry with id " + entry_id + " is private!");
+					return ResponseEntity.status(401).body(null);
+				}
+			}
+			
+			// if the current user is the owner or entry is public, return entry
+			return ResponseEntity.status(200).body(e);
+			
+		} catch (Exception exception) {
+			System.out.println("Failed to get entry with id: " + entry_id);
+			exception.printStackTrace();
+			return ResponseEntity.status(404).body(null);
+		}
 		
-		return map;
 	}
 	
-	
-	@ResponseBody
-	@GetMapping("/patient/public/entries")
-	public Map<String, Object> getAllPatientsPublicEntries() {
+	// get all my entries
+	@GetMapping("/entries")
+	public ResponseEntity<List<Entry>> getPatientsEntries(HttpSession session) {
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("result", patientService.getAllPublicEntries());
-		map.put("status_code", 200);
+		// get current patient's id
+		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
-		return map;
+		// if the patient is not logged in return null
+		if (loggedInPatientId == null) {
+			System.out.println("Patient not logged in!");
+			return ResponseEntity.status(401).body(null);
+		}
+		
+		// return all this patient's entries
+		return ResponseEntity.status(200).body(entryDao.findByPatientId(loggedInPatientId));
 	}
-
+	
+	// get all users' public entries
+	@GetMapping("/public/entries")
+	public ResponseEntity<List<Entry>> getPublicEntries(HttpSession session) {
+		
+		// get current patient's id
+		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
+		
+		// if the patient is not logged in return null
+		if (loggedInPatientId == null) {
+			System.out.println("Patient not logged in!");
+			return ResponseEntity.status(401).body(null);
+		}
+		
+		// return all this patient's entries
+		return ResponseEntity.status(200).body(entryDao.findByIsPublic(true));
+	}
+	
+	// add reply to an entry
+	@PostMapping("/entry/{entry_id}/reply")
+	public ResponseEntity<?> addReply(@RequestBody Reply r, @PathVariable int entry_id, HttpSession session) {
+		
+		// get current patient's id
+		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
+		if (loggedInPatientId == null) {
+			System.out.println("Patient not logged in!");
+			return ResponseEntity.status(401).build();
+		}
+		
+		// get entry to add reply to
+		try {
+			Entry e = entryDao.findById(entry_id).get();
+			
+			// set this reply to this entry
+			r.setEntry(e);
+			
+			// set current date to reply date posted
+			Date currentDate = new Date();
+			r.setDatePosted(currentDate);
+			
+			// set current patient to reply author
+			r.setPatient(patientDao.getById(loggedInPatientId));
+			// set professional author to null for safety (replies can't have two authors)
+			r.setprofessional(null);
+			
+			// save the reply
+			replyDao.save(r);
+			
+			return ResponseEntity.status(201).build();
+		} catch (Exception exception) {
+			// if the entry doesn't exist return null
+			System.out.println("No entry with id: " + entry_id);
+			return ResponseEntity.status(404).build();
+			
+		}
+		
+	}
 }

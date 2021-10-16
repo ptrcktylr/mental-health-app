@@ -13,34 +13,22 @@ repositories {
 }
 
 dependencies {
-
-	// Spring Actuator
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	
-	// Spring JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	
-	// Spring Web/MVC
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	
-	// Spring DevTools
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	
-	// Spring Starter
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	
-	// PostgreSQL
 	runtimeOnly 'org.postgresql:postgresql'
-	
-	//JUnit dependency for testing (see week1 HelloGradle)
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	
 	// https://mvnrepository.com/artifact/com.google.code.gson/gson
 	implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.8'
 	
 	// https://mvnrepository.com/artifact/com.auth0/java-jwt
 	implementation group: 'com.auth0', name: 'java-jwt', version: '3.18.2'
+	
+	//JUnit dependency for testing
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
 test {

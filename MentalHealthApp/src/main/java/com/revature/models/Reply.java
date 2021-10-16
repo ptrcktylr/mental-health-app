@@ -2,6 +2,7 @@ package com.revature.models;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.springframework.stereotype.Repository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="replies")
@@ -22,7 +23,7 @@ public class Reply {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name="reply_id")
 	private int id;
 	
 	@Column(name="body", nullable=false, columnDefinition="TEXT")
@@ -34,37 +35,39 @@ public class Reply {
 	private Date datePosted;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
-	private User author;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="entry_id", referencedColumnName="id", nullable=false)
+	@JoinColumn(name="entry_id")
+	@JsonIgnore
 	private Entry entry;
+	
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="patient_id")
+	private Patient patient;
+	
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="professional_id")
+	private Professional professional;
 	
 	public Reply() {
 		super();
 	}
 
-	public Reply(int id, String body, Date datePosted, User author, Entry entry) {
+	public Reply(int id, String body, Date datePosted, Entry entry, Patient patient, Professional professional) {
 		super();
 		this.id = id;
 		this.body = body;
 		this.datePosted = datePosted;
-		this.author = author;
 		this.entry = entry;
+		this.patient = patient;
+		this.professional = professional;
 	}
 
-	public Reply(String body, Date datePosted, User author, Entry entry) {
+	public Reply(String body, Date datePosted, Entry entry, Patient patient, Professional professional) {
 		super();
 		this.body = body;
 		this.datePosted = datePosted;
-		this.author = author;
 		this.entry = entry;
-	}
-
-	public Reply(String body) {
-		super();
-		this.body = body;
+		this.patient = patient;
+		this.professional = professional;
 	}
 
 	public int getId() {
@@ -91,14 +94,6 @@ public class Reply {
 		this.datePosted = datePosted;
 	}
 
-	public User getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(User author) {
-		this.author = author;
-	}
-
 	public Entry getEntry() {
 		return entry;
 	}
@@ -107,15 +102,32 @@ public class Reply {
 		this.entry = entry;
 	}
 
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public Professional getprofessional() {
+		return professional;
+	}
+
+	public void setprofessional(Professional professional) {
+		this.professional = professional;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((author == null) ? 0 : author.hashCode());
 		result = prime * result + ((body == null) ? 0 : body.hashCode());
 		result = prime * result + ((datePosted == null) ? 0 : datePosted.hashCode());
 		result = prime * result + ((entry == null) ? 0 : entry.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((patient == null) ? 0 : patient.hashCode());
+		result = prime * result + ((professional == null) ? 0 : professional.hashCode());
 		return result;
 	}
 
@@ -128,11 +140,6 @@ public class Reply {
 		if (getClass() != obj.getClass())
 			return false;
 		Reply other = (Reply) obj;
-		if (author == null) {
-			if (other.author != null)
-				return false;
-		} else if (!author.equals(other.author))
-			return false;
 		if (body == null) {
 			if (other.body != null)
 				return false;
@@ -150,14 +157,23 @@ public class Reply {
 			return false;
 		if (id != other.id)
 			return false;
+		if (patient == null) {
+			if (other.patient != null)
+				return false;
+		} else if (!patient.equals(other.patient))
+			return false;
+		if (professional == null) {
+			if (other.professional != null)
+				return false;
+		} else if (!professional.equals(other.professional))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Reply [id=" + id + ", body=" + body + ", datePosted=" + datePosted + ", author=" + author + ", entry="
-				+ entry + "]";
+		return "Reply [id=" + id + ", body=" + body + ", datePosted=" + datePosted + ", entry=" + entry + ", patient="
+				+ patient + ", professional=" + professional + "]";
 	}
-
 	
 }

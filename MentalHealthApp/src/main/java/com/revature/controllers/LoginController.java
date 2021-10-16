@@ -1,62 +1,89 @@
 package com.revature.controllers;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.daos.PatientRepository;
+import com.revature.daos.ProfessionalRepository;
 import com.revature.models.LoginDTO;
-import com.revature.services.LoginService;
-
-
+import com.revature.models.Patient;
+import com.revature.models.Professional;
 
 @RestController
 @CrossOrigin
 public class LoginController {
 	
-	private LoginService loginService;
+	private PatientRepository patientDao;
+	private ProfessionalRepository professionalDao;
 	
 	@Autowired
-	public LoginController(LoginService loginService) {
+	public LoginController(PatientRepository patientDao, ProfessionalRepository professionalDao) {
 		super();
-		this.loginService = loginService;
+		this.patientDao = patientDao;
+		this.professionalDao = professionalDao;
 	}
 	
-	
-	@PostMapping("/login")
-    public String login(@RequestBody LoginDTO user, 
-    		            HttpSession session,
-    		            Map<String, Object> map) {
+	@PostMapping("/patient/login")
+	public ResponseEntity<?> patientLogin(@RequestBody LoginDTO patient, HttpSession session) {
 		
-		 if (loginService.userLogin(user.getUsername(), user.getPassword()) != null){
-			 
-			 session.setAttribute("loginedUser", user.getUsername());
-			 
-			 return "redirect:/index.html";	 
-		 }else {
-			 
-			 map.put("msg", "The username or password is incorrect.");
-			 map.put("status_code", 401);
-			 
-			 return "login";
-		 }
+		Patient loggedInPatient = patientDao.validLogin(patient.getUsername(), patient.getPassword());
+		
+		// fail to log patient in
+		if (loggedInPatient == null) {
+			System.out.println("Failed to log patient in!");
+			
+			//clear session ids
+			session.setAttribute("professional_id", null);
+			session.setAttribute("patient_id", null);
+			return ResponseEntity.status(401).build();
+		}
+		
+		// log patient
+		session.setAttribute("patient_id", loggedInPatient.getId());
+		session.setAttribute("professional_id", null);
+		
+		System.out.println("Session's patient id is: "+ session.getAttribute("patient_id"));
+		System.out.println("Session's professional id is: "+ session.getAttribute("professional_id"));
+		return ResponseEntity.status(200).body(loggedInPatient);
 	}
 	
+	@PostMapping("/professional/login")
+	public ResponseEntity<?> professionalLogin(@RequestBody LoginDTO professional, HttpSession session) {
+		
+		Professional loggedInProfessional = professionalDao.validLogin(professional.getUsername(), professional.getPassword());
+		
+		// fail to log professional in
+		if (loggedInProfessional == null) {
+			System.out.println("Failed to log professional in!");
+			
+			//clear session ids
+			session.setAttribute("professional_id", null);
+			session.setAttribute("patient_id", null);
+			return ResponseEntity.status(401).build();
+		}
+		
+		// log professional
+		session.setAttribute("professional_id", loggedInProfessional.getId());
+		session.setAttribute("patient_id", null);
+		
+		System.out.println("Session's professional id is: "+ session.getAttribute("professional_id"));
+		System.out.println("Session's patient id is: "+ session.getAttribute("patient_id"));
+		return ResponseEntity.status(200).body(loggedInProfessional);
+	}
 	
 	@PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
+	public ResponseEntity<?> logout(HttpSession session) {
 		
-		HttpSession httpSession = request.getSession();
-        httpSession.invalidate();
-        
-        return "redirect:/login";
-        }
+		session.setAttribute("professional_id", null);
+		session.setAttribute("patient_id", null);
+		
+		System.out.println("Logged user out");
+		return ResponseEntity.status(200).build();
 	}
-
-
+}

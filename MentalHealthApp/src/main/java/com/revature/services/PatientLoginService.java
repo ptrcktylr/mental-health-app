@@ -1,6 +1,5 @@
 package com.revature.services;
 
+public class PatientLoginService {
 
-public class PatientService {
-	
 }

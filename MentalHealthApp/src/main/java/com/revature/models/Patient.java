@@ -1,29 +1,29 @@
 package com.revature.models;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="users")
-public class User {
+@Table(name="patients")
+public class Patient {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name="patient_id")
 	private int id;
 	
 	@Column(name="username", nullable=false, unique=true)
@@ -32,63 +32,73 @@ public class User {
 	@Column(name="password", nullable=false)
 	private String password;
 	
-	@Column(name="is_professional", nullable=false)
-	private boolean isProfessional;
-	
-	@Column(name="first_name", nullable=false)
 	private String firstName;
 	
-	@Column(name="last_name", nullable=false)
 	private String lastName;
 	
 	@Column(name="email", nullable=false, unique=true)
 	private String email;
 	
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="patients_professionals",
-	 joinColumns=@JoinColumn(name="professional_id"),
-	 inverseJoinColumns=@JoinColumn(name="patient_id")
-	)
-	private Set<User> assignedPatients;
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="professional_id")
+	@JsonIgnore
+	private Professional professional;
+
+	@OneToMany(mappedBy="patient", fetch=FetchType.EAGER)
+	@JsonIgnore
+	private List<Entry> entries;
 	
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="patients_professionals",
-	 joinColumns=@JoinColumn(name="patient_id"),
-	 inverseJoinColumns=@JoinColumn(name="professional_id")
-	)
-	private Set<User> assignedProfessionals;
+	@OneToMany(mappedBy="patient", fetch=FetchType.EAGER)
+	@JsonIgnore
+	private List<Reply> replies;
 	
-	// no args constructor
-	public User() {
+	public Patient() {
 		super();
 	}
 
-	public User(int id, String username, String password, boolean isProfessional, String firstName, String lastName,
-			String email, Set<User> assignedPatients, Set<User> assignedProfessionals) {
+	public Patient(int id, String username, String password, String firstName, String lastName, String email,
+			Professional professional, List<Entry> entries) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
-		this.isProfessional = isProfessional;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.assignedPatients = assignedPatients;
-		this.assignedProfessionals = assignedProfessionals;
+		this.professional = professional;
+		this.entries = entries;
 	}
 
-	public User(String username, String password, boolean isProfessional, String firstName, String lastName,
-			String email) {
+	public Patient(String username, String password, String firstName, String lastName, String email,
+			Professional professional, List<Entry> entries) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.isProfessional = isProfessional;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		
-		this.assignedPatients = new HashSet<User>();
-		this.assignedProfessionals = new HashSet<User>();
+		this.professional = professional;
+		this.entries = entries;
+	}
+
+	public Patient(String username, String password, String firstName, String lastName, String email,
+			List<Entry> entries) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.entries = entries;
+	}
+
+	public Patient(String username, String password, String firstName, String lastName, String email) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
 	}
 
 	public int getId() {
@@ -115,14 +125,6 @@ public class User {
 		this.password = password;
 	}
 
-	public boolean isProfessional() {
-		return isProfessional;
-	}
-
-	public void setProfessional(boolean isProfessional) {
-		this.isProfessional = isProfessional;
-	}
-
 	public String getFirstName() {
 		return firstName;
 	}
@@ -147,50 +149,41 @@ public class User {
 		this.email = email;
 	}
 
-	public Set<User> getAssignedPatients() {
-		return assignedPatients;
+	public Professional getProfessional() {
+		return professional;
 	}
 
-	public void setAssignedPatients(Set<User> assignedPatients) {
-		this.assignedPatients = assignedPatients;
-	}
-	
-	public void addAssignedPatient(User assignedPatient) {
-		this.assignedPatients.add(assignedPatient);
-	}
-	
-	public void removeAssignedPatient(User assignedPatient) {
-		this.assignedPatients.remove(assignedPatient);
+	public void setProfessional(Professional professional) {
+		this.professional = professional;
 	}
 
-	public Set<User> getAssignedProfessionals() {
-		return assignedProfessionals;
+	public List<Entry> getEntries() {
+		return entries;
 	}
 
-	public void setAssignedProfessionals(Set<User> assignedProfessionals) {
-		this.assignedProfessionals = assignedProfessionals;
-	}
-	
-	public void addAssignedProfessional(User assignedProfessional) {
-		this.assignedProfessionals.add(assignedProfessional);
-	}
-	
-	public void removeAssignedProfessional(User assignedProfessional) {
-		this.assignedProfessionals.remove(assignedProfessional);
+	public void setEntries(List<Entry> entries) {
+		this.entries = entries;
 	}
 
-	
+	public List<Reply> getReplies() {
+		return replies;
+	}
+
+	public void setReplies(List<Reply> replies) {
+		this.replies = replies;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((entries == null) ? 0 : entries.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + id;
-		result = prime * result + (isProfessional ? 1231 : 1237);
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((professional == null) ? 0 : professional.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -203,11 +196,16 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Patient other = (Patient) obj;
 		if (email == null) {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
+			return false;
+		if (entries == null) {
+			if (other.entries != null)
+				return false;
+		} else if (!entries.equals(other.entries))
 			return false;
 		if (firstName == null) {
 			if (other.firstName != null)
@@ -215,8 +213,6 @@ public class User {
 		} else if (!firstName.equals(other.firstName))
 			return false;
 		if (id != other.id)
-			return false;
-		if (isProfessional != other.isProfessional)
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
@@ -228,6 +224,11 @@ public class User {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
+		if (professional == null) {
+			if (other.professional != null)
+				return false;
+		} else if (!professional.equals(other.professional))
+			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -238,8 +239,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", isProfessional="
-				+ isProfessional + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
+		return "Patient [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", email=" + email + "]";
 	}
 	
 }

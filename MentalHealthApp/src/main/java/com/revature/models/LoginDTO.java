@@ -1,8 +1,5 @@
 package com.revature.models;
 
-import org.springframework.stereotype.Repository;
-
-
 public class LoginDTO {
 	
 	private String username;
@@ -38,6 +35,5 @@ public class LoginDTO {
 	public String toString() {
 		return "LoginDTO [username=" + username + ", password=" + password + "]";
 	}
-	
 	
 }
