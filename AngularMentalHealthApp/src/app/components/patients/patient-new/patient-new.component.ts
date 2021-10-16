@@ -39,6 +39,10 @@ export class PatientNewComponent implements OnInit {
   }
 
   async addEntry():Promise<void>{
+
+    if(!(this.cookie.check('username') && this.cookie.get('accountType') == 'patient')){
+      this.route.navigate(['/login']);
+    }
     //Check if fields are filled
     if(this.validatePost() == false){
       this.message = "Body and Text fields must be filled"
