@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -168,6 +169,11 @@ public class PatientController {
 		try {
 			Entry e = entryDao.findById(entry_id).get();
 			
+			if (!e.isPublic() && e.getPatient() != patientDao.getById(loggedInPatientId)) {
+				System.out.println("Patient with id: " + loggedInPatientId + " can't reply to a private entry they didn't create");
+				return ResponseEntity.status(401).build();
+			}
+			
 			// set this reply to this entry
 			r.setEntry(e);
 			
@@ -189,6 +195,41 @@ public class PatientController {
 			System.out.println("No entry with id: " + entry_id);
 			return ResponseEntity.status(404).build();
 			
+		}
+		
+	}
+	
+	// delete user entry 
+	@DeleteMapping("entry/{entry_id}")
+	public ResponseEntity<?> deleteEntry(@PathVariable int entry_id, HttpSession session) {
+		
+		// get current patient's id
+		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
+		
+		// if patient is not logged in, return null
+		if (loggedInPatientId == null) {
+			System.out.println("Patient not logged in!");
+			return ResponseEntity.status(401).build();
+		}
+		
+		try {
+			Entry e = entryDao.getById(entry_id);
+			
+			// if this entry doesn't belong to the currently logged in patient
+			if (e.getPatient() != patientDao.getById(loggedInPatientId)) {
+				// return null
+				System.out.println("Entry with id: " + entry_id + " doesn't belong to current patient");
+				return ResponseEntity.status(401).build();
+			} else {
+				// else delete the entry
+				entryDao.deleteById(entry_id);
+				return ResponseEntity.status(200).build();
+			}
+			
+		} catch (Exception exception) {
+			// if the entry doesn't exist return null
+			System.out.println("Entry with id: " + entry_id + " doesn't exist");
+			return ResponseEntity.status(404).build();
 		}
 		
 	}
