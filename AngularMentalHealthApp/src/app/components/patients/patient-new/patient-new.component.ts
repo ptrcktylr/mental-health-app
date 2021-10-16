@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { Entry } from 'src/app/models/entry';
 import { DeepaiApiService } from 'src/app/services/deepai/deepai-api.service';
 import { SentpackService } from 'src/app/services/sentpack/sentpack.service';
@@ -24,9 +26,14 @@ export class PatientNewComponent implements OnInit {
   public newPost:any;
 
 
-  constructor(private das:DeepaiApiService, private sps: SentpackService) { }
+  constructor(private das:DeepaiApiService, private sps: SentpackService, private cookie:CookieService, private route:Router) { }
 
   ngOnInit(): void {
+    //check if patient cookie exists
+    if(!(this.cookie.check('username') && this.cookie.get('accountType') == 'patient')){
+      this.route.navigate(['/login']);
+    }
+
     this.newPost = new Entry(1,1,"", "","", 0,false,"");
     console.log(this.newPost);
   }

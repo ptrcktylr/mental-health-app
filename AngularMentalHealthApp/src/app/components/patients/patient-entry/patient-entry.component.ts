@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
+import { CookieService } from 'ngx-cookie-service';
 import { Entry } from 'src/app/models/entry';
 import { Sentiment } from 'src/app/models/sentiment';
 
@@ -35,13 +36,17 @@ export class PatientEntryComponent implements OnInit {
   replyArray = [this.reply1, this.reply2];
   
   
-  constructor(private route: ActivatedRoute) { }
+  constructor(private aRoute: ActivatedRoute, private cookie:CookieService, private route:Router) { }
 
   ngOnInit(): void {
 
+    if(!(this.cookie.check('username') && this.cookie.check('accountType'))){
+      this.route.navigate(['/login']);
+    }
+
     //Add security features to go back to /patient/history if returned entry is null
 
-    this.sub = this.route.params.subscribe((params:any) => {
+    this.sub = this.aRoute.params.subscribe((params:any) => {
       this.entryId = params['id'];
       });
     console.log(this.entryId);

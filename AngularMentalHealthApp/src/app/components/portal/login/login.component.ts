@@ -24,11 +24,13 @@ export class LoginComponent implements OnInit {
     if(this.username == "username" && this.password == "password"){
       console.log(this.cookie.get("username"),{expires:5});
       this.cookie.set("username",this.username.toString());
+      this.cookie.set("accountType", 'patient')
       this.route.navigate(['/patient/history']);
     }
     else if(this.username == "professional" && this.password == "password"){
       this.cookie.set("username",this.username.toString(),{expires:5});
       this.route.navigate(['professional/my-patients']);
+      this.cookie.set("accountType", 'professional')
     }
     else{
       this.error = "Username or Password not recognized.";
