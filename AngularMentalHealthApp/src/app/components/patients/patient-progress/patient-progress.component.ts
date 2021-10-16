@@ -49,7 +49,6 @@ export class PatientProgressComponent implements OnInit {
         //Set the x-axis name
         xAxisName: "Day",
         //Set the y-axis name
-        yAxisName: "<-Negative        Positive->",
         yAxisMaxValue: 100.01,
         yAxisMinValue: 0,
         showYAxisValues: '0',

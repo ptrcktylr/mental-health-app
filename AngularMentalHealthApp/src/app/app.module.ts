@@ -19,15 +19,15 @@ import { ProfessionalNavComponent } from './components/navbars/professional-nav/
 import { LoginComponent } from './components/portal/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/portal/register/register.component';
-
+import { ProfessionalPatientHistoryComponent } from './components/professionals/professional-patient-history/professional-patient-history.component';
+import { ViewPublicComponent } from './components/public/view-public/view-public.component';
 
 import { FusionChartsModule } from "angular-fusioncharts";
 // Import FusionCharts library and chart modules
 import * as FusionCharts from "fusioncharts";
 import * as charts from "fusioncharts/fusioncharts.charts";
 import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
-import { ProfessionalPatientHistoryComponent } from './components/professionals/professional-patient-history/professional-patient-history.component';
-import { ViewPublicComponent } from './components/public/view-public/view-public.component';
+
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);

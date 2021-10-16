@@ -26,12 +26,18 @@ export class ProfessionalMyPatientsComponent implements OnInit {
       fname: "James",
       lname: "Johnson",
       lastMood: "Neutral"
+    },
+    {
+      id: 4,
+      fname: "Jennifer",
+      lname: "Lopez",
+      lastMood: "Positive"
     }
   ]
   constructor(private route:Router) { }
 
   changeToPatient(id:number){
-    this.route.navigate(['/patient/history']);
+    this.route.navigate(['/professional/patient-history/'+id]);
   }
 
   ngOnInit(): void {

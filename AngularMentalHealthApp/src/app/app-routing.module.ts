@@ -10,6 +10,9 @@ import { ProfessionalAllPatientsComponent } from './components/professionals/pro
 import { ProfessionalMyPatientsComponent } from './components/professionals/professional-my-patients/professional-my-patients.component';
 import { ViewPublicEntryComponent } from './components/public/view-public-entry/view-public-entry.component';
 import { ViewPublicComponent } from './components/public/view-public/view-public.component';
+import { ProfessionalPatientHistoryComponent } from './components/professionals/professional-patient-history/professional-patient-history.component';
+import { ProfessionalViewEntryComponent } from './components/professionals/professional-view-entry/professional-view-entry.component';
+import { ProfessionalViewProgressComponent } from './components/professionals/professional-view-progress/professional-view-progress.component';
 
 const routes: Routes = [
   {
@@ -48,6 +51,18 @@ const routes: Routes = [
   {
     path: "professional/all-patients",
     component: ProfessionalAllPatientsComponent
+  },
+  {
+    path: "professional/progress",
+    component: ProfessionalViewProgressComponent
+  },
+  {
+    path: "professional/patient-history/:id",
+    component: ProfessionalPatientHistoryComponent
+  },
+  {
+    path: "professional/entry/:id",
+    component: ProfessionalViewEntryComponent
   },
   {
     path: "view-public",

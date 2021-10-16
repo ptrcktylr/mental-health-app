@@ -1,9 +1,9 @@
 <app-professional-nav></app-professional-nav>
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-sm-3">
+        <div class="col-lg-12">
             <div class="card shadow my-card">
-                <div class="card-body">
+                <div class="card-body text-center">
                     <div id="myPatients">
                         <h1 class="mb-3">My Patients</h1>
                     </div>
@@ -18,9 +18,9 @@
             <div class="card shadow my-card">
                 <div class="card-body text-center">
                     <div>
-                        <h3 (click)="changeToPatient(patient.id)" class="emphasisWords noMargin">{{patient.fname}} {{patient.lname}}</h3>
+                        <h3 (click)="changeToPatient(patient.id)" class="normalWords noMargin">{{patient.fname}} {{patient.lname}}</h3>
                         <hr>
-                        <div class="normalWords noMargin">Mood of last post: {{patient.lastMood}}</div>
+                        <div class="noMargin">Mood of last post: {{patient.lastMood}}</div>
                     </div>
                 </div>
             </div>

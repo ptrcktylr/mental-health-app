@@ -20,6 +20,7 @@
 
 .normalWords:hover{
     color: #f7f8f9;
+    cursor: pointer;
 }
 
 .emphasisWords{
@@ -55,10 +56,39 @@ text {
 }
 
 .tab{
-    text-indent: 45px;
+    font-size: .8em;
+    color: #D7DBE2;
 }
 
 .noMargin{
     padding: 0px;
     margin: 0px;
+}
+
+.emoji{
+    height: 65px;
+}
+
+.emoji2{
+    height: 36px;
+}
+
+#tableEmojis{
+    vertical-align: top;
+}
+
+.ellipsis{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#arrow{
+    height: 50px;
+}
+
+#arrow:hover{
+    cursor: pointer;
 }

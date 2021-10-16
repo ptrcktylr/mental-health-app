@@ -1,15 +1,33 @@
 <app-patient-nav></app-patient-nav>
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <div class="card my-card text-center">
-                <div>
-                    <h3>Progress</h3>
-                </div>
                 <div class="card-body">
-                    <fusioncharts width="100%" type="line" [dataSource]="dataSource"></fusioncharts>
+                    <div>
+                        <h2>Progress</h2>
+                    </div>
+                    <hr>
+                    <table>
+                        <tr>
+                            <td id="tableEmojis">
+                                <br>
+                                <img class="emoji2" src="assets/verypositive.png">
+                                <br>
+                                <img class="emoji2" src="assets/positive.png">
+                                <br>
+                                <img class="emoji2" src="assets/neutral.png">
+                                <br>
+                                <img class="emoji2" src="assets/negative.png">
+                                <br>
+                                <img class="emoji2" src="assets/verynegative.png">
+                            </td>
+                            <td>
+                                <fusioncharts class="chart" width="90%" type="line" [dataSource]="dataSource"></fusioncharts>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-
             </div>
         </div>
     </div>
