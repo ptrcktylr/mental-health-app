@@ -1,10 +1,13 @@
 package com.revature.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -69,5 +72,17 @@ public class LoginController {
 		
 		System.out.println("Logged user out");
 		return ResponseEntity.status(200).body(true);
+	}
+	
+	@GetMapping("/usernames-and-emails")
+	public ResponseEntity<List<List<String>>> getUsernamesAndEmails() {
+		
+		List<List<String>> usernamesAndEmails = loginService.listUsernamesEmails();
+		
+		if (usernamesAndEmails == null) {
+			return ResponseEntity.status(400).body(null);
+		} else {
+			return ResponseEntity.status(200).body(usernamesAndEmails);
+		}
 	}
 }
