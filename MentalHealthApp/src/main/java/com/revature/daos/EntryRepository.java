@@ -9,8 +9,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.revature.models.Entry;
-import com.revature.models.Patient;
-import com.revature.models.Reply;
 
 public interface EntryRepository extends JpaRepository<Entry, Integer>{
 	

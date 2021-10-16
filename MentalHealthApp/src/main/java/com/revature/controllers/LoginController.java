@@ -9,81 +9,65 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.daos.PatientRepository;
-import com.revature.daos.ProfessionalRepository;
 import com.revature.models.LoginDTO;
 import com.revature.models.Patient;
 import com.revature.models.Professional;
+import com.revature.services.LoginService;
 
 @RestController
 @CrossOrigin
 public class LoginController {
 	
-	private PatientRepository patientDao;
-	private ProfessionalRepository professionalDao;
+	// login service
+	private LoginService loginService;
 	
 	@Autowired
-	public LoginController(PatientRepository patientDao, ProfessionalRepository professionalDao) {
+	public LoginController(LoginService loginService
+			) {
 		super();
-		this.patientDao = patientDao;
-		this.professionalDao = professionalDao;
+		this.loginService = loginService;
 	}
 	
 	@PostMapping("/patient/login")
-	public ResponseEntity<?> patientLogin(@RequestBody LoginDTO patient, HttpSession session) {
+	public ResponseEntity<Patient> patientLogin(@RequestBody LoginDTO patient, HttpSession session) {
 		
-		Patient loggedInPatient = patientDao.validLogin(patient.getUsername(), patient.getPassword());
-		
-		// fail to log patient in
+		Patient loggedInPatient = loginService.loginPatient(patient);
 		if (loggedInPatient == null) {
-			System.out.println("Failed to log patient in!");
-			
-			//clear session ids
+			// clear session attributes
 			session.setAttribute("professional_id", null);
 			session.setAttribute("patient_id", null);
-			return ResponseEntity.status(401).build();
+			return ResponseEntity.status(401).body(null);
+		} else {
+			// set patient session attribute
+			session.setAttribute("professional_id", null);
+			session.setAttribute("patient_id", loggedInPatient.getId());
+			return ResponseEntity.status(200).body(loggedInPatient);
 		}
-		
-		// log patient
-		session.setAttribute("patient_id", loggedInPatient.getId());
-		session.setAttribute("professional_id", null);
-		
-		System.out.println("Session's patient id is: "+ session.getAttribute("patient_id"));
-		System.out.println("Session's professional id is: "+ session.getAttribute("professional_id"));
-		return ResponseEntity.status(200).body(loggedInPatient);
 	}
 	
 	@PostMapping("/professional/login")
-	public ResponseEntity<?> professionalLogin(@RequestBody LoginDTO professional, HttpSession session) {
-		
-		Professional loggedInProfessional = professionalDao.validLogin(professional.getUsername(), professional.getPassword());
-		
-		// fail to log professional in
+	public ResponseEntity<Professional> professionalLogin(@RequestBody LoginDTO professional, HttpSession session) {
+		Professional loggedInProfessional = loginService.loginProfessional(professional);
 		if (loggedInProfessional == null) {
-			System.out.println("Failed to log professional in!");
-			
-			//clear session ids
-			session.setAttribute("professional_id", null);
+			// clear session attributes
 			session.setAttribute("patient_id", null);
-			return ResponseEntity.status(401).build();
+			session.setAttribute("professional_id", null);
+			return ResponseEntity.status(401).body(null);
+		} else {
+			// set professional session attribute
+			session.setAttribute("professional_id", loggedInProfessional.getId());
+			session.setAttribute("patient_id", null);
+			return ResponseEntity.status(200).body(loggedInProfessional);
 		}
-		
-		// log professional
-		session.setAttribute("professional_id", loggedInProfessional.getId());
-		session.setAttribute("patient_id", null);
-		
-		System.out.println("Session's professional id is: "+ session.getAttribute("professional_id"));
-		System.out.println("Session's patient id is: "+ session.getAttribute("patient_id"));
-		return ResponseEntity.status(200).body(loggedInProfessional);
 	}
 	
 	@PostMapping("/logout")
-	public ResponseEntity<?> logout(HttpSession session) {
+	public ResponseEntity<Boolean> logout(HttpSession session) {
 		
 		session.setAttribute("professional_id", null);
 		session.setAttribute("patient_id", null);
 		
 		System.out.println("Logged user out");
-		return ResponseEntity.status(200).build();
+		return ResponseEntity.status(200).body(true);
 	}
 }
