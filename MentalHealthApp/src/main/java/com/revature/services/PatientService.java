@@ -164,6 +164,11 @@ public class PatientService {
 				return false;
 			}
 			
+			// remove replies
+			for (Reply reply : entry.getReplies()) {
+				replyRepository.deleteById(reply.getId());
+			}
+			
 			// delete entry
 			entryRepository.deleteById(entryId);
 			System.out.println("Entry with id: " + entryId + " deleted successfully");

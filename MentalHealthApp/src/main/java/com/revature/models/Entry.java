@@ -45,7 +45,7 @@ public class Entry {
 	
 	private int sentiment;
 	
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="patient_id")
 	@JsonIgnore
 	private Patient patient;
