@@ -29,11 +29,16 @@ public class ProfessionalController {
 	// professional service
 	private ProfessionalService professionalService;
 	
+	// controller 'library'
+	private ControllerLibrary ch;
+	
 	@Autowired
-	public ProfessionalController(ProfessionalService professionalService
+	public ProfessionalController(ProfessionalService professionalService,
+			ControllerLibrary ch
 							 	 ) {
 		
 		this.professionalService = professionalService;
+		this.ch = ch;
 	}
 	
 	
@@ -56,8 +61,8 @@ public class ProfessionalController {
 		Integer loggedInProfessionalId = (Integer) session.getAttribute("professional_id");
 		
 		// if the professional is not logged in return null
-		if (loggedInProfessionalId == null) {
-			System.out.println("Professional not logged in!");
+		if (ch.isIdNull(loggedInProfessionalId)) {
+			//System.out.println("Professional not logged in!");
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -73,8 +78,8 @@ public class ProfessionalController {
 		Integer loggedInProfessionalId = (Integer) session.getAttribute("professional_id");
 				
 		// if the professional is not logged in return null
-		if (loggedInProfessionalId == null) {
-			System.out.println("Professional not logged in!");
+		if (ch.isIdNull(loggedInProfessionalId)) {
+			//System.out.println("Professional not logged in!");
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -97,8 +102,8 @@ public class ProfessionalController {
 		Integer loggedInProfessionalId = (Integer) session.getAttribute("professional_id");
 				
 		// if the professional is not logged in return null
-		if (loggedInProfessionalId == null) {
-			System.out.println("Professional not logged in!");
+		if (ch.isIdNull(loggedInProfessionalId)) {
+			//System.out.println("Professional not logged in!");
 			return ResponseEntity.status(401).body(false);
 		}
 		
@@ -117,8 +122,8 @@ public class ProfessionalController {
 		Integer loggedInProfessionalId = (Integer) session.getAttribute("professional_id");
 				
 		// if the professional is not logged in return null
-		if (loggedInProfessionalId == null) {
-			System.out.println("Professional not logged in!");
+		if (ch.isIdNull(loggedInProfessionalId)) {
+			//System.out.println("Professional not logged in!");
 			return ResponseEntity.status(401).body(false);
 		}
 		
@@ -138,8 +143,8 @@ public class ProfessionalController {
 		Integer loggedInProfessionalId = (Integer) session.getAttribute("professional_id");
 				
 		// if the professional is not logged in return null
-		if (loggedInProfessionalId == null) {
-			System.out.println("Professional not logged in!");
+		if (ch.isIdNull(loggedInProfessionalId)) {
+			//System.out.println("Professional not logged in!");
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -160,8 +165,8 @@ public class ProfessionalController {
 		Integer loggedInProfessionalId = (Integer) session.getAttribute("professional_id");
 				
 		// if the professional is not logged in return null
-		if (loggedInProfessionalId == null) {
-			System.out.println("Professional not logged in!");
+		if (ch.isIdNull(loggedInProfessionalId)) {
+			//System.out.println("Professional not logged in!");
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -182,8 +187,8 @@ public class ProfessionalController {
 		Integer loggedInProfessionalId = (Integer) session.getAttribute("professional_id");
 				
 		// if the professional is not logged in return null
-		if (loggedInProfessionalId == null) {
-			System.out.println("Professional not logged in!");
+		if (ch.isIdNull(loggedInProfessionalId)) {
+			//System.out.println("Professional not logged in!");
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -204,8 +209,8 @@ public class ProfessionalController {
 		Integer loggedInProfessionalId = (Integer) session.getAttribute("professional_id");
 				
 		// if the professional is not logged in return null
-		if (loggedInProfessionalId == null) {
-			System.out.println("Professional not logged in!");
+		if (ch.isIdNull(loggedInProfessionalId)) {
+			//System.out.println("Professional not logged in!");
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -226,8 +231,8 @@ public class ProfessionalController {
 		Integer loggedInProfessionalId = (Integer) session.getAttribute("professional_id");
 				
 		// if the professional is not logged in return null
-		if (loggedInProfessionalId == null) {
-			System.out.println("Professional not logged in!");
+		if (ch.isIdNull(loggedInProfessionalId)) {
+			//System.out.println("Professional not logged in!");
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -248,8 +253,8 @@ public class ProfessionalController {
 		Integer loggedInProfessionalId = (Integer) session.getAttribute("professional_id");
 				
 		// if the professional is not logged in return null
-		if (loggedInProfessionalId == null) {
-			System.out.println("Professional not logged in!");
+		if (ch.isIdNull(loggedInProfessionalId)) {
+			//System.out.println("Professional not logged in!");
 			return ResponseEntity.status(401).body(null);
 		}
 		

@@ -1,0 +1,48 @@
+2021-10-17 03:37:48 INFO  MentalHealthAppApplication:55 - Starting MentalHealthAppApplication using Java 15 on DESKTOP-T5NRKIT with PID 3008 (C:\Users\anunez24\Documents\Revature\Github\P2\mental-health-app\MentalHealthApp\bin\main started by anunez24 in C:\Users\anunez24\Documents\Revature\Github\P2\mental-health-app\MentalHealthApp)
+2021-10-17 03:37:48 DEBUG MentalHealthAppApplication:56 - Running with Spring Boot v2.5.5, Spring v5.3.10
+2021-10-17 03:37:48 INFO  MentalHealthAppApplication:659 - No active profile set, falling back to default profiles: default
+2021-10-17 03:37:54 INFO  MentalHealthAppApplication:61 - Started MentalHealthAppApplication in 5.876 seconds (JVM running for 6.843)
+2021-10-17 03:38:03 INFO  LoggingAspect:28 - ResponseEntity com.revature.controllers.LoginController.logout(HttpSession) ----- USER LOGGED OUT
+2021-10-17 03:38:09 INFO  LoggingAspect:45 - ResponseEntity com.revature.controllers.LoginController.patientLogin(LoginDTO,HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:38:20 INFO  LoggingAspect:62 - ResponseEntity com.revature.controllers.LoginController.professionalLogin(LoginDTO,HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:38:23 INFO  LoggingAspect:74 - ResponseEntity com.revature.controllers.LoginController.getUsernamesAndEmails() ----- SUCCESSFUL
+2021-10-17 03:38:27 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:38:27 INFO  LoggingAspect:200 - ResponseEntity com.revature.controllers.ProfessionalController.getAllPatients(HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:38:31 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:38:31 INFO  LoggingAspect:216 - ResponseEntity com.revature.controllers.ProfessionalController.getAllPatientsEntries(int,HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:38:34 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:38:34 INFO  LoggingAspect:200 - ResponseEntity com.revature.controllers.ProfessionalController.myAssignedPatients(HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:38:37 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:38:37 INFO  LoggingAspect:216 - ResponseEntity com.revature.controllers.ProfessionalController.getPublicEntries(HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:38:39 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:38:39 INFO  LoggingAspect:248 - ResponseEntity com.revature.controllers.ProfessionalController.getEntry(int,HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:38:42 INFO  LoggingAspect:184 - ResponseEntity com.revature.controllers.ProfessionalController.registerProfessional(Professional) ----- FAILED - 409 CONFLICT
+2021-10-17 03:38:47 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:38:47 INFO  LoggingAspect:232 - ResponseEntity com.revature.controllers.ProfessionalController.addMyPatient(int,HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:38:56 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:38:56 INFO  LoggingAspect:232 - ResponseEntity com.revature.controllers.ProfessionalController.removeMyPatient(int,HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:39:01 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:39:01 INFO  LoggingAspect:264 - ResponseEntity com.revature.controllers.ProfessionalController.addReply(Reply,int,HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:39:26 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:39:26 INFO  LoggingAspect:200 - ResponseEntity com.revature.controllers.ProfessionalController.getAllUnassignedPatients(HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:39:30 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:39:30 INFO  LoggingAspect:232 - ResponseEntity com.revature.controllers.ProfessionalController.deleteReply(int,HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:39:50 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:39:50 INFO  LoggingAspect:98 - ResponseEntity com.revature.controllers.PatientController.getPatientsEntries(HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:39:52 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:39:52 INFO  LoggingAspect:115 - ResponseEntity com.revature.controllers.PatientController.getEntry(int,HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:39:54 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:39:54 INFO  LoggingAspect:98 - ResponseEntity com.revature.controllers.PatientController.getPublicEntries(HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:39:57 INFO  LoggingAspect:132 - ResponseEntity com.revature.controllers.PatientController.registerPatient(Patient) ----- FAILED - 409 CONFLICT
+2021-10-17 03:40:00 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:40:00 INFO  LoggingAspect:115 - ResponseEntity com.revature.controllers.PatientController.addEntry(Entry,HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:40:04 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:40:04 INFO  LoggingAspect:149 - ResponseEntity com.revature.controllers.PatientController.addReply(Reply,int,HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:40:06 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:40:06 INFO  LoggingAspect:166 - ResponseEntity com.revature.controllers.PatientController.deleteEntry(int,HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:40:10 INFO  LoggingAspect:272 - boolean com.revature.controllers.ControllerLibrary.isIdNull(Integer) ----- USER NOT LOGGED IN
+2021-10-17 03:40:10 INFO  LoggingAspect:166 - ResponseEntity com.revature.controllers.PatientController.deleteReply(int,HttpSession) ----- FAILED - 401 UNAUTHORIZED
+2021-10-17 03:45:01 INFO  MentalHealthAppApplication:55 - Starting MentalHealthAppApplication using Java 15 on DESKTOP-T5NRKIT with PID 14836 (C:\Users\anunez24\Documents\Revature\Github\P2\mental-health-app\MentalHealthApp\bin\main started by anunez24 in C:\Users\anunez24\Documents\Revature\Github\P2\mental-health-app\MentalHealthApp)
+2021-10-17 03:45:01 DEBUG MentalHealthAppApplication:56 - Running with Spring Boot v2.5.5, Spring v5.3.10
+2021-10-17 03:45:01 INFO  MentalHealthAppApplication:659 - No active profile set, falling back to default profiles: default
+2021-10-17 03:45:10 INFO  MentalHealthAppApplication:61 - Started MentalHealthAppApplication in 9.556 seconds (JVM running for 10.729)
