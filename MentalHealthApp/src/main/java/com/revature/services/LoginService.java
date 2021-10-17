@@ -38,8 +38,8 @@ public class LoginService {
 			
 			// if credentials incorrect
 			if (loggedInPatient == null) {
-				System.out.println("Failed to log patient with username: " 
-									+ patientLoginDTO.getUsername() + " in");
+				System.out.println("Failed to login patient with username: " 
+									+ patientLoginDTO.getUsername());
 				return null;
 			}
 			
