@@ -17,7 +17,7 @@
                         </thead>
                         <tbody id="entry-table-body">
                             <tr *ngFor="let entry of entryArray">
-                                <td>{{entry.date}}</td> <!-- {{entry.date}}-->
+                                <td>{{entry.datePosted.substring(0,10)}}</td> <!-- {{entry.date}}-->
                                 <td>{{entry.title}}</td>
                                 <td>{{entry.tags}}</td>
                                 <td>{{entry.sentiment}}</td>
