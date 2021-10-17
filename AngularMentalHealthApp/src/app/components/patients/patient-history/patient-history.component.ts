@@ -35,10 +35,6 @@ export class PatientHistoryComponent implements OnInit {
     );
   }
 
-  viewDetailEntry():void{
-
-  }
-
 
 
 }

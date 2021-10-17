@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Entry } from 'src/app/models/entry';
 import { Sentiment } from 'src/app/models/sentiment';
 import {Location} from '@angular/common';
+import { PatientService } from 'src/app/services/patients/patient.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class PatientEntryComponent implements OnInit {
 
   public message:String = "";
   //newPost will proxy a Json class to POST send
-  public newPost:any;
+  public newPost:any = {};
   
 //reply properties
   public newReply:any = {};
@@ -37,7 +38,7 @@ export class PatientEntryComponent implements OnInit {
   replyArray = [this.reply1, this.reply2];
   
   
-  constructor(private aRoute: ActivatedRoute, private cookie:CookieService, private route:Router, private _location: Location) { }
+  constructor(private aRoute: ActivatedRoute, private cookie:CookieService, private route:Router, private _location: Location,private patS:PatientService) { }
 
   ngOnInit(): void {
 
@@ -49,17 +50,17 @@ export class PatientEntryComponent implements OnInit {
 
     this.sub = this.aRoute.params.subscribe((params:any) => {
       this.entryId = params['id'];
+        this.patS.getEntry(this.entryId).subscribe(
+          (allEntries:any)=>{
+            this.newPost = allEntries;
+            this.getEntryInfo();
+            console.log(this.newPost);
+          },
+          ()=>{
+            console.log("No information")
+          }
+        );
       });
-    console.log(this.entryId);
-
-    //replace with HTTP client request
-    this.newPost = new Entry(1,1,"", "","", 0,false,"");
-    this.newPost.title = this.entry1.header;
-    this.newPost.body = this.entry1.body;
-    this.newPost.tags = this.entry1.tags;
-    this.newPost.sentiment = this.entry1.sentimentScore;
-    this.newPost.datePosted = "10/30/2020";
-    this.newPost.author = 1;
 
     this.getEntryInfo();
   }
@@ -70,12 +71,12 @@ export class PatientEntryComponent implements OnInit {
 
   getEntryInfo(){
 
-    this.headerInput = this.newPost.header;
+    this.headerInput = this.newPost.title;
     this.bodyInput = this.newPost.body;
     this.tags = this.newPost.tags;
     this.sentimentScore = this.newPost.sentiment;
-    this.author = this.newPost.author;
-    this.date = this.newPost.datePosted;
+    this.author = this.newPost.patient.username;
+    this.date = this.newPost.datePosted.substring(0,10);
 
   }
 

@@ -46,7 +46,7 @@
                     <img class="emoji" src="assets/verynegative.png"> -->
                     <div *ngFor="let entry of entryArray">
                         <hr>
-                        <table [routerLink] = "['/patient/history', entry.entryId]">
+                        <table [routerLink] = "['/patient/history', entry.id]">
                             <tr>
                                 <td>
                                     <img *ngIf="entry.sentiment < 20"class="emoji" src="assets/verynegative.png">
@@ -57,7 +57,7 @@
                                 </td>
                                 <td class="col-lg-12">
                                     <h3>{{entry.title}}</h3>
-                                    <div class="tab">{{entry.datePosted}}</div>
+                                    <div class="tab">{{entry.datePosted.substring(0,10)}}</div>
                                     <div class="ellipsis">{{entry.body}}</div>
                                     <div class="tab text-center">{{entry.tags}}</div>
                                 </td>
