@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router'; 
 import { CookieService } from 'ngx-cookie-service';
+import { PortalService } from 'src/app/services/portal/portal.service';
 
 @Component({
   selector: 'app-login',
@@ -13,44 +14,42 @@ export class LoginComponent implements OnInit {
   public password:String = "";
   public error:String = "";
 
-  constructor(private route:Router, private cookie:CookieService) { }
+  constructor(private route:Router, private cookie:CookieService, private portalS:PortalService) { }
 
   resetError(): void{
     this.error = "";
   }
 
   login(): void{
+    /*
     // code to make it functional until I have connection to the db
     if(this.username == "username" && this.password == "password"){
       console.log(this.cookie.get("username"),{expires:5});
       this.cookie.set("username",this.username.toString());
-      this.cookie.set("accountType", 'patient')
+      this.cookie.set("accountType", 'patient');
       this.route.navigate(['/patient/history']);
     }
     else if(this.username == "professional" && this.password == "password"){
       this.cookie.set("username",this.username.toString(),{expires:5});
       this.route.navigate(['professional/my-patients']);
-      this.cookie.set("accountType", 'professional')
+      this.cookie.set("accountType", 'professional');
     }
     else{
       this.error = "Username or Password not recognized.";
-    }
+    }*/
 
-    //actual code will look more like this:
-    /* 
-    user = getUserByKeys(username,password)
-    if(user != null){
-      if(user.role == patient){
-        this.route.navigate(['/patient-history']);
+    this.portalS.patientLogin(this.username,this.password).subscribe(
+      (user:any)=>{
+        console.log(user);
+        this.cookie.set("username",this.username.toString());
+        this.cookie.set("accountType", 'patient');
+        this.route.navigate(['/patient/history']);
+      },
+      ()=>{
+        this.error = "Username or Password not recognized.";
+        console.log("Wrong Info")
       }
-      else if(user.role == professional){
-        this.route.navigate(['/professional-all-patients']);
-      }
-    }
-    else{
-      error = "Username or password not recognized."
-    }
-    */
+    );
 
   }
 

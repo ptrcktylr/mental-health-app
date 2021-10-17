@@ -16,7 +16,10 @@ export class ProfessionalNavComponent implements OnInit {
   }
 
   logout():void{
-    this.cookie.deleteAll();
+    if(this.cookie.check('username')){
+      this.cookie.delete('username');
+      this.cookie.delete('accountType');
+    }
     this.route.navigate(['/login']);
   }
 
