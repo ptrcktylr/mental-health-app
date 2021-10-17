@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { PatientService } from 'src/app/services/patients/patient.service';
 
 @Component({
   selector: 'app-view-public',
@@ -14,7 +15,7 @@ export class ViewPublicComponent implements OnInit {
   entry2 = { entryId: 2, author: 1, title: "Second", body: "Don't give up on medicine. Even though you may take a lot of abuse, the money and hours are not that great, and the perceived public worth of the physician is ever-diminishing; it can still be a very rewarding profession. Nothing is more fulfilling than helping another human being out when they need it the most. A lot of people go out of their way to do stuff like that for free out of their own time. You get paid to do it, so count yourself lucky.", tags: "", sentiment: 50.39999999999999, isPublic: true, datePosted: "" };
   entryArray: any[] = [];
 
-  constructor(private cookie:CookieService, private route:Router) { }
+  constructor(private cookie:CookieService, private route:Router,private patS:PatientService) { }
 
   ngOnInit(): void {
 
@@ -24,7 +25,15 @@ export class ViewPublicComponent implements OnInit {
       this.route.navigate(['/login']);
     }
 
-    this.entryArray = [this.entry1, this.entry2];
+    this.patS.getPublicEntries().subscribe(
+      (allEntries:any)=>{
+        this.entryArray = allEntries;
+        console.log(this.entryArray);
+      },
+      ()=>{
+        console.log("No information")
+      }
+    );
   }
 
   viewDetailEntry():void{

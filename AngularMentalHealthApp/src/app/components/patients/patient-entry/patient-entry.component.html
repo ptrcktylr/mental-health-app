@@ -28,7 +28,7 @@
                                     </td>
                                 </tr>
                             </table>
-                            <h2 class="text-center noMargin">First</h2>
+                            <h2 class="text-center noMargin">{{headerInput}}</h2>
                             <div class="text-center">By: {{author}}</div>
                             <div class="tab">{{date}}</div>
                             <div class="tab">{{tags}}</div>
@@ -39,8 +39,9 @@
                 <hr>
                 <div class="card-body">
                     <div class="text mb-4" *ngFor="let reply of replyArray">
+
                         <div>
-                            <div><strong>{{reply.author.username}}</strong> &nbsp; &nbsp;<span class="tab">{{reply.datePosted}}</span></div>
+                            <div *ngIf="reply.patient"><strong>{{reply.patient.username}}</strong> &nbsp; &nbsp;<span class="tab">{{reply.datePosted.substring(0,10)}}</span></div>
                             <div>{{reply.body}}</div>
                         </div>
                         <hr>

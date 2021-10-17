@@ -33,9 +33,7 @@ export class PatientEntryComponent implements OnInit {
   //ghost properties
   public sub: any;
   entry1 = {entryId:1, header: "First", body: "One of the best things you can do is care for yourself. I get that some people believe they are the center of the universe and that the earth revolves around them. But sometimes, we are right.\n\nWe good ways to get things done. And most of the time, it doesn’t include waking up at 5 am. Our methods are often unique. For example, I saw someone put a paper clip on the end of a roll of tape. I immediately felt as powerful as an atom.", tags: "me", sentimentScore: 69, publicPost: true };
-  reply1 = {datePosted:"10/15/2021", author:{username:"Mr.Funsocks", isProfessional:true}, body:"Wow! Impressive..."}
-  reply2 = {datePosted:"10/16/2021", author:{username:"Peter", isProfessional:false}, body:"Interesting post you have here. I disagree with your opinions on Banana matters."}
-  replyArray = [this.reply1, this.reply2];
+  replyArray:any = [];
   
   
   constructor(private aRoute: ActivatedRoute, private cookie:CookieService, private route:Router, private _location: Location,private patS:PatientService) { }
@@ -61,8 +59,6 @@ export class PatientEntryComponent implements OnInit {
           }
         );
       });
-
-    this.getEntryInfo();
   }
 
   ngOnDestroy() {
@@ -77,12 +73,19 @@ export class PatientEntryComponent implements OnInit {
     this.sentimentScore = this.newPost.sentiment;
     this.author = this.newPost.patient.username;
     this.date = this.newPost.datePosted.substring(0,10);
-
+    this.replyArray = this.newPost.replies;
+    console.log(this.replyArray);
   }
 
   submitReply(){
-    this.newReply.body = this.replyBody;
-    console.log(this.newReply)
+    this.patS.replyEntry(this.entryId, this.replyBody).subscribe(
+      (reply:any)=>{
+        console.log("reply sent");
+      },
+      ()=>{
+        console.log("No information");
+      }
+    );
   }
 
   backClicked() {
