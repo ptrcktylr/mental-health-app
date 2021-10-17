@@ -29,6 +29,25 @@ dependencies {
 	//JUnit dependency for testing
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+   
+    // aspectj for aop
+	// https://mvnrepository.com/artifact/org.aspectj/aspectjweaver
+	runtimeOnly group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.7'
+   
+   	// https://mvnrepository.com/artifact/org.springframework/spring-context
+	//implementation group: 'org.springframework', name: 'spring-context', version: '5.3.10'
+   
+    //*
+    // uncomment this^ to switch back to spring's default logging
+    // comment to use log4j2
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-log4j2
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	modules {
+		module('org.springframework.boot:spring-boot-starter-logging') {
+			replacedBy('org.springframework.boot:spring-boot-starter-log4j2', 'Use Log4j2 instead of Logback')
+		}
+	}
+	//*/
 }
 
 test {

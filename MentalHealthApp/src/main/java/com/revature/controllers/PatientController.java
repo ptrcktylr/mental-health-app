@@ -28,13 +28,18 @@ public class PatientController {
 	// patient service
 	private PatientService patientService;
 	
+	// controller 'library'
+	private ControllerLibrary ch;
+	
 	
 	// constructor injecting service
 	@Autowired
 	public PatientController(
-							 PatientService patientService
+							 PatientService patientService,
+							 ControllerLibrary ch
 							 ) {
 		this.patientService = patientService;
+		this.ch = ch;
 	}
 	
 	
@@ -56,7 +61,7 @@ public class PatientController {
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
 		// if patient not logged in
-		if (loggedInPatientId == null) {
+		if (ch.isIdNull(loggedInPatientId)) {
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -75,7 +80,7 @@ public class PatientController {
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
 		// if patient not logged in
-		if (loggedInPatientId == null) {
+		if (ch.isIdNull(loggedInPatientId)) {
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -96,8 +101,9 @@ public class PatientController {
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
 		// if the patient is not logged in return null
-		if (loggedInPatientId == null) {
-			System.out.println("Patient not logged in!");
+		//if (loggedInPatientId == null) {
+		if (ch.isIdNull(loggedInPatientId)) {
+			//System.out.println("Patient not logged in!");
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -116,8 +122,8 @@ public class PatientController {
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
 		// if the patient is not logged in return null
-		if (loggedInPatientId == null) {
-			System.out.println("Patient not logged in!");
+		if (ch.isIdNull(loggedInPatientId)) {
+			//System.out.println("Patient not logged in!");
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -132,8 +138,8 @@ public class PatientController {
 		
 		// get current patient's id
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
-		if (loggedInPatientId == null) {
-			System.out.println("Patient not logged in!");
+		if (ch.isIdNull(loggedInPatientId)) {
+			//System.out.println("Patient not logged in!");
 			return ResponseEntity.status(401).build();
 		}
 		
@@ -155,8 +161,8 @@ public class PatientController {
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
 		// if patient is not logged in, return null
-		if (loggedInPatientId == null) {
-			System.out.println("Patient not logged in!");
+		if (ch.isIdNull(loggedInPatientId)) {
+			//System.out.println("Patient not logged in!");
 			return ResponseEntity.status(401).body(false);
 		}
 		
@@ -178,8 +184,8 @@ public class PatientController {
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
 		// if patient is not logged in, return null
-		if (loggedInPatientId == null) {
-			System.out.println("Patient not logged in!");
+		if (ch.isIdNull(loggedInPatientId)) {
+			//System.out.println("Patient not logged in!");
 			return ResponseEntity.status(401).body(false);
 		}
 		

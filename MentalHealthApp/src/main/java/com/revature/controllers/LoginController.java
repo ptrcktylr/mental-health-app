@@ -70,7 +70,7 @@ public class LoginController {
 		session.setAttribute("professional_id", null);
 		session.setAttribute("patient_id", null);
 		
-		System.out.println("Logged user out");
+		//System.out.println("Logged user out");
 		return ResponseEntity.status(200).body(true);
 	}
 	
