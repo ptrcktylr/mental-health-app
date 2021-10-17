@@ -64,8 +64,8 @@ public class LoginService {
 			
 			// if credentials incorrect
 			if (loggedInProfessional == null) {
-				System.out.println("Failed to log professional with username: " 
-									+ professionalLoginDTO.getUsername() + " in");
+				System.out.println("Failed to login professional with username: " 
+									+ professionalLoginDTO.getUsername());
 				return null;
 			}
 			
