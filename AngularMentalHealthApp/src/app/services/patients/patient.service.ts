@@ -26,5 +26,9 @@ export class PatientService {
     return this.http.get("http://localhost:8080/patient/public/entries",{withCredentials: true}) as Observable<any>;
   }
 
+  postEntry(body:any):Observable<any>{
+    return this.http.post("http://localhost:8080/patient/entry",body,{withCredentials: true}) as Observable<any>;
+  }
+
 
 }

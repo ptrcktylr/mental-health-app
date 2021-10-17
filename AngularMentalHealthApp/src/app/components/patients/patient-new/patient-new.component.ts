@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Entry } from 'src/app/models/entry';
 import { DeepaiApiService } from 'src/app/services/deepai/deepai-api.service';
+import { PatientService } from 'src/app/services/patients/patient.service';
 import { SentpackService } from 'src/app/services/sentpack/sentpack.service';
 
 @Component({
@@ -23,18 +24,16 @@ export class PatientNewComponent implements OnInit {
 
   public message:String = "";
   //newPost will proxy a Json class to POST send
-  public newPost:any;
+  public newPost:any = {};
 
 
-  constructor(private das:DeepaiApiService, private sps: SentpackService, private cookie:CookieService, private route:Router) { }
+  constructor(private das:DeepaiApiService, private sps: SentpackService, private cookie:CookieService, private route:Router,private patS:PatientService) { }
 
   ngOnInit(): void {
     //check if patient cookie exists
     if(!(this.cookie.check('username') && this.cookie.get('accountType') == 'patient')){
       this.route.navigate(['/login']);
     }
-
-    this.newPost = new Entry(1,1,"", "","", 0,false,"");
     console.log(this.newPost);
   }
 
@@ -57,7 +56,7 @@ export class PatientNewComponent implements OnInit {
     this.newPost.title = this.headerInput;
     this.newPost.body = this.bodyInput;
     this.newPost.tags = this.tags.toLowerCase();
-    this.newPost.isPublic = this.publicPost;
+    this.newPost.public = this.publicPost;
 
     //Fill the sentimentScore field
     //this.getSentPackAnalysis();
@@ -65,6 +64,16 @@ export class PatientNewComponent implements OnInit {
 
     //Renew the sections of the Page
     console.log(this.newPost.sentiment);
+
+    this.patS.postEntry(this.newPost).subscribe(
+      (allEntries:any)=>{
+        console.log("Sent info")
+      },
+      ()=>{
+        console.log("No information")
+      }
+    );
+
     this.renewPost();
     console.log(this.newPost);
   }
