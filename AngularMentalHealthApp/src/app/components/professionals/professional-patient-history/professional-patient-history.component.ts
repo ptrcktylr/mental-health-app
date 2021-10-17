@@ -41,7 +41,7 @@ export class ProfessionalPatientHistoryComponent implements OnInit {
   }
 
   goToEntry(id:number){
-    this.route.navigate(['/professional/entry/'+id]);
+    this.route.navigate(['/patient/history/'+id]);
   }
 
 }

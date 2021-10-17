@@ -3,27 +3,45 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-12 col-md-7">
-            <div class="card">
+            <div class="card my-card">
                 <div class="card-body">
-                    <div class="text mb-4" style="color:black">
-                        <h2 class="mb-4">{{headerInput}}</h2>
+                    <div class="text mb-4">
+                        <!-- <h2 class="mb-4">{{headerInput}}</h2>
                         <div><strong>Date Posted: </strong>{{date}}</div>
                         <div><strong>Author: </strong> {{author}}</div>
                         <div><strong>Tag: </strong> {{tags}}</div>
                         <div><strong>Description: </strong> {{bodyInput}}</div>
-                        <div><strong>Sentiment: </strong> {{sentimentScore}}</div>
+                        <div><strong>Sentiment: </strong> {{sentimentScore}}</div> -->
+                        <div>
+                            <table>
+                                <tr>
+                                    <td class="col-lg-12">
+                                        <!-- This doesn't work for routing back to where they came from, because  -->
+                                        <img id="arrow" class="backArrow" src="assets/arrow.png" (click)="backClicked()">
+                                    </td>
+                                    <td>
+                                        <img *ngIf="sentimentScore < 20"class="emoji d-inline-block" src="assets/verynegative.png">
+                                        <img *ngIf="sentimentScore > 19 && sentimentScore < 40"class="emoji d-inline-block" src="assets/negative.png">
+                                        <img *ngIf="sentimentScore > 39 && sentimentScore < 60"class="emoji d-inline-block" src="assets/neutral.png">
+                                        <img *ngIf="sentimentScore > 59 && sentimentScore< 80"class="emoji d-inline-block" src="assets/positive.png">
+                                        <img *ngIf="sentimentScore > 79"class="emoji d-inline-block" src="assets/verypositive.png">
+                                    </td>
+                                </tr>
+                            </table>
+                            <h2 class="text-center noMargin">First</h2>
+                            <div class="text-center">By: {{author}}</div>
+                            <div class="tab">{{date}}</div>
+                            <div class="tab">{{tags}}</div>
+                            <div>{{bodyInput}}</div>
+                        </div>
                     </div>
-                </div>
-                <div class="row justify-content-center">
-                    <button class="btn btn-dark" [routerLink] = "['/patient/history']">Back</button>
                 </div>
                 <hr>
                 <div class="card-body">
-                    <div class="text mb-4" style="color:black;" *ngFor="let reply of replyArray">
+                    <div class="text mb-4" *ngFor="let reply of replyArray">
                         <div>
-                        <div><strong>Date Posted: </strong>{{reply.datePosted}}</div>
-                        <div><strong>Author: </strong> {{reply.author.username}}</div>
-                        <div>{{reply.body}}</div>
+                            <div><strong>{{reply.author.username}}</strong> &nbsp; &nbsp;<span class="tab">{{reply.datePosted}}</span></div>
+                            <div>{{reply.body}}</div>
                         </div>
                         <hr>
                     </div>
@@ -41,4 +59,3 @@
     </div>
     
 </div>
-

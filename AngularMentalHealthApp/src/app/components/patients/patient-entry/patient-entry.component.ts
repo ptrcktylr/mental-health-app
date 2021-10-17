@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { CookieService } from 'ngx-cookie-service';
 import { Entry } from 'src/app/models/entry';
 import { Sentiment } from 'src/app/models/sentiment';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class PatientEntryComponent implements OnInit {
   replyArray = [this.reply1, this.reply2];
   
   
-  constructor(private aRoute: ActivatedRoute, private cookie:CookieService, private route:Router) { }
+  constructor(private aRoute: ActivatedRoute, private cookie:CookieService, private route:Router, private _location: Location) { }
 
   ngOnInit(): void {
 
@@ -83,6 +84,9 @@ export class PatientEntryComponent implements OnInit {
     console.log(this.newReply)
   }
 
+  backClicked() {
+    this._location.back();
+  }
 
 
 }
