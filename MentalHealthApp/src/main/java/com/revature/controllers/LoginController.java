@@ -18,7 +18,7 @@ import com.revature.models.Professional;
 import com.revature.services.LoginService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins="http://localhost:4200/", allowCredentials="true")
 public class LoginController {
 	
 	// login service
