@@ -26,6 +26,7 @@ export class ViewPublicProfessionalComponent implements OnInit {
     this.proS.getPublicEntries().subscribe(
       (allEntries:any)=>{
         this.entryArray = allEntries;
+        this.entryArray.reverse();
         console.log(this.entryArray);
       },
       ()=>{

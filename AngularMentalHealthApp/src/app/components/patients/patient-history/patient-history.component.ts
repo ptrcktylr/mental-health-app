@@ -25,6 +25,7 @@ export class PatientHistoryComponent implements OnInit {
     this.patS.getAllMyEntries().subscribe(
       (allEntries:any)=>{
         this.entryArray = allEntries;
+        this.entryArray.reverse();
         console.log(this.entryArray);
       },
       ()=>{

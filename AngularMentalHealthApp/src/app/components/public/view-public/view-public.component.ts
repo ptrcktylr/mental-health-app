@@ -27,6 +27,9 @@ export class ViewPublicComponent implements OnInit {
     this.patS.getPublicEntries().subscribe(
       (allEntries:any)=>{
         this.entryArray = allEntries;
+        let x = this.entryArray.sort((a:any, b:any) => (a.datePosted > b.datePosted) ? 1 : -1)
+        console.log(x);
+        this.entryArray.reverse();
         console.log(this.entryArray);
       },
       ()=>{

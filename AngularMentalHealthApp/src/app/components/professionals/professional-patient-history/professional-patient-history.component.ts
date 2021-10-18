@@ -22,6 +22,7 @@ export class ProfessionalPatientHistoryComponent implements OnInit {
         this.proS.getPatientEntries(this.patientId).subscribe(
           (patEntries:any)=>{
             this.entryArray = patEntries;
+            this.entryArray.reverse();
             console.log(patEntries);
           },
           ()=>{
