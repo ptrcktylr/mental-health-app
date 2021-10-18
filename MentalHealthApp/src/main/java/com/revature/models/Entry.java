@@ -47,7 +47,6 @@ public class Entry {
 	
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="patient_id")
-	@JsonIgnore
 	private Patient patient;
 	
 	@OneToMany(mappedBy="entry", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
