@@ -23,7 +23,7 @@ import com.revature.services.ProfessionalService;
 
 @RestController
 @RequestMapping(value="/professional")
-@CrossOrigin
+@CrossOrigin(origins="http://localhost:4200/", allowCredentials="true")
 public class ProfessionalController {
 	
 	// professional service

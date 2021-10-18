@@ -17,7 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="entries")
@@ -47,7 +46,6 @@ public class Entry {
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="patient_id")
-	@JsonIgnore
 	private Patient patient;
 	
 	@OneToMany(mappedBy="entry", fetch=FetchType.EAGER, cascade=CascadeType.ALL)

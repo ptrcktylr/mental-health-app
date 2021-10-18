@@ -22,7 +22,7 @@ import com.revature.services.PatientService;
 
 @RestController
 @RequestMapping(value="/patient")
-@CrossOrigin
+@CrossOrigin(origins="http://localhost:4200/", allowCredentials="true")
 public class PatientController {
 	
 	// patient service
