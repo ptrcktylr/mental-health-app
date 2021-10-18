@@ -23,17 +23,21 @@ public class ProfessionalService {
 	private ReplyRepository replyRepository;
 	private EntryRepository entryRepository;
 	
+	private ServiceLibrary sl;
+	
 	@Autowired
 	public ProfessionalService(PatientRepository patientRepository,
 							   ProfessionalRepository professionalRepository,
 							   ReplyRepository replyRepository,
-							   EntryRepository entryRepository
+							   EntryRepository entryRepository,
+							   ServiceLibrary sl
 			) {
 		
 		this.patientRepository = patientRepository;
 		this.professionalRepository = professionalRepository;
 		this.replyRepository = replyRepository;
 		this.entryRepository = entryRepository;
+		this.sl = sl;
 		
 	}
 	
@@ -51,8 +55,8 @@ public class ProfessionalService {
 	public List<Patient> getAllPatients(int professionalId) {
 		try {
 			// if professional not logged in
-			if (professionalId == 0) {
-				System.out.println("Professional not logged in");
+			if (!sl.isProfessionalLoggedIn(professionalId)) {
+				//System.out.println("Professional not logged in");
 				return null;
 			}
 			
@@ -69,16 +73,16 @@ public class ProfessionalService {
 	public List<Entry> getAllThisPatientsEntries(int patientId, int professionalId) {
 		try {
 			// if professional not logged in
-			if (professionalId == 0) {
-				System.out.println("Professional not logged in");
+			if (!sl.isProfessionalLoggedIn(professionalId)) {
+				//System.out.println("Professional not logged in");
 				return null;
 			}
 			
 			// if patient isn't assigned to this professional
 			Patient patient = patientRepository.findPatientById(patientId);
-			if (patient.getProfessional().getId() != professionalId) {
-				System.out.println("Professional with id: " + professionalId 
-						+ " is not assigned to patient with id: " + patientId);
+			if (!sl.isPatientAssignedToProfessional(professionalId, patient.getProfessional().getId(), patientId)) {
+				//System.out.println("Professional with id: " + professionalId 
+				//		+ " is not assigned to patient with id: " + patientId);
 				return null;
 			}
 			
@@ -95,8 +99,8 @@ public class ProfessionalService {
 	public List<Patient> getUnassignedPatients(int professionalId) {
 		try {
 			// if professional not logged in
-			if (professionalId == 0) {
-				System.out.println("Professional not logged in");
+			if (!sl.isProfessionalLoggedIn(professionalId)) {
+				//System.out.println("Professional not logged in");
 				return null;
 			}
 			// else return unassigned patients
@@ -112,17 +116,17 @@ public class ProfessionalService {
 	public Boolean addAssignedPatient(int patientId, int professionalId) {
 		try {
 			// if professional not logged in
-			if (professionalId == 0) {
-				System.out.println("Professional not logged in");
+			if (!sl.isProfessionalLoggedIn(professionalId)) {
+				//System.out.println("Professional not logged in");
 				return false;
 			}
 			
 			Patient patient = patientRepository.findPatientById(patientId);
 			
 			// if patient has an assigned professional already
-			if (patient.getProfessional() != null) {
-				System.out.println("Patient with id: " + patientId + " already has "
-										+ "an assigned professional");
+			if (sl.doesPatientHaveProfessional(patient.getProfessional(), patientId)) {
+				//System.out.println("Patient with id: " + patientId + " already has "
+				//						+ "an assigned professional");
 				return false;
 			}
 				
@@ -142,18 +146,18 @@ public class ProfessionalService {
 	public Boolean removeAssignedPatient(int patientId, int professionalId) {
 		try {
 			// if professional not logged in
-			if (professionalId == 0) {
-				System.out.println("Professional not logged in");
+			if (!sl.isProfessionalLoggedIn(professionalId)) {
+				//System.out.println("Professional not logged in");
 				return false;
 			}
 			
 			Patient patient = patientRepository.findPatientById(patientId);
 			
 			// if patient isn't assigned to this professional
-			if (patient.getProfessional() == null || 
-				patient.getProfessional().getId() != professionalId) {
-				System.out.println("Patient with id: " + patientId + " is not assigned "
-								+ "to professional with id: " + professionalId);
+			if (!sl.doesPatientHaveProfessional(patient.getProfessional(), patientId) || 
+					!sl.isPatientAssignedToProfessional(patient.getProfessional().getId(), professionalId, patientId)) {
+				//System.out.println("Patient with id: " + patientId + " is not assigned "
+				//				+ "to professional with id: " + professionalId);
 				return false;
 			}
 			
@@ -173,8 +177,8 @@ public class ProfessionalService {
 	public List<Patient> getAssignedPatients(int professionalId) {
 		try {
 			// if professional not logged in
-			if (professionalId == 0) {
-				System.out.println("Professional not logged in");
+			if (!sl.isProfessionalLoggedIn(professionalId)) {
+				//System.out.println("Professional not logged in");
 				return null;
 			}
 			
@@ -193,8 +197,8 @@ public class ProfessionalService {
 	public List<Entry> getAllPublicEntries(int professionalId) {
 		try {
 			// if professional not logged in
-			if (professionalId == 0) {
-				System.out.println("Professional not logged in");
+			if (!sl.isProfessionalLoggedIn(professionalId)) {
+				//System.out.println("Professional not logged in");
 				return null;
 			}
 			
@@ -221,11 +225,11 @@ public class ProfessionalService {
 			
 			// if entry is private and belongs to a patient 
 			// this professional isn't assigned it
-			if (!entry.isPublic() && entry.getPatient()
+			if (!sl.isEntryPublic(entry) && !sl.isPatientAssignedToProfessional(entry.getPatient()
 										  .getProfessional()
-										  .getId() != professionalId) {
-				System.out.println("Professional with id: " + professionalId + " is not "
-						      + "assigned to entry with id: " + entryId + "'s patient");
+										  .getId(), professionalId, entry.getPatient().getId())) {
+				//System.out.println("Professional with id: " + professionalId + " is not "
+				//		      + "assigned to entry with id: " + entryId + "'s patient");
 				return null;
 			}
 			
@@ -242,20 +246,20 @@ public class ProfessionalService {
 	public Reply addReply(Reply reply, int entryId, int professionalId) {
 		try {
 			// if professional not logged in
-			if (professionalId == 0) {
-				System.out.println("Professional not logged in");
+			if (!sl.isProfessionalLoggedIn(professionalId)) {
+				//System.out.println("Professional not logged in");
 				return null;
 			}
 			
 			Entry entry = entryRepository.getById(entryId);
 			
 			// if entry is private and entry doesn't belong to professional's assigned patients
-			if (!entry.isPublic() && entry.getPatient()
+			if (!sl.isEntryPublic(entry) && !sl.isPatientAssignedToProfessional(entry.getPatient()
 										  .getProfessional()
-										  .getId() != professionalId) {
-				System.out.println("Professional with id: " + professionalId + 
-						" can't reply to private " + "entry with id: " + entryId + 
-						" because they are not assigned to patient");
+										  .getId(), professionalId, entry.getPatient().getId())) {
+				//System.out.println("Professional with id: " + professionalId + 
+				//		" can't reply to private " + "entry with id: " + entryId + 
+				//		" because they are not assigned to patient");
 				return null;
 			}
 			
@@ -281,8 +285,8 @@ public class ProfessionalService {
 	public Boolean deleteReply(int replyId, int professionalId) {
 		try {
 			// if professional not logged in
-			if (professionalId == 0) {
-				System.out.println("Professional not logged in");
+			if (sl.isProfessionalLoggedIn(professionalId)) {
+				//System.out.println("Professional not logged in");
 				return false;
 			}
 			
@@ -290,13 +294,13 @@ public class ProfessionalService {
 			
 			// if entry is private and professional isn't assigned to the entry's patient
 			// return false
-			if (!reply.getEntry().isPublic() && reply.getEntry()
+			if (!sl.isEntryPublic(reply.getEntry()) && !sl.isPatientAssignedToProfessional(reply.getEntry()
 													 .getPatient()
 													 .getProfessional()
-													 .getId() != professionalId) {
-				System.out.println("Professional with id: " + professionalId + 
-						" can't delete reply with id: " + replyId + 
-						" because they are not assigned to the patient");
+													 .getId(), professionalId, reply.getEntry().getPatient().getId())) {
+				//System.out.println("Professional with id: " + professionalId + 
+				//		" can't delete reply with id: " + replyId + 
+				//		" because they are not assigned to the patient");
 				return false;
 			}
 			

@@ -18,12 +18,16 @@ public class LoginService {
 	private PatientRepository patientRepository;
 	private ProfessionalRepository professionalRepository;
 	
+	private ServiceLibrary sl;
+	
 	@Autowired
 	public LoginService(PatientRepository patientRepository,
-						ProfessionalRepository professionalRepository
+						ProfessionalRepository professionalRepository,
+						ServiceLibrary sl
 						) {
 		this.patientRepository = patientRepository;
 		this.professionalRepository = professionalRepository;
+		this.sl = sl;
 	}
 	
 	// log in patient
@@ -37,9 +41,9 @@ public class LoginService {
 									  );
 			
 			// if credentials incorrect
-			if (loggedInPatient == null) {
-				System.out.println("Failed to login patient with username: " 
-									+ patientLoginDTO.getUsername());
+			if (sl.isPatientNull(loggedInPatient, patientLoginDTO.getUsername())) {
+				//System.out.println("Failed to login patient with username: " 
+				//					+ patientLoginDTO.getUsername());
 				return null;
 			}
 			
@@ -63,9 +67,9 @@ public class LoginService {
 												);
 			
 			// if credentials incorrect
-			if (loggedInProfessional == null) {
-				System.out.println("Failed to login professional with username: " 
-									+ professionalLoginDTO.getUsername());
+			if (sl.isProfessionalNull(loggedInProfessional, professionalLoginDTO.getUsername())) {
+				//System.out.println("Failed to login professional with username: " 
+				//					+ professionalLoginDTO.getUsername());
 				return null;
 			}
 			

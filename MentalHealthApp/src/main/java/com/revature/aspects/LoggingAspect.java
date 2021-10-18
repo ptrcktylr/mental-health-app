@@ -5,7 +5,10 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -265,11 +268,260 @@ public class LoggingAspect {
 	}
 	
 	// --------------------------------------------- Controller 'Library' ------------------------------------------------------------
+	
 	@AfterReturning(pointcut="execution(* com.revature.controllers.ControllerLibrary.isIdNull(..))", returning="returnedBool")
 	public void logIsPatientIdNull(JoinPoint jp, boolean returnedBool) {
 
 		if(returnedBool == true) {
 			log.info(jp.getSignature() + " ----- USER NOT LOGGED IN");
+		}
+	}
+
+	// --------------------------------------------- Login Service -------------------------------------------------------------------
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.LoginService.*(..))", returning="returnedObject")
+	public void logLoginServicePatient(JoinPoint jp, Patient returnedObject) {
+		
+		if(returnedObject != null) {
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+			return;
+		}
+		
+		log.info(jp.getSignature() + " ----- FAILED");
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.LoginService.*(..))", returning="returnedObject")
+	public void logLoginServiceProfessional(JoinPoint jp, Professional returnedObject) {
+		
+		if(returnedObject != null) {
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+			return;
+		}
+		
+		log.info(jp.getSignature() + " ----- FAILED");
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.LoginService.*(..))", returning="returnedObject")
+	public void logLoginServiceListString(JoinPoint jp, List<List<String>> returnedObject) {
+		if(returnedObject == null) {
+			log.info(jp.getSignature() + " ----- FAILED");
+		}
+		else {
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+		}
+	}
+	
+	@AfterThrowing(pointcut="execution(* com.revature.services.LoginService.*(..))", throwing="thrownException")
+	public void logLoginServiceException(JoinPoint jp, Exception thrownException) {
+		log.info(jp.getSignature() + " threw an exception: " + thrownException.getClass());
+	}
+	
+	// --------------------------------------------- Patient Service --------------------------------------------------------------
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.PatientService.*(..))", returning="returnedObject") 
+	public void logPatientServiceRegister(JoinPoint jp, Patient returnedObject) {
+		
+		if(returnedObject == null) {
+			log.info(jp.getSignature() + " ----- FAILED");
+		}
+		else {
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+		}
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.PatientService.*(..))", returning="returnedObject") 
+	public void logPatientServiceEntry(JoinPoint jp, Entry returnedObject) {
+		
+		if(returnedObject == null) {
+			log.info(jp.getSignature() + " ----- FAILED");
+		}
+		else {
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+		}
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.PatientService.*(..))", returning="returnedObject") 
+	public void logPatientServiceListEntry(JoinPoint jp, List<Entry> returnedObject) {
+		
+		if(returnedObject == null) {
+			log.info(jp.getSignature() + " ----- FAILED");
+		}
+		else {
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+		}
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.PatientService.deleteEntry(..))", returning="returnedBool") 
+	public void logPatientServiceDeleteEntry(JoinPoint jp, Boolean returnedBool) {
+		
+		if(returnedBool == false) {
+			log.info(jp.getSignature() + " ----- FAILED");
+		}
+		else {
+			log.info("ENTRY WITH ID: " + jp.getArgs()[0] + " SUCESSFULLY DELETED");
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+		}
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.PatientService.deleteReply(..))", returning="returnedBool") 
+	public void logPatientServiceDeleteReply(JoinPoint jp, Boolean returnedBool) {
+		
+		if(returnedBool == false) {
+			log.info(jp.getSignature() + " ----- FAILED");
+		}
+		else {
+			log.info("REPLY WITH ID: " + jp.getArgs()[0] + " SUCESSFULLY DELETED");
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+		}
+	}
+	
+	// ---------------------------------------------- Professional Service ----------------------------------------------------------
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.ProfessionalService.*(..))", returning="returnedObject") 
+	public void logProfessionalServiceRegister(JoinPoint jp, Professional returnedObject) {
+		
+		if(returnedObject == null) {
+			log.info(jp.getSignature() + " ----- FAILED");
+		}
+		else {
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+		}
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.ProfessionalService.*(..))", returning="returnedObject") 
+	public void logProfessionalServiceListPatient(JoinPoint jp, List<Patient> returnedObject) {
+		
+		if(returnedObject == null) {
+			log.info(jp.getSignature() + " ----- FAILED");
+		}
+		else {
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+		}
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.ProfessionalService.*(..))", returning="returnedObject") 
+	public void logProfessionalServiceListEntry(JoinPoint jp, List<Entry> returnedObject) {
+		
+		if(returnedObject == null) {
+			log.info(jp.getSignature() + " ----- FAILED");
+		}
+		else {
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+		}
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.ProfessionalService.deleteReply(..))", returning="returnedBool") 
+	public void logProfessionalServiceDeleteReply(JoinPoint jp, Boolean returnedBool) {
+		if(returnedBool == false) {
+			log.info(jp.getSignature() + " ----- FAILED");
+		}
+		else {
+			log.info("REPLY WITH ID: " + jp.getArgs()[0] + " SUCESSFULLY DELETED");
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+		}
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.ProfessionalService.*(..))", returning="returnedObject") 
+	public void logProfessionalServiceEntry(JoinPoint jp, Entry returnedObject) {
+		if(returnedObject == null) {
+			log.info(jp.getSignature() + " ----- FAILED");
+		}
+		else {
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+		}
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.ProfessionalService.*(..))", returning="returnedObject") 
+	public void logProfessionalServiceReply(JoinPoint jp, Reply returnedObject) {
+		
+		if(returnedObject == null) {
+			log.info(jp.getSignature() + " ----- FAILED");
+		}
+		else {
+			log.info(jp.getSignature() + " ----- SUCCESSFUL");
+		}
+	}
+	
+	// ----------------------------------------- Service 'Library' -----------------------------------------------------------------
+	
+	@Around("execution(* com.revature.services.ServiceLibrary.isPatientNull(..))")
+	public void logIsLoggedInPatientNull(ProceedingJoinPoint pjp) {
+		
+		if(pjp.getArgs()[0] == null) {
+			log.info(pjp.getSignature() + " ----- FAILED TO LOGIN PATIENT WITH USERNAME: " + pjp.getArgs()[1]);
+		}
+		
+	}
+	
+	@Around("execution(* com.revature.services.ServiceLibrary.isProfessionalNull(..))")
+	public void logIsLoggedInProfessionalNull(ProceedingJoinPoint pjp) {
+		
+		if(pjp.getArgs()[0] == null) {
+			log.info(pjp.getSignature() + " ----- FAILED TO LOGIN PROFESSIONAL WITH USERNAME: " + pjp.getArgs()[1]);
+		}
+		
+	}
+	
+	@Around("execution(* com.revature.services.ServiceLibrary.isEntryPublicOwnedByPatient(..))") 
+	public void logIsEntryPublicOwnedByPatient(ProceedingJoinPoint pjp) {
+		
+		Entry e = (Entry)pjp.getArgs()[0];
+		
+		// if the ids dont match and is private
+		if(e.getPatient().getId() != (int)pjp.getArgs()[1] && !e.isPublic()) {
+			log.info(pjp.getSignature() + " ----- ENTRY WITH ID: " + pjp.getArgs()[1] + " DOESN'T BELONG TO PATIENT WITH ID: " + e.getPatient().getId());
+		}
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.ServiceLibrary.isPatientLoggedIn(..))", returning="returnedBool") 
+	public void logIsPatientLoggedIn(JoinPoint jp, boolean returnedBool) {
+		
+		// if the patient is not logged in
+		if(!returnedBool) {
+			log.info(jp.getSignature() + " ----- PATIENT NOT LOGGED IN");
+		}
+	}
+	
+	@Around("execution(* com.revature.services.ServiceLibrary.isEntryPublicOwnedByPatient(..))") 
+	public void logIsEntryOwnedByPatient(ProceedingJoinPoint pjp) {
+
+		// if the ids dont match
+		if((int)pjp.getArgs()[0] != (int)pjp.getArgs()[1]) {
+			log.info(pjp.getSignature() + " ----- ENTRY WITH ID: " + pjp.getArgs()[0] + " DOESN'T BELONG TO PATIENT WITH ID: " + pjp.getArgs()[1]);
+		}
+	}
+	
+	@Around("execution(* com.revature.services.ServiceLibrary.isReplyOwnedByPatient(..))") 
+	public void logIsReplyOwnedByPatient(ProceedingJoinPoint pjp) {
+		
+		// if the ids dont match
+		if((int)pjp.getArgs()[0] != (int)pjp.getArgs()[1]) {
+			log.info(pjp.getSignature() + " ----- REPLY WITH ID: " + pjp.getArgs()[0] + " DOESN'T BELONG TO PATIENT WITH ID: " + pjp.getArgs()[1]);
+		}
+	}
+
+	@AfterReturning(pointcut="execution(* com.revature.services.ServiceLibrary.isProfessionalLoggedIn(..))", returning="returnedBool") 
+	public void logIsProfessionalLoggedIn(JoinPoint jp, boolean returnedBool) {
+		
+		// if the patient is not logged in
+		if(!returnedBool) {
+			log.info(jp.getSignature() + " ----- PROFESSIONAL NOT LOGGED IN");
+		}
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.ServiceLibrary.isPatientAssignedToProfessional(..))", returning="returnedBool") 
+	public void logIsPatientAssignedToProfessional(JoinPoint jp, boolean returnedBool) {
+		// if the patient is not logged in
+		if(!returnedBool) {
+			log.info(jp.getSignature() + " ----- PROFESSIONAL WITH ID: " + jp.getArgs()[1] + " IS NOT ASSIGNED TO PATIENT WITH ID: " + jp.getArgs()[2]);
+		}
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.ServiceLibrary.doesPatientHaveProfessional(..))", returning="returnedBool") 
+	public void logDoesPatientHaveProfessional(JoinPoint jp, boolean returnedBool) {
+		// if the patient is not logged in
+		if(!returnedBool) {
+			log.info(jp.getSignature() + " ----- PATIENT WITH ID: " + jp.getArgs()[1] + " HAS AN ASSIGNED PROFESSIONAL");
 		}
 	}
 }
