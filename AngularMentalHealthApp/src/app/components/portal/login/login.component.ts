@@ -46,6 +46,19 @@ export class LoginComponent implements OnInit {
         this.route.navigate(['/patient/history']);
       },
       ()=>{
+        //this.error = "Username or Password not recognized.";
+        console.log("Not a patient")
+      }
+    );
+
+    this.portalS.professionalLogin(this.username,this.password).subscribe(
+      (user:any)=>{
+        console.log(user);
+        this.cookie.set("username",this.username.toString());
+        this.cookie.set("accountType", 'professional');
+        this.route.navigate(['/professional/my-patients']);
+      },
+      ()=>{
         this.error = "Username or Password not recognized.";
         console.log("Wrong Info")
       }

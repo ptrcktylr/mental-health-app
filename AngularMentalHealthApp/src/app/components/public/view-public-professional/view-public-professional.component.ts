@@ -5,13 +5,12 @@ import { PatientService } from 'src/app/services/patients/patient.service';
 import { ProfessionalService } from 'src/app/services/professional/professional.service';
 
 @Component({
-  selector: 'app-view-public',
-  templateUrl: './view-public.component.html',
-  styleUrls: ['./view-public.component.css']
+  selector: 'app-view-public-professional',
+  templateUrl: './view-public-professional.component.html',
+  styleUrls: ['./view-public-professional.component.css']
 })
-export class ViewPublicComponent implements OnInit {
+export class ViewPublicProfessionalComponent implements OnInit {
 
-  //proxy entries
   entryArray: any[] = [];
 
   constructor(private cookie:CookieService, private route:Router,private patS:PatientService,private proS:ProfessionalService) { }
@@ -24,7 +23,7 @@ export class ViewPublicComponent implements OnInit {
       this.route.navigate(['/login']);
     }
 
-    this.patS.getPublicEntries().subscribe(
+    this.proS.getPublicEntries().subscribe(
       (allEntries:any)=>{
         this.entryArray = allEntries;
         console.log(this.entryArray);
@@ -33,6 +32,6 @@ export class ViewPublicComponent implements OnInit {
         console.log("No information");
       }
     );
-
   }
+
 }

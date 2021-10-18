@@ -14,7 +14,6 @@ import { ProfessionalAllPatientsComponent } from './components/professionals/pro
 import { ProfessionalAddPatientComponent } from './components/professionals/professional-add-patient/professional-add-patient.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PatientEntryComponent } from './components/patients/patient-entry/patient-entry.component';
-import { ViewPublicEntryComponent } from './components/public/view-public-entry/view-public-entry.component';
 import { PatientNavComponent } from './components/navbars/patient-nav/patient-nav.component';
 import { ProfessionalNavComponent } from './components/navbars/professional-nav/professional-nav.component';
 import { LoginComponent } from './components/portal/login/login.component';
@@ -29,6 +28,7 @@ import * as FusionCharts from "fusioncharts";
 import * as charts from "fusioncharts/fusioncharts.charts";
 import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 import { CookieService } from 'ngx-cookie-service';
+import { ViewPublicProfessionalComponent } from './components/public/view-public-professional/view-public-professional.component';
 
 
 // Pass the fusioncharts library and chart modules
@@ -46,13 +46,13 @@ FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
     ProfessionalAllPatientsComponent,
     ProfessionalAddPatientComponent,
     PatientEntryComponent,
-    ViewPublicEntryComponent,
     ViewPublicComponent,
     PatientNavComponent,
     ProfessionalNavComponent,
     LoginComponent,
     RegisterComponent,
-    ProfessionalPatientHistoryComponent
+    ProfessionalPatientHistoryComponent,
+    ViewPublicProfessionalComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-professional-view-progress',
@@ -9,7 +9,9 @@ import { Router } from '@angular/router';
 export class ProfessionalViewProgressComponent implements OnInit {
 
   dataSource: Object;
-  constructor(private route:Router) {
+  sub: any;
+  public patientId: any;
+  constructor(private route:Router,private aRoute: ActivatedRoute) {
     //STEP 2 - Chart Data
     const chartData = [
       {
@@ -65,10 +67,13 @@ export class ProfessionalViewProgressComponent implements OnInit {
 
   goToHistory(){
     console.log("HI");
-    this.route.navigate(['/professional/patient-history/1']);
+    this.route.navigate(['/professional/patient-history/' + this.patientId]);
   }
 
   ngOnInit(): void {
+    this.sub = this.aRoute.params.subscribe((params:any) => {
+      this.patientId = params['id'];
+      });
   }
 
 }

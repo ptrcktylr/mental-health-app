@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProfessionalService } from 'src/app/services/professional/professional.service';
 
 @Component({
   selector: 'app-professional-my-patients',
@@ -8,39 +9,25 @@ import { Router } from '@angular/router';
 })
 export class ProfessionalMyPatientsComponent implements OnInit {
 
-  patients = [
-    {
-      id: 1,
-      fname: "John",
-      lname: "Doe",
-      lastMood: "Positive"
-    },
-    {
-      id: 2,
-      fname: "Jane",
-      lname: "Smith",
-      lastMood: "Negative"
-    },
-    {
-      id: 3,
-      fname: "James",
-      lname: "Johnson",
-      lastMood: "Neutral"
-    },
-    {
-      id: 4,
-      fname: "Jennifer",
-      lname: "Lopez",
-      lastMood: "Positive"
-    }
-  ]
-  constructor(private route:Router) { }
+  patients:any = []
+  constructor(private route:Router, private proS:ProfessionalService) { }
 
   changeToPatient(id:number){
-    this.route.navigate(['/professional/patient-history/'+id]);
+    this.route.navigate(['/professional/patient-history/', id]);
   }
 
   ngOnInit(): void {
+
+
+    this.proS.getMyPatients().subscribe(
+      (myPatients:any)=>{
+        this.patients = myPatients;
+        console.log(this.patients);
+      },
+      ()=>{
+        console.log("No information");
+      }
+    );
   }
 
 }

@@ -8,11 +8,11 @@ import { LoginComponent } from './components/portal/login/login.component';
 import { RegisterComponent } from './components/portal/register/register.component';
 import { ProfessionalAllPatientsComponent } from './components/professionals/professional-all-patients/professional-all-patients.component';
 import { ProfessionalMyPatientsComponent } from './components/professionals/professional-my-patients/professional-my-patients.component';
-import { ViewPublicEntryComponent } from './components/public/view-public-entry/view-public-entry.component';
 import { ViewPublicComponent } from './components/public/view-public/view-public.component';
 import { ProfessionalPatientHistoryComponent } from './components/professionals/professional-patient-history/professional-patient-history.component';
 import { ProfessionalViewEntryComponent } from './components/professionals/professional-view-entry/professional-view-entry.component';
 import { ProfessionalViewProgressComponent } from './components/professionals/professional-view-progress/professional-view-progress.component';
+import { ViewPublicProfessionalComponent } from './components/public/view-public-professional/view-public-professional.component';
 
 const routes: Routes = [
   {
@@ -53,7 +53,7 @@ const routes: Routes = [
     component: ProfessionalAllPatientsComponent
   },
   {
-    path: "professional/progress",
+    path: "professional/progress/:id",
     component: ProfessionalViewProgressComponent
   },
   {
@@ -69,8 +69,12 @@ const routes: Routes = [
     component: ViewPublicComponent
   },
   {
-    path: "view-public/:id",
-    component: ViewPublicEntryComponent
+    path: "view-public-professional",
+    component: ViewPublicProfessionalComponent
+  },
+  {
+    path: "professional/entry/:id",
+    component: ProfessionalViewEntryComponent
   }
 ];
 
