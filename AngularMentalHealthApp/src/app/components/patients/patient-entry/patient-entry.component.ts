@@ -39,12 +39,6 @@ export class PatientEntryComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if(!(this.cookie.check('username') && this.cookie.check('accountType'))){
-      this.route.navigate(['/login']);
-    }
-
-    //Add security features to go back to /patient/history if returned entry is null
-
     this.sub = this.aRoute.params.subscribe((params:any) => {
       this.entryId = params['id'];
         this.patS.getEntry(this.entryId).subscribe(
@@ -68,7 +62,7 @@ export class PatientEntryComponent implements OnInit {
 
     this.headerInput = this.newPost.title;
     this.bodyInput = this.newPost.body;
-    this.tags = this.newPost.tags;
+    this.tags = this.newPost.tag;
     this.sentimentScore = this.newPost.sentiment;
     this.author = this.newPost.patient.username;
     this.date = this.newPost.datePosted.substring(0,10);

@@ -41,9 +41,6 @@ export class PatientProgressComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(!(this.cookie.check('username') && this.cookie.get('accountType') == 'patient')){
-      this.route.navigate(['/login']);
-    }
 
     this.patS.getAllMyEntries().subscribe(
       (allEntries:any)=>{

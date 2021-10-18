@@ -13,6 +13,7 @@ export class ViewPublicComponent implements OnInit {
 
   //proxy entries
   entryArray: any[] = [];
+  allEntryArray:any [] = [];
 
   constructor(private cookie:CookieService, private route:Router,private patS:PatientService,private proS:ProfessionalService) { }
 
@@ -26,10 +27,11 @@ export class ViewPublicComponent implements OnInit {
 
     this.patS.getPublicEntries().subscribe(
       (allEntries:any)=>{
-        this.entryArray = allEntries;
-        let x = this.entryArray.sort((a:any, b:any) => (a.datePosted > b.datePosted) ? 1 : -1)
+        this.allEntryArray = allEntries;
+        let x = this.allEntryArray.sort((a:any, b:any) => (a.datePosted > b.datePosted) ? 1 : -1)
         console.log(x);
-        this.entryArray.reverse();
+        this.allEntryArray.reverse();
+        this.entryArray = this.allEntryArray;
         console.log(this.entryArray);
       },
       ()=>{

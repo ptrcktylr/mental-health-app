@@ -66,7 +66,7 @@ export class ProfessionalViewEntryComponent implements OnInit {
 
     this.headerInput = this.newPost.title;
     this.bodyInput = this.newPost.body;
-    this.tags = this.newPost.tags;
+    this.tags = this.newPost.tag;
     this.sentimentScore = this.newPost.sentiment;
     this.author = this.newPost.patient.username;
     this.date = this.newPost.datePosted.substring(0,10);

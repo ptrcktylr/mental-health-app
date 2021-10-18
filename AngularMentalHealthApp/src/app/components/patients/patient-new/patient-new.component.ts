@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { Entry } from 'src/app/models/entry';
 import { DeepaiApiService } from 'src/app/services/deepai/deepai-api.service';
 import { PatientService } from 'src/app/services/patients/patient.service';
 import { SentpackService } from 'src/app/services/sentpack/sentpack.service';
@@ -19,22 +18,22 @@ export class PatientNewComponent implements OnInit {
   //fields of sentiment
   public headerInput:String = "";
   public bodyInput:String = "";
-  public tags:String = "";
+  public tag:String = "";
   public publicPost:boolean = false;
-
   public message:String = "";
   //newPost will proxy a Json class to POST send
   public newPost:any = {};
+
+  //fields for static tag helper
+  public introTag = "introduction";
+  public coroTag = "coronavirus";
+  public helpTag = "healthhelp";
+  public experienceTag = "healthexperience"
 
 
   constructor(private das:DeepaiApiService, private sps: SentpackService, private cookie:CookieService, private route:Router,private patS:PatientService) { }
 
   ngOnInit(): void {
-    //check if patient cookie exists
-    if(!(this.cookie.check('username') && this.cookie.get('accountType') == 'patient')){
-      this.route.navigate(['/login']);
-    }
-    console.log(this.newPost);
   }
 
   async addEntry():Promise<void>{
@@ -48,14 +47,11 @@ export class PatientNewComponent implements OnInit {
       return;
     }
 
-    //Fill the header and body fields
-
-    this.newPost.author = 1;
     //this.newPost.header = this.headerInput;
 
     this.newPost.title = this.headerInput;
     this.newPost.body = this.bodyInput;
-    this.newPost.tags = this.tags.toLowerCase();
+    this.newPost.tag = this.tag.toLowerCase();
     this.newPost.public = this.publicPost;
 
     //Fill the sentimentScore field
@@ -92,7 +88,7 @@ export class PatientNewComponent implements OnInit {
     this.message = "Success Post";
     this.headerInput = "";
     this.bodyInput = "";
-    this.tags = "";
+    this.tag = "";
     this.publicPost = false;
   }
 
@@ -135,5 +131,21 @@ export class PatientNewComponent implements OnInit {
     this.newPost.sentiment = Math.round(score/total * 100);
   }
 
+
+  //Changing tags
+  changeIntroTag(){
+    this.tag = this.introTag;
+  }
+  changeCoroTag(){
+    this.tag = this.coroTag;
+  }
+  changeExpTag(){
+    this.tag = this.experienceTag;
+  }
+
+  changeHelpTag(){
+    this.tag = this.helpTag;
+  }
+
+
 }
-//It has been a rough day at work.
