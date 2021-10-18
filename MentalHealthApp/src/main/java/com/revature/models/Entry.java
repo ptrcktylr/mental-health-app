@@ -38,6 +38,7 @@ public class Entry {
 			columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
 	private Date datePosted;
 	
+	@Column(name="is_public")
 	private boolean isPublic;
 	
 	private String tag;
@@ -54,7 +55,7 @@ public class Entry {
 	public Entry() {
 		super();
 	}
-
+	
 	public Entry(int id, String title, String body, Date datePosted, boolean isPublic, String tag, int sentiment,
 			Patient patient, List<Reply> replies) {
 		super();

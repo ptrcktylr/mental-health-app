@@ -59,6 +59,7 @@ public class Reply {
 		this.patient = patient;
 		this.professional = professional;
 	}
+	
 
 	public Reply(String body, Date datePosted, Entry entry, Patient patient, Professional professional) {
 		super();
