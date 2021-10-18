@@ -444,19 +444,19 @@ public class LoggingAspect {
 	
 	// ----------------------------------------- Service 'Library' -----------------------------------------------------------------
 	
-	@Around("execution(* com.revature.services.ServiceLibrary.isPatientNull(..))")
-	public void logIsLoggedInPatientNull(ProceedingJoinPoint pjp) {
+	@AfterReturning(pointcut="execution(* com.revature.services.ServiceLibrary.isPatientNull(..))", returning="returnedBool")
+	public void logIsLoggedInPatientNull(JoinPoint pjp, boolean returnedBool) {
 		
-		if(pjp.getArgs()[0] == null) {
+		if(returnedBool == true) {
 			log.info(pjp.getSignature() + " ----- FAILED TO LOGIN PATIENT WITH USERNAME: " + pjp.getArgs()[1]);
 		}
 		
 	}
 	
-	@Around("execution(* com.revature.services.ServiceLibrary.isProfessionalNull(..))")
-	public void logIsLoggedInProfessionalNull(ProceedingJoinPoint pjp) {
+	@AfterReturning(pointcut="execution(* com.revature.services.ServiceLibrary.isProfessionalNull(..))", returning="returnedBool")
+	public void logIsLoggedInProfessionalNull(JoinPoint pjp, boolean returnedBool) {
 		
-		if(pjp.getArgs()[0] == null) {
+		if(returnedBool == true) {
 			log.info(pjp.getSignature() + " ----- FAILED TO LOGIN PROFESSIONAL WITH USERNAME: " + pjp.getArgs()[1]);
 		}
 		
