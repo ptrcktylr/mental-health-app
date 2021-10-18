@@ -131,7 +131,7 @@ public class ProfessionalService {
 			}
 				
 			// else assign
-			patient.setProfessional(professionalRepository.getById(professionalId));
+			patient.setProfessional(professionalRepository.findById(professionalId).get());
 			patientRepository.save(patient);
 			return true;
 			
@@ -182,7 +182,7 @@ public class ProfessionalService {
 				return null;
 			}
 			
-			Professional professional = professionalRepository.getById(professionalId);
+			Professional professional = professionalRepository.findById(professionalId).get();
 			return patientRepository.findPatientsByProfessional(professional);
 			
 			// get assigned patients
@@ -250,9 +250,9 @@ public class ProfessionalService {
 				//System.out.println("Professional not logged in");
 				return null;
 			}
-			
-			Entry entry = entryRepository.getById(entryId);
-			
+
+			Entry entry = entryRepository.findById(entryId).get();
+
 			// if entry is private and entry doesn't belong to professional's assigned patients
 			if (!sl.isEntryPublic(entry) && !sl.isPatientAssignedToProfessional(entry.getPatient()
 										  .getProfessional()
@@ -262,21 +262,20 @@ public class ProfessionalService {
 				//		" because they are not assigned to patient");
 				return null;
 			}
-			
 			// set entry to reply
 			reply.setEntry(entry);
 			// set professional to reply
-			reply.setprofessional(professionalRepository.getById(professionalId));
+			reply.setprofessional(professionalRepository.findById(professionalId).get());
 			// set post date
 			Date currentDate = new Date();
 			reply.setDatePosted(currentDate);
-			
 			// return reply
 			return replyRepository.save(reply);
 			
 		} catch (Exception exception) {
 			System.out.println("Could not add reply to entry with id: " + entryId + 
 					" as professional with id: " + professionalId);
+			exception.printStackTrace();
 			return null;
 		}
 	}
@@ -290,7 +289,7 @@ public class ProfessionalService {
 				return false;
 			}
 			
-			Reply reply = replyRepository.getById(replyId);
+			Reply reply = replyRepository.findById(replyId).get();
 			
 			// if entry is private and professional isn't assigned to the entry's patient
 			// return false

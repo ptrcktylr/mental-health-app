@@ -35,7 +35,7 @@ public class Reply {
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="entry_id")
-	@JsonIgnore
+	//@JsonIgnore
 	private Entry entry;
 	
 	@ManyToOne(fetch=FetchType.EAGER)

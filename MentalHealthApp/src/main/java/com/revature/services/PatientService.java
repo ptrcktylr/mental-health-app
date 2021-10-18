@@ -65,7 +65,7 @@ public class PatientService {
 	// get single entry
 	public Entry getEntry(int entryId, int patientId) {
 		try {
-			Entry entry = entryRepository.getById(entryId);
+			Entry entry = entryRepository.findById(entryId).get();
 			
 			// if it's private and if this entry doesn't belong to this patient return null
 			if (!sl.isEntryPublicOwnedByPatient(entry, patientId)) {
@@ -122,9 +122,10 @@ public class PatientService {
 				//System.out.println("Patient not logged in");
 				return null;
 			}
+
+			Entry entry = entryRepository.findById(entryId).get();
 			
-			Entry entry = entryRepository.getById(entryId);
-			
+			//System.out.println(entry);
 			// if entry is private and isn't this patients
 			if (!sl.isEntryPublicOwnedByPatient(entry, patientId)) {
 				//System.out.println("Patient with id: " + patientId + " can not reply to "
@@ -146,6 +147,7 @@ public class PatientService {
 		} catch (Exception exception) {
 			System.out.println("Failed to add reply to entry with id: " + entryId 
 									+ " as patient with id: " + patientId);
+			exception.printStackTrace();
 			return null;
 		}
 	}
@@ -159,7 +161,7 @@ public class PatientService {
 				return false;
 			}
 			
-			Entry entry = entryRepository.getById(entryId);
+			Entry entry = entryRepository.findById(entryId).get();
 			
 			// if entry isn't this patients
 			if (!sl.isEntryOwnedByPatient(entry.getPatient().getId(), patientId)) {
@@ -194,15 +196,16 @@ public class PatientService {
 				return false;
 			}
 			
-			Reply reply = replyRepository.getById(replyId);
-			
+			Reply reply = replyRepository.findById(replyId).get();
+
 			// if this reply isn't this patients
 			if (!sl.isReplyOwnedByPatient(reply.getPatient().getId(), patientId)) {
 				//System.out.println("Reply with id: " + replyId + " doesn't belong to "
 				//		+ "patient with id: " + patientId);
+				//System.out.println("failed here bruh");
 				return false;
 			}
-			
+
 			// delete reply
 			replyRepository.deleteById(replyId);
 			//System.out.println("Reply with id: " + replyId + " deleted successfully");
@@ -211,6 +214,7 @@ public class PatientService {
 		} catch (Exception exception) {
 			System.out.println("Failed to delete reply with id: " + replyId 
 					+ " as patient with id: " + patientId);
+			exception.printStackTrace();
 			return false;
 		}
 	}

@@ -39,8 +39,7 @@ public class LoginService {
 											patientLoginDTO.getUsername(), 
 											patientLoginDTO.getPassword()
 									  );
-			System.out.println("Is patient null? ");
-			System.out.println(sl.isPatientNull(loggedInPatient, patientLoginDTO.getUsername()));
+			
 			// if credentials incorrect
 			if (sl.isPatientNull(loggedInPatient, patientLoginDTO.getUsername())) {
 				//System.out.println("Failed to login patient with username: " 

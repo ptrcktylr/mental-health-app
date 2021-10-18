@@ -442,6 +442,12 @@ public class LoggingAspect {
 		}
 	}
 	
+	@AfterThrowing(pointcut="execution(* com.revature.services.ProfessionalService.*(..))", throwing="returnedException") 
+	public void logProfessionalServiceReplyError(JoinPoint jp, Exception returnedException) {
+		
+		log.info(jp.getSignature() + " ----- FAILED");
+	}
+	
 	// ----------------------------------------- Service 'Library' -----------------------------------------------------------------
 	
 	@AfterReturning(pointcut="execution(* com.revature.services.ServiceLibrary.isPatientNull(..))", returning="returnedBool")
@@ -462,15 +468,14 @@ public class LoggingAspect {
 		
 	}
 	
-	@Around("execution(* com.revature.services.ServiceLibrary.isEntryPublicOwnedByPatient(..))") 
-	public void logIsEntryPublicOwnedByPatient(ProceedingJoinPoint pjp) {
-		
-		Entry e = (Entry)pjp.getArgs()[0];
-		
-		// if the ids dont match and is private
-		if(e.getPatient().getId() != (int)pjp.getArgs()[1] && !e.isPublic()) {
-			log.info(pjp.getSignature() + " ----- ENTRY WITH ID: " + pjp.getArgs()[1] + " DOESN'T BELONG TO PATIENT WITH ID: " + e.getPatient().getId());
+	@AfterReturning(pointcut="execution(* com.revature.services.ServiceLibrary.isEntryPublic(..))", returning="returnedBool") 
+	public void logIsEntryPublic(JoinPoint pjp, boolean returnedBool) {
+
+		// if the entry is private
+		if(!returnedBool) {
+			log.info(pjp.getSignature() + " ----- ENTRY IS PRIVATE");
 		}
+		
 	}
 	
 	@AfterReturning(pointcut="execution(* com.revature.services.ServiceLibrary.isPatientLoggedIn(..))", returning="returnedBool") 
@@ -483,21 +488,29 @@ public class LoggingAspect {
 	}
 	
 	@Around("execution(* com.revature.services.ServiceLibrary.isEntryPublicOwnedByPatient(..))") 
-	public void logIsEntryOwnedByPatient(ProceedingJoinPoint pjp) {
+	public boolean logIsEntryPublicOwnedByPatient(ProceedingJoinPoint pjp) {
 
+		Entry entry = (Entry)pjp.getArgs()[0];
 		// if the ids dont match
-		if((int)pjp.getArgs()[0] != (int)pjp.getArgs()[1]) {
+		if(entry.getPatient().getId() != (int)pjp.getArgs()[1]) {
 			log.info(pjp.getSignature() + " ----- ENTRY WITH ID: " + pjp.getArgs()[0] + " DOESN'T BELONG TO PATIENT WITH ID: " + pjp.getArgs()[1]);
+			return false;
 		}
+		
+		return true;
 	}
 	
 	@Around("execution(* com.revature.services.ServiceLibrary.isReplyOwnedByPatient(..))") 
-	public void logIsReplyOwnedByPatient(ProceedingJoinPoint pjp) {
+	public boolean logIsReplyOwnedByPatient(ProceedingJoinPoint pjp) {
 		
 		// if the ids dont match
 		if((int)pjp.getArgs()[0] != (int)pjp.getArgs()[1]) {
 			log.info(pjp.getSignature() + " ----- REPLY WITH ID: " + pjp.getArgs()[0] + " DOESN'T BELONG TO PATIENT WITH ID: " + pjp.getArgs()[1]);
+			
+			return false;
 		}
+		
+		return true;
 	}
 
 	@AfterReturning(pointcut="execution(* com.revature.services.ServiceLibrary.isProfessionalLoggedIn(..))", returning="returnedBool") 
@@ -519,9 +532,9 @@ public class LoggingAspect {
 	
 	@AfterReturning(pointcut="execution(* com.revature.services.ServiceLibrary.doesPatientHaveProfessional(..))", returning="returnedBool") 
 	public void logDoesPatientHaveProfessional(JoinPoint jp, boolean returnedBool) {
-		// if the patient is not logged in
+		// if the patient does not have a professional assigned to them
 		if(!returnedBool) {
-			log.info(jp.getSignature() + " ----- PATIENT WITH ID: " + jp.getArgs()[1] + " HAS AN ASSIGNED PROFESSIONAL");
+			log.info(jp.getSignature() + " ----- PATIENT WITH ID: " + jp.getArgs()[1] + " DOES NOT HAVE AN ASSIGNED PROFESSIONAL");
 		}
 	}
 }
