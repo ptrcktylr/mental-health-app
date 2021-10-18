@@ -18,9 +18,10 @@
             <div class="card shadow my-card">
                 <div class="card-body text-center">
                     <div>
-                        <h3 (click)="changeToPatient(patient.id)" class="normalWords noMargin">{{patient.fname}} {{patient.lname}}</h3>
+                        <h3 (click)="changeToPatient(patient.id)" class="normalWords noMargin">{{patient.firstName}} {{patient.lastName}}</h3>
                         <hr>
-                        <div class="noMargin">Mood of last post: {{patient.lastMood}}</div>
+                        <div class="tab">Email: {{patient.email}}</div>
+                        <div class="tab">Username: {{patient.username}}</div>
                     </div>
                 </div>
             </div>

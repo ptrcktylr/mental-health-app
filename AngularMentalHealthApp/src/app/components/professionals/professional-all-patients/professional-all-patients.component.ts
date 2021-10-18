@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProfessionalService } from 'src/app/services/professional/professional.service';
 
 @Component({
   selector: 'app-professional-all-patients',
@@ -8,32 +9,47 @@ import { Router } from '@angular/router';
 })
 export class ProfessionalAllPatientsComponent implements OnInit {
 
-  patients = [
-    {
-      id: 1,
-      fname: "John",
-      lname: "Doe",
-    },
-    {
-      id: 2,
-      fname: "Jane",
-      lname: "Smith",
-    },
-    {
-      id: 3,
-      fname: "James",
-      lname: "Johnson",
-    }
-  ]
+  patients:any = []
 
-  constructor(private route:Router) { }
+  constructor(private route:Router,private proS:ProfessionalService) { }
 
   addPatient(id:number){
-    console.log(id);
-    this.route.navigate(['/professional/my-patients']);
+    this.proS.addPatient(id).subscribe(
+      (addPatients:any)=>{
+        console.log("Added Successfully");
+        this.route.navigate(['/professional/my-patients']);
+      },
+      ()=>{
+        console.log("No information");
+      }
+    );
   }
 
   ngOnInit(): void {
+    this.proS.getPatients().subscribe(
+      (patientsList:any)=>{
+        this.proS.getMyPatients().subscribe(
+          (myPatients:any)=>{
+            this.patients = this.notMyPatients(myPatients,patientsList);
+          },
+          ()=>{
+            console.log("No information");
+          }
+        );
+      },
+      ()=>{
+        console.log("No information");
+      }
+    );
+  }
+
+  notMyPatients(myArray:any, allArray:any): any{
+    for(let item of myArray){
+      allArray.forEach((value:any,index:number)=>{
+        if(value.username==item.username) allArray.splice(index,1);
+      });
+    }
+    return allArray;
   }
 
 }
