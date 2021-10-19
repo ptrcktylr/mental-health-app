@@ -19,7 +19,7 @@ export class PortalService {
     return this.http.post("http://localhost:8080/professional/login",{username:username, password:password},{withCredentials: true}) as Observable<any>;
   }
 
-  patientRegister(bodyR:String):Observable<any>{
+  patientRegister(bodyR:any):Observable<any>{
     //console.log({username:username, password:password});
     return this.http.post("http://localhost:8080/professional/login",bodyR,{withCredentials: true}) as Observable<any>;
   }

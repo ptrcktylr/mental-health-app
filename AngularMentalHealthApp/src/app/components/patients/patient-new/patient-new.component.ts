@@ -76,6 +76,7 @@ export class PatientNewComponent implements OnInit {
 
     this.renewPost();
     console.log(this.newPost);
+    
   }
 
   validatePost():boolean{
