@@ -22,8 +22,6 @@ export class ViewPublicComponent implements OnInit {
   public helpTag = "healthhelp";
   public experienceTag = "healthexperience";
 
-
-
   constructor(private cookie:CookieService, private route:Router,private patS:PatientService,private proS:ProfessionalService) { }
 
   ngOnInit(): void {
@@ -49,7 +47,6 @@ export class ViewPublicComponent implements OnInit {
     );
 
   }
-
 
   //Changing tags
   changeIntroTag(){
@@ -80,5 +77,4 @@ export class ViewPublicComponent implements OnInit {
     console.log(tempArray);
     this.entryArray = tempArray;
   }
-
 }
