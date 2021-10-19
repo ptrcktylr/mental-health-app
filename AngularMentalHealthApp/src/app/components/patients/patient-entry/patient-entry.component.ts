@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'
 import { CookieService } from 'ngx-cookie-service';
-import { Entry } from 'src/app/models/entry';
-import { Sentiment } from 'src/app/models/sentiment';
 import {Location} from '@angular/common';
 import { PatientService } from 'src/app/services/patients/patient.service';
 
@@ -66,14 +64,19 @@ export class PatientEntryComponent implements OnInit {
     this.sentimentScore = this.newPost.sentiment;
     this.author = this.newPost.patient.username;
     this.date = this.newPost.datePosted.substring(0,10);
-    this.replyArray = this.newPost.replies;
+    this.replyArray = this.newPost.replies.reverse();
     console.log(this.replyArray);
   }
 
   submitReply(){
+    if(this.replyBody == ""){
+      //this.message = "Can not reply with an empty body";
+      return;
+    }
     this.patS.replyEntry(this.entryId, this.replyBody).subscribe(
       (reply:any)=>{
         console.log("reply sent");
+        location.reload();
       },
       ()=>{
         console.log("No information");

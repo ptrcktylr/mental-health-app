@@ -70,14 +70,20 @@ export class ProfessionalViewEntryComponent implements OnInit {
     this.sentimentScore = this.newPost.sentiment;
     this.author = this.newPost.patient.username;
     this.date = this.newPost.datePosted.substring(0,10);
-    this.replyArray = this.newPost.replies;
+    this.replyArray = this.newPost.replies.reverse();
     console.log(this.replyArray);
   }
 
   submitReply(){
+    if(this.replyBody == ""){
+      //this.message = "Can not reply with an empty body";
+      return;
+    }
+
     this.proS.replyEntry(this.entryId, this.replyBody).subscribe(
       (reply:any)=>{
         console.log("reply sent");
+        location.reload();
       },
       ()=>{
         console.log("No information");
