@@ -29,5 +29,7 @@ export class PortalService {
     return this.http.post("http://localhost:8080/professional/register",bodyR,{withCredentials: true}) as Observable<any>;
   }
 
-
+  getUsernamesEmails():Observable<any>{
+    return this.http.get("http://localhost:8080/usernames-and-emails",{withCredentials: true}) as Observable<any>;
+  }
 }
