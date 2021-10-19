@@ -238,7 +238,7 @@ public class PatientService {
 			}
 			
 			// get professional's name
-			Professional professional = patientRepository.getById(patientId).getProfessional();
+			Professional professional = patientRepository.findById(patientId).get().getProfessional();
 			if (professional == null) {
 				return "none";
 			}

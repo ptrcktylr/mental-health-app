@@ -79,10 +79,26 @@ public class AllTests {
 
 	}
 	
-
+	@Test
+	@DisplayName("test of getting patient")
+	@Order(3)
+	public void testGetPatient() {
+		
+		int patientId = 1;
+		Patient patient = patientService.getPatient(patientId);
+		
+		assertEquals("Tom", patient.getUsername());
+		assertEquals("p@ssw0rd", patient.getPassword());
+		assertEquals("Tom", patient.getFirstName());
+		assertEquals("Lee", patient.getLastName());
+		assertEquals("tom@example.com", patient.getEmail());
+	}
+	
+	
+	
 	@Test
 	@DisplayName("test of registering professional")
-	@Order(3)
+	@Order(4)
 	public void testRegisterProfessional() { 
 		
 		Professional professional = professionalService.registerProfessional(new Professional("Jane", "p@ssw0rd", "Jane", "Lee", "jane@example.com"));
@@ -99,7 +115,7 @@ public class AllTests {
 
 	@Test
 	@DisplayName("test of logging professional in")
-	@Order(4)
+	@Order(5)
 	public void testLoginProfessional() { 
 		
 		Professional professional = loginService.loginProfessional(new LoginDTO("Jane", "p@ssw0rd"));
@@ -112,7 +128,7 @@ public class AllTests {
 
 	@Test
 	@DisplayName("test of posting a new patient entry")
-	@Order(5)
+	@Order(6)
 	public void testAddEntry() {
 			
 		Entry entry1 = new Entry("diary1", "I am sad yesterday", new Date(), false, "negative", -1, null, null);
@@ -145,7 +161,7 @@ public class AllTests {
 	
 	@Test
 	@DisplayName("test of getting all entries of a patient")
-	@Order(6)
+	@Order(7)
 	public void testGetMyEntries() {
 		
 		int patientId = 1;
@@ -159,7 +175,7 @@ public class AllTests {
 	
 	@Test
 	@DisplayName("test of getting a single entry of a patient")
-	@Order(7)
+	@Order(8)
 	public void testGetEntry() {
 		
 		 try {
@@ -182,7 +198,7 @@ public class AllTests {
 	
 	@Test
 	@DisplayName("test of getting all publi entries of a patient")
-	@Order(8)
+	@Order(9)
 	public void testGetPatientAllPublicEntries() {
 		
 		int patientId = 1;
@@ -197,7 +213,7 @@ public class AllTests {
 	
 	@Test
 	@DisplayName("test of adding a patient to a professional's assigned patients")
-	@Order(9)
+	@Order(10)
 	public void testAddAssignedPatient() {
 		
 		int patientId = 1; 
@@ -209,8 +225,21 @@ public class AllTests {
 	
 	
 	@Test
+	@DisplayName("test of getting assigned professional of the patient")
+	@Order(11)
+	public void testGetAssignedProfessional() {
+		
+		int patientId = 1;
+		System.out.println(patientService.getAssignedProfessional(patientId));
+		assertEquals("Jane Lee",patientService.getAssignedProfessional(patientId));
+	}
+	
+	
+	
+	
+	@Test
 	@DisplayName("test of adding reply to entry with id entry_id (if entry is public or entry belongs to logged in patient)")
-	@Order(10)
+	@Order(12)
 	public void testAddPatientReply(){
 		
 		int entryId = 1;
@@ -226,7 +255,7 @@ public class AllTests {
 	
 	@Test
 	@DisplayName("test for adding reply to this entry (if private entry, the author [patient] must be assigned to the logged in professional")
-	@Order(11)
+	@Order(13)
 	public void testAddProfessionalReply() {
 				
 		Reply reply = new Reply("Reply from profeesional1", new Date(), null, null, null);
@@ -245,7 +274,7 @@ public class AllTests {
 	
 	@Test
 	@DisplayName("test for getting all patients who are not assigned a professional")
-	@Order(12)
+	@Order(14)
 	public void testGetUnassignedPatients() {
 		
 		int professionalId = 1;
@@ -258,7 +287,7 @@ public class AllTests {
 	
 	@Test
 	@DisplayName("test for getting all entries from patient with id patient_id (if logged in professional is assigned to patient)")
-	@Order(13)
+	@Order(15)
 	public void testGetAllThisPatientsEntries() {
 		
 		int patientId = 1;
@@ -271,7 +300,7 @@ public class AllTests {
 	
 	@Test
 	@DisplayName("test for getting all public entries from a professional")
-	@Order(14)
+	@Order(16)
 	public void testGetProfessionalAllPublicEntries() {
 		
 		int professionalId = 1;
@@ -284,7 +313,7 @@ public class AllTests {
 	
 	@Test
 	@DisplayName("test for getting entry with id entry_id (if entry is private, logged in professional must be assigned to patient")
-	@Order(15)
+	@Order(17)
 	public void testGetEntryFromPatient() {
 		
 		int entryId = 1;
@@ -303,7 +332,7 @@ public class AllTests {
 	
 	@Test
 	@DisplayName("test for deleting patient reply with id reply_id (if reply belongs to logged in patient)")
-	@Order(16)
+	@Order(18)
 	public void testDeleteReply() {
 		
 		int replyId = 1;
@@ -316,7 +345,7 @@ public class AllTests {
 	
 	@Test
 	@DisplayName("test for deleting patient entry with id entry_id (if entry belongs to logged in patient)")
-	@Order(17)
+	@Order(19)
 	public void testDeleteEntry() {
 		
 		int entryId = 2;
@@ -329,7 +358,7 @@ public class AllTests {
 	
 	@Test
 	@DisplayName("test for removing a patient from logged in professional (patient must be assigned to logged in professional)")
-	@Order(18)
+	@Order(20)
 	public void testRemoveAssignedPatient() {
 		
 		int patientId = 1;
