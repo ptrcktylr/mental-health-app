@@ -50,4 +50,20 @@ public class ServiceLibrary {
 	public boolean doesPatientHaveProfessional(Professional p, int patid) {
 		return p != null;
 	}
+	
+	public boolean doesPatientExist(Patient patient) {
+		return patient != null;
+	}
+	
+	public boolean doesProfessionalExist(Professional pro) {
+		return pro != null;
+	}
+	
+	public boolean doesPatientAndProfessionalNotExist(Patient patient, Professional pro, String username) {
+		return !doesPatientExist(patient) && !doesProfessionalExist(pro);
+	}
+	
+	public boolean doesPatientAndProfessionalExist(Patient patient, Professional pro) {
+		return doesPatientExist(patient) && doesProfessionalExist(pro);
+	}
 }

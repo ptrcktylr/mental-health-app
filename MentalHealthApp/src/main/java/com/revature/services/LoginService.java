@@ -126,22 +126,22 @@ public class LoginService {
 			Professional professional = professionalRepository.validLogin(userDTO.getUsername(), userDTO.getPassword());
 			
 			// if patient and professional are null, no user with those credentials exist
-			if (patient == null && professional == null) {
-				System.out.println("No user with username " + userDTO.getUsername() + " & password exists!");
+			if (sl.doesPatientAndProfessionalNotExist(patient, professional, userDTO.getUsername())) {
+				//System.out.println("No user with username " + userDTO.getUsername() + " & password exists!");
 				return null;
 			// if patient and professional are both not null, there's two users with the same info
-			} else if (patient != null && professional != null) {
-				System.out.println("Two users with the same login info exist!");
+			} else if (sl.doesPatientAndProfessionalExist(patient, professional)) {
+				//System.out.println("Two users with the same login info exist!");
 				return null;
 			// if patient is null, set professional on the DTO and return the DTO
-			} else if (patient == null) {
-				System.out.println("Logged professional in!");
+			} else if (!sl.doesPatientExist(patient)) {
+				//System.out.println("Logged professional in!");
 				userDTO.setProfessional(professional);
 				userDTO.setAccountType("Professional");
 				return userDTO;
 			// if professional is null, set patient on the DTO and return the DTO
 			} else {
-				System.out.println("Logged patient in!");
+				//System.out.println("Logged patient in!");
 				userDTO.setPatient(patient);
 				userDTO.setAccountType("Patient");
 				return userDTO;

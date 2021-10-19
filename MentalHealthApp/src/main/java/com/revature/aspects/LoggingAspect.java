@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.revature.models.Entry;
+import com.revature.models.LoginDTO;
 import com.revature.models.Patient;
 import com.revature.models.Professional;
 import com.revature.models.Reply;
@@ -79,7 +80,7 @@ public class LoggingAspect {
 			}
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
+		log.warn(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
 	}
 	
 	// ------------------------------ Patient Controller ----------------------------------------------
@@ -98,7 +99,7 @@ public class LoggingAspect {
 			}
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
+		log.warn(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
 	}
 	
 	// methods that return Entries
@@ -115,7 +116,7 @@ public class LoggingAspect {
 			}
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
+		log.warn(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
 	}
 	
 	// methods that return Patients
@@ -132,7 +133,7 @@ public class LoggingAspect {
 			}
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
+		log.warn(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
 	}
 	
 	// methods that return Replies
@@ -149,7 +150,7 @@ public class LoggingAspect {
 			}
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
+		log.warn(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
 	}
 	
 	// methods that return Booleans
@@ -166,7 +167,7 @@ public class LoggingAspect {
 			}
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
+		log.warn(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
 	}
 	
 	// ------------------------------ Professional Controller ------------------------------------------
@@ -184,7 +185,7 @@ public class LoggingAspect {
 			}
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
+		log.warn(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
 	}
 	
 	@AfterReturning(pointcut="execution(* com.revature.controllers.ProfessionalController.*(..))", returning="returnedObject")
@@ -200,7 +201,7 @@ public class LoggingAspect {
 			}
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
+		log.warn(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
 	}
 	
 	@AfterReturning(pointcut="execution(* com.revature.controllers.ProfessionalController.*(..))", returning="returnedObject")
@@ -216,7 +217,7 @@ public class LoggingAspect {
 			}
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
+		log.warn(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
 	}
 	
 	@AfterReturning(pointcut="execution(* com.revature.controllers.ProfessionalController.*(..))", returning="returnedObject")
@@ -232,7 +233,7 @@ public class LoggingAspect {
 			}
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
+		log.warn(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
 	}
 	
 	@AfterReturning(pointcut="execution(* com.revature.controllers.ProfessionalController.*(..))", returning="returnedObject")
@@ -248,7 +249,7 @@ public class LoggingAspect {
 			}
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
+		log.warn(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
 	}
 	
 	@AfterReturning(pointcut="execution(* com.revature.controllers.ProfessionalController.*(..))", returning="returnedObject")
@@ -264,7 +265,7 @@ public class LoggingAspect {
 			}
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
+		log.warn(jp.getSignature() + " ----- FAILED - " + returnedObject.getStatusCode());
 	}
 	
 	// --------------------------------------------- Controller 'Library' ------------------------------------------------------------
@@ -287,7 +288,7 @@ public class LoggingAspect {
 			return;
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED");
+		log.warn(jp.getSignature() + " ----- FAILED");
 	}
 	
 	@AfterReturning(pointcut="execution(* com.revature.services.LoginService.*(..))", returning="returnedObject")
@@ -298,13 +299,13 @@ public class LoggingAspect {
 			return;
 		}
 		
-		log.info(jp.getSignature() + " ----- FAILED");
+		log.warn(jp.getSignature() + " ----- FAILED");
 	}
 	
 	@AfterReturning(pointcut="execution(* com.revature.services.LoginService.*(..))", returning="returnedObject")
 	public void logLoginServiceListString(JoinPoint jp, List<List<String>> returnedObject) {
 		if(returnedObject == null) {
-			log.info(jp.getSignature() + " ----- FAILED");
+			log.warn(jp.getSignature() + " ----- FAILED");
 		}
 		else {
 			log.info(jp.getSignature() + " ----- SUCCESSFUL");
@@ -313,7 +314,12 @@ public class LoggingAspect {
 	
 	@AfterThrowing(pointcut="execution(* com.revature.services.LoginService.*(..))", throwing="thrownException")
 	public void logLoginServiceException(JoinPoint jp, Exception thrownException) {
-		log.info(jp.getSignature() + " threw an exception: " + thrownException.getClass());
+		log.warn(jp.getSignature() + " threw an exception: " + thrownException.getClass());
+	}
+	
+	@AfterReturning(pointcut="execution(* com.revature.services.LoginService.loginUser(..))", returning="returnedObject")
+	public void logLoginServiceLogin(JoinPoint jp, LoginDTO returnedObject) {
+		log.info(jp.getSignature() + " ----- " + returnedObject.getAccountType().toUpperCase() + " LOGGED IN");
 	}
 	
 	// --------------------------------------------- Patient Service --------------------------------------------------------------
@@ -322,7 +328,7 @@ public class LoggingAspect {
 	public void logPatientServiceRegister(JoinPoint jp, Patient returnedObject) {
 		
 		if(returnedObject == null) {
-			log.info(jp.getSignature() + " ----- FAILED");
+			log.warn(jp.getSignature() + " ----- FAILED");
 		}
 		else {
 			log.info(jp.getSignature() + " ----- SUCCESSFUL");
@@ -333,7 +339,7 @@ public class LoggingAspect {
 	public void logPatientServiceEntry(JoinPoint jp, Entry returnedObject) {
 		
 		if(returnedObject == null) {
-			log.info(jp.getSignature() + " ----- FAILED");
+			log.warn(jp.getSignature() + " ----- FAILED");
 		}
 		else {
 			log.info(jp.getSignature() + " ----- SUCCESSFUL");
@@ -344,7 +350,7 @@ public class LoggingAspect {
 	public void logPatientServiceListEntry(JoinPoint jp, List<Entry> returnedObject) {
 		
 		if(returnedObject == null) {
-			log.info(jp.getSignature() + " ----- FAILED");
+			log.warn(jp.getSignature() + " ----- FAILED");
 		}
 		else {
 			log.info(jp.getSignature() + " ----- SUCCESSFUL");
@@ -355,10 +361,10 @@ public class LoggingAspect {
 	public void logPatientServiceDeleteEntry(JoinPoint jp, Boolean returnedBool) {
 		
 		if(returnedBool == false) {
-			log.info(jp.getSignature() + " ----- FAILED");
+			log.warn(jp.getSignature() + " ----- FAILED");
 		}
 		else {
-			log.info("ENTRY WITH ID: " + jp.getArgs()[0] + " SUCESSFULLY DELETED");
+			log.warn("ENTRY WITH ID: " + jp.getArgs()[0] + " SUCESSFULLY DELETED");
 			log.info(jp.getSignature() + " ----- SUCCESSFUL");
 		}
 	}
@@ -367,10 +373,10 @@ public class LoggingAspect {
 	public void logPatientServiceDeleteReply(JoinPoint jp, Boolean returnedBool) {
 		
 		if(returnedBool == false) {
-			log.info(jp.getSignature() + " ----- FAILED");
+			log.warn(jp.getSignature() + " ----- FAILED");
 		}
 		else {
-			log.info("REPLY WITH ID: " + jp.getArgs()[0] + " SUCESSFULLY DELETED");
+			log.warn("REPLY WITH ID: " + jp.getArgs()[0] + " SUCESSFULLY DELETED");
 			log.info(jp.getSignature() + " ----- SUCCESSFUL");
 		}
 	}
@@ -381,7 +387,7 @@ public class LoggingAspect {
 	public void logProfessionalServiceRegister(JoinPoint jp, Professional returnedObject) {
 		
 		if(returnedObject == null) {
-			log.info(jp.getSignature() + " ----- FAILED");
+			log.warn(jp.getSignature() + " ----- FAILED");
 		}
 		else {
 			log.info(jp.getSignature() + " ----- SUCCESSFUL");
@@ -392,7 +398,7 @@ public class LoggingAspect {
 	public void logProfessionalServiceListPatient(JoinPoint jp, List<Patient> returnedObject) {
 		
 		if(returnedObject == null) {
-			log.info(jp.getSignature() + " ----- FAILED");
+			log.warn(jp.getSignature() + " ----- FAILED");
 		}
 		else {
 			log.info(jp.getSignature() + " ----- SUCCESSFUL");
@@ -403,7 +409,7 @@ public class LoggingAspect {
 	public void logProfessionalServiceListEntry(JoinPoint jp, List<Entry> returnedObject) {
 		
 		if(returnedObject == null) {
-			log.info(jp.getSignature() + " ----- FAILED");
+			log.warn(jp.getSignature() + " ----- FAILED");
 		}
 		else {
 			log.info(jp.getSignature() + " ----- SUCCESSFUL");
@@ -413,10 +419,10 @@ public class LoggingAspect {
 	@AfterReturning(pointcut="execution(* com.revature.services.ProfessionalService.deleteReply(..))", returning="returnedBool") 
 	public void logProfessionalServiceDeleteReply(JoinPoint jp, Boolean returnedBool) {
 		if(returnedBool == false) {
-			log.info(jp.getSignature() + " ----- FAILED");
+			log.warn(jp.getSignature() + " ----- FAILED");
 		}
 		else {
-			log.info("REPLY WITH ID: " + jp.getArgs()[0] + " SUCESSFULLY DELETED");
+			log.warn("REPLY WITH ID: " + jp.getArgs()[0] + " SUCESSFULLY DELETED");
 			log.info(jp.getSignature() + " ----- SUCCESSFUL");
 		}
 	}
@@ -424,7 +430,7 @@ public class LoggingAspect {
 	@AfterReturning(pointcut="execution(* com.revature.services.ProfessionalService.*(..))", returning="returnedObject") 
 	public void logProfessionalServiceEntry(JoinPoint jp, Entry returnedObject) {
 		if(returnedObject == null) {
-			log.info(jp.getSignature() + " ----- FAILED");
+			log.warn(jp.getSignature() + " ----- FAILED");
 		}
 		else {
 			log.info(jp.getSignature() + " ----- SUCCESSFUL");
@@ -435,7 +441,7 @@ public class LoggingAspect {
 	public void logProfessionalServiceReply(JoinPoint jp, Reply returnedObject) {
 		
 		if(returnedObject == null) {
-			log.info(jp.getSignature() + " ----- FAILED");
+			log.warn(jp.getSignature() + " ----- FAILED");
 		}
 		else {
 			log.info(jp.getSignature() + " ----- SUCCESSFUL");
@@ -445,7 +451,7 @@ public class LoggingAspect {
 	@AfterThrowing(pointcut="execution(* com.revature.services.ProfessionalService.*(..))", throwing="returnedException") 
 	public void logProfessionalServiceReplyError(JoinPoint jp, Exception returnedException) {
 		
-		log.info(jp.getSignature() + " ----- FAILED");
+		log.warn(jp.getSignature() + " ----- FAILED");
 	}
 	
 	// ----------------------------------------- Service 'Library' -----------------------------------------------------------------
@@ -454,7 +460,7 @@ public class LoggingAspect {
 	public void logIsLoggedInPatientNull(JoinPoint pjp, boolean returnedBool) {
 		
 		if(returnedBool == true) {
-			log.info(pjp.getSignature() + " ----- FAILED TO LOGIN PATIENT WITH USERNAME: " + pjp.getArgs()[1]);
+			log.warn(pjp.getSignature() + " ----- FAILED TO LOGIN PATIENT WITH USERNAME: " + pjp.getArgs()[1]);
 		}
 		
 	}
@@ -463,7 +469,7 @@ public class LoggingAspect {
 	public void logIsLoggedInProfessionalNull(JoinPoint pjp, boolean returnedBool) {
 		
 		if(returnedBool == true) {
-			log.info(pjp.getSignature() + " ----- FAILED TO LOGIN PROFESSIONAL WITH USERNAME: " + pjp.getArgs()[1]);
+			log.warn(pjp.getSignature() + " ----- FAILED TO LOGIN PROFESSIONAL WITH USERNAME: " + pjp.getArgs()[1]);
 		}
 		
 	}
@@ -493,7 +499,7 @@ public class LoggingAspect {
 		Entry entry = (Entry)pjp.getArgs()[0];
 		// if the ids dont match
 		if(entry.getPatient().getId() != (int)pjp.getArgs()[1]) {
-			log.info(pjp.getSignature() + " ----- ENTRY WITH ID: " + pjp.getArgs()[0] + " DOESN'T BELONG TO PATIENT WITH ID: " + pjp.getArgs()[1]);
+			log.warn(pjp.getSignature() + " ----- ENTRY WITH ID: " + pjp.getArgs()[0] + " DOESN'T BELONG TO PATIENT WITH ID: " + pjp.getArgs()[1]);
 			return false;
 		}
 		
@@ -505,7 +511,7 @@ public class LoggingAspect {
 		
 		// if the ids dont match
 		if((int)pjp.getArgs()[0] != (int)pjp.getArgs()[1]) {
-			log.info(pjp.getSignature() + " ----- REPLY WITH ID: " + pjp.getArgs()[0] + " DOESN'T BELONG TO PATIENT WITH ID: " + pjp.getArgs()[1]);
+			log.warn(pjp.getSignature() + " ----- REPLY WITH ID: " + pjp.getArgs()[0] + " DOESN'T BELONG TO PATIENT WITH ID: " + pjp.getArgs()[1]);
 			
 			return false;
 		}
@@ -518,7 +524,7 @@ public class LoggingAspect {
 		
 		// if the patient is not logged in
 		if(!returnedBool) {
-			log.info(jp.getSignature() + " ----- PROFESSIONAL NOT LOGGED IN");
+			log.warn(jp.getSignature() + " ----- PROFESSIONAL NOT LOGGED IN");
 		}
 	}
 	
@@ -526,7 +532,7 @@ public class LoggingAspect {
 	public void logIsPatientAssignedToProfessional(JoinPoint jp, boolean returnedBool) {
 		// if the patient is not logged in
 		if(!returnedBool) {
-			log.info(jp.getSignature() + " ----- PROFESSIONAL WITH ID: " + jp.getArgs()[1] + " IS NOT ASSIGNED TO PATIENT WITH ID: " + jp.getArgs()[2]);
+			log.warn(jp.getSignature() + " ----- PROFESSIONAL WITH ID: " + jp.getArgs()[1] + " IS NOT ASSIGNED TO PATIENT WITH ID: " + jp.getArgs()[2]);
 		}
 	}
 	
@@ -535,6 +541,44 @@ public class LoggingAspect {
 		// if the patient does not have a professional assigned to them
 		if(!returnedBool) {
 			log.info(jp.getSignature() + " ----- PATIENT WITH ID: " + jp.getArgs()[1] + " DOES NOT HAVE AN ASSIGNED PROFESSIONAL");
+		}
+	}
+
+	@AfterReturning(pointcut=("execution(* com.revature.services.ServiceLibrary.doesPatientExist(..))"), returning="returnedBool") 
+	public void logDoesPatientExist(JoinPoint jp, boolean returnedBool) {
+		
+		if(returnedBool) {
+			log.info(jp.getSignature() + " ----- PATIENT LOGIN INFO EXISTS");
+		}
+		else {
+			log.info(jp.getSignature() + " PATIENT WITH GIVEN LOGIN INFO DOES NOT EXIST");
+		}
+	}
+	
+	@AfterReturning(pointcut=("execution(* com.revature.services.ServiceLibrary.doesProfessionalExist(..))"), returning="returnedBool") 
+	public void logDoesProfessionalExist(JoinPoint jp, boolean returnedBool) {
+		
+		if(returnedBool) {
+			log.info(jp.getSignature() + " ----- PROFESSIONAL LOGIN INFO EXISTS");
+		}
+		else {
+			log.info(jp.getSignature() + " PROFESSIONAL WITH GIVEN LOGIN INFO DOES NOT EXIST");
+		}
+	}
+	
+	@AfterReturning(pointcut=("execution(* com.revature.services.ServiceLibrary.doesPatientAndProfessionalNotExist(..))"), returning="returnedBool") 
+	public void logDoesPatientAndProfessionalNotExist(JoinPoint jp, boolean returnedBool) {
+		
+		if(returnedBool) {
+			log.warn(jp.getSignature() + " NO ACCOUNT WITH THE USERNAME " + jp.getArgs()[2] +" EXISTS");
+		}
+	}
+	
+	@AfterReturning(pointcut=("execution(* com.revature.services.ServiceLibrary.doesPatientAndProfessionalExist(..))"), returning="returnedBool") 
+	public void logDoesPatientAndProfessionalExist(JoinPoint jp, boolean returnedBool) {
+		
+		if(returnedBool) {
+			log.warn(jp.getSignature() + " ----- TWO USERS WITH THE GIVEN LOGIN INFO EXIST");
 		}
 	}
 }
