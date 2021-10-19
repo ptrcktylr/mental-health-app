@@ -197,4 +197,39 @@ public class PatientController {
 			return ResponseEntity.status(400).body(deletedSuccessfully);
 		}
 	}
+	
+	@GetMapping("my-professional")
+	public ResponseEntity<String> getMyProfessional(HttpSession session) {
+		
+		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
+		
+		String professionalName = patientService.getAssignedProfessional(loggedInPatientId);
+		
+		if (professionalName == null) {
+			return ResponseEntity.status(401).body(null);
+		} else {
+			return ResponseEntity.status(200).body(professionalName);
+		}
+		
+	}
+	
+	@GetMapping("my-info")
+	public ResponseEntity<Patient> getMyInfo(HttpSession session) {
+		
+		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
+		
+		if (ch.isIdNull(loggedInPatientId)) {
+			return ResponseEntity.status(401).body(null);
+		}
+		
+		Patient patient = patientService.getPatient(loggedInPatientId);
+		
+		if (patient == null) {
+			return ResponseEntity.status(401).body(null);
+		} else {
+			return ResponseEntity.status(200).body(patient);
+		}
+		
+	}
+	
 }

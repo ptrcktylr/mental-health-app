@@ -12,6 +12,7 @@ import com.revature.daos.ProfessionalRepository;
 import com.revature.daos.ReplyRepository;
 import com.revature.models.Entry;
 import com.revature.models.Patient;
+import com.revature.models.Professional;
 import com.revature.models.Reply;
 
 @Service
@@ -225,6 +226,47 @@ public class PatientService {
 			System.out.println("Failed to delete reply with id: " + replyId 
 					+ " as patient with id: " + patientId);
 			return false;
+		}
+	}
+	
+	// get assigned professional
+	public String getAssignedProfessional(int patientId) {
+		try {
+			// if patient not logged in
+			if (!sl.isPatientLoggedIn(patientId)) {
+				return null;
+			}
+			
+			// get professional's name
+			Professional professional = patientRepository.getById(patientId).getProfessional();
+			if (professional == null) {
+				return "none";
+			}
+			
+			return professional.getFirstName() + " " + professional.getLastName();
+			
+		} catch (Exception exception) {
+			System.out.println("Failed to get assigned professional from patient with id: " + patientId);
+			return null;
+		}
+	}
+	
+	// get patient object from id
+	public Patient getPatient(int patientId) {
+		try {
+			if (!sl.isPatientLoggedIn(patientId)) {
+				return null;
+			}
+			
+			// get the patient with the id patientId
+			Patient patient = patientRepository.findById(patientId).get();
+			
+			// return
+			return patient;
+			
+		} catch (Exception exception) {
+			System.out.println("Failed to get patient with id: " + patientId);
+			return null;
 		}
 	}
 	
