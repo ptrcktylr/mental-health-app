@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.revature.daos.EntryRepository;
 import com.revature.daos.PatientRepository;
+import com.revature.daos.ProfessionalRepository;
 import com.revature.daos.ReplyRepository;
 import com.revature.models.Entry;
 import com.revature.models.Patient;
@@ -19,16 +20,19 @@ public class PatientService {
 	private PatientRepository patientRepository;
 	private EntryRepository entryRepository;
 	private ReplyRepository replyRepository;
+	private ProfessionalRepository professionalRepository;
 	
 	private ServiceLibrary sl;
 	
 	@Autowired
 	public PatientService(PatientRepository patientRepository, 
+						  ProfessionalRepository professionalRepository,
 						  EntryRepository entryRepository,
 						  ReplyRepository replyRepository,
 						  ServiceLibrary sl
 						  ) {
 		this.patientRepository = patientRepository;
+		this.professionalRepository = professionalRepository;
 		this.entryRepository = entryRepository;
 		this.replyRepository = replyRepository;
 		this.sl = sl;
@@ -37,6 +41,12 @@ public class PatientService {
 	// register new user
 	public Patient registerPatient(Patient patient) {
 		try {
+			if (professionalRepository.findProfessionalWithExistingEmail(patient.getEmail()) != null 
+			 || professionalRepository.findProfessionalWithExistingUsername(patient.getUsername()) != null) 
+			{
+				System.out.println("A professional with the same username or email exists already!");
+				return null;
+			}
 			return patientRepository.save(patient);
 		} catch (Exception exception) {
 			System.out.println("Failed to register new patient");
@@ -214,7 +224,6 @@ public class PatientService {
 		} catch (Exception exception) {
 			System.out.println("Failed to delete reply with id: " + replyId 
 					+ " as patient with id: " + patientId);
-			exception.printStackTrace();
 			return false;
 		}
 	}

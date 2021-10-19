@@ -41,7 +41,7 @@ public class Professional {
 	@OneToMany(mappedBy="professional", fetch=FetchType.EAGER)
 	@JsonIgnore
 	private List<Reply> replies;
-
+	
 	public Professional() {
 		super();
 	}
@@ -130,7 +130,7 @@ public class Professional {
 	public void setReplies(List<Reply> replies) {
 		this.replies = replies;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

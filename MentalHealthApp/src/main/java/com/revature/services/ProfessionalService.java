@@ -44,6 +44,14 @@ public class ProfessionalService {
 	// register professional
 	public Professional registerProfessional(Professional professional) {
 		try {
+			// check if patients have the same username/email
+			if (patientRepository.findPatientWithExistingEmail(professional.getEmail()) != null 
+			 || patientRepository.findPatientWithExistingUsername(professional.getUsername()) != null) 
+			{
+				System.out.println("A patient with the same username or email exists already!");
+				return null;
+			}
+			
 			return professionalRepository.save(professional);
 		} catch (Exception exception) {
 			System.out.println("Failed to register new professional");

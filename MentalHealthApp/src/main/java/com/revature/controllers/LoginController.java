@@ -64,6 +64,31 @@ public class LoginController {
 		}
 	}
 	
+	@PostMapping("/login")
+	public ResponseEntity<LoginDTO> login(@RequestBody LoginDTO user, HttpSession session) {
+		
+		LoginDTO loggedInUser = loginService.loginUser(user);
+		
+		if (loggedInUser == null) {
+			// clear session attributes
+			session.setAttribute("patient_id", null);
+			session.setAttribute("professional_id", null);
+			return ResponseEntity.status(401).body(null);
+			
+		} else if (loggedInUser.getPatient() == null) {
+			// log professional in
+			session.setAttribute("patient_id", null);
+			session.setAttribute("professional_id", loggedInUser.getProfessional().getId());
+			return ResponseEntity.status(200).body(loggedInUser);
+			
+		} else {
+			// log patient in
+			session.setAttribute("patient_id", loggedInUser.getPatient().getId());
+			session.setAttribute("professional_id", null);
+			return ResponseEntity.status(200).body(loggedInUser);
+		}
+	}
+	
 	@PostMapping("/logout")
 	public ResponseEntity<Boolean> logout(HttpSession session) {
 		

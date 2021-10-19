@@ -18,4 +18,9 @@ public interface ProfessionalRepository extends JpaRepository<Professional, Inte
 	@Query("SELECT P.email FROM Professional P")
 	public List<String> getAllEmails();
 	
+	@Query("FROM Professional P WHERE P.username=?1")
+	public Professional findProfessionalWithExistingUsername(String username);
+	
+	@Query("FROM Professional P WHERE P.email=?1")
+	public Professional findProfessionalWithExistingEmail(String email);
 }
