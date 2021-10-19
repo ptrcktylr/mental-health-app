@@ -1,6 +1,21 @@
 <app-patient-nav></app-patient-nav>
 
 <br>
+<!-- Tags section -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-3">
+            <div id = "tagOption" class="card my-card">
+                <div class="card-body">
+                    <div (click)="changeIntroTag()">{{introTag}}</div>
+                    <div (click)="changeCoroTag()">{{coroTag}}</div>
+                    <div (click)="changeExpTag()">{{experienceTag}}</div>
+                    <div (click)="changeHelpTag()">{{helpTag}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container mt-5">
       <div class="row justify-content-center">
@@ -61,20 +76,4 @@
               </div>
           </div>
       </div>
-</div>
-
-<!-- Tags section -->
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-sm-3">
-            <div id = "tagOption" class="card my-card">
-                <div class="card-body">
-                    <div (click)="changeIntroTag()">{{introTag}}</div>
-                    <div (click)="changeCoroTag()">{{coroTag}}</div>
-                    <div (click)="changeExpTag()">{{experienceTag}}</div>
-                    <div (click)="changeHelpTag()">{{helpTag}}</div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>

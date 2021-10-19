@@ -28,7 +28,7 @@ export class PatientNewComponent implements OnInit {
   public introTag = "introduction";
   public coroTag = "coronavirus";
   public helpTag = "healthhelp";
-  public experienceTag = "healthexperience"
+  public experienceTag = "healthexperience";
 
 
   constructor(private das:DeepaiApiService, private sps: SentpackService, private cookie:CookieService, private route:Router,private patS:PatientService) { }
