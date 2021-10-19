@@ -36,6 +36,13 @@ export class RegisterComponent implements OnInit {
       //check that email is unique
       // if email isn't unique, this.error = "Email already in use."
       //code to create new user, then go back to login
+      let proUser ={
+        email:this.email,
+        firstName: this.fname, 
+        lastName: this.lname,
+        password: this.password,
+        username: this.username
+      }
       let user ={
         username: this.username,
         password: this.password,
@@ -44,7 +51,7 @@ export class RegisterComponent implements OnInit {
         email: this.email
       }
       if(this.isP){
-        this.portal.professionalRegister(user).subscribe();
+        this.portal.professionalRegister(proUser).subscribe();
       }
       else{
         this.portal.patientRegister(user).subscribe();
