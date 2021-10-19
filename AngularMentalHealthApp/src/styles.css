@@ -1,5 +1,6 @@
 .my-navbar{
     background-color: rgb(124, 132, 148, .85);
+    position: sticky;
 }
 .my-card{
     background-color: rgb(124, 132, 148, .85);
