@@ -13,6 +13,16 @@ export class ViewPublicComponent implements OnInit {
 
   //proxy entries
   entryArray: any[] = [];
+  allEntryArray:any [] = [];
+
+  //fields for static tag helper
+  public tag = "";
+  public introTag = "introduction";
+  public coroTag = "coronavirus";
+  public helpTag = "healthhelp";
+  public experienceTag = "healthexperience";
+
+
 
   constructor(private cookie:CookieService, private route:Router,private patS:PatientService,private proS:ProfessionalService) { }
 
@@ -26,10 +36,11 @@ export class ViewPublicComponent implements OnInit {
 
     this.patS.getPublicEntries().subscribe(
       (allEntries:any)=>{
-        this.entryArray = allEntries;
-        let x = this.entryArray.sort((a:any, b:any) => (a.datePosted > b.datePosted) ? 1 : -1)
+        this.allEntryArray = allEntries;
+        let x = this.allEntryArray.sort((a:any, b:any) => (a.datePosted > b.datePosted) ? 1 : -1)
         console.log(x);
-        this.entryArray.reverse();
+        this.allEntryArray.reverse();
+        this.entryArray = this.allEntryArray;
         console.log(this.entryArray);
       },
       ()=>{
@@ -38,4 +49,36 @@ export class ViewPublicComponent implements OnInit {
     );
 
   }
+
+
+  //Changing tags
+  changeIntroTag(){
+    this.tag = this.introTag;
+  }
+  changeCoroTag(){
+    this.tag = this.coroTag;
+  }
+  changeExpTag(){
+    this.tag = this.experienceTag;
+  }
+  changeHelpTag(){
+    this.tag = this.helpTag;
+  }
+
+  filterByTag(){
+    if(this.tag ==""){
+      this.entryArray = this.allEntryArray;
+      return;
+    }
+    let tempArray: any[] = [];
+    this.allEntryArray.forEach(element => {
+      console.log(element.tag);
+      if(element.tag == this.tag){
+        tempArray.push(element);
+      }
+    });
+    console.log(tempArray);
+    this.entryArray = tempArray;
+  }
+
 }

@@ -15,10 +15,7 @@ export class PatientNavComponent implements OnInit {
   }
 
   logout():void{
-    if(this.cookie.check('username')){
-      this.cookie.delete('username');
-      this.cookie.delete('accountType');
-    }
+    this.cookie.deleteAll();
     this.route.navigate(['/login']);
   }
 

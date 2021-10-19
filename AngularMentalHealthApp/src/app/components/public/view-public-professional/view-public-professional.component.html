@@ -32,6 +32,28 @@
 </div> -->
 
 <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-3">
+            <div id = "tagOption" class="card my-card">
+                <div class="card-body">
+                    <div (click)="changeIntroTag()">{{introTag}}</div>
+                    <div (click)="changeCoroTag()">{{coroTag}}</div>
+                    <div (click)="changeExpTag()">{{experienceTag}}</div>
+                    <div (click)="changeHelpTag()">{{helpTag}}</div>
+                    <hr>
+                    <div>
+                        <div>
+                            <input name="pu_tag" id="pu_tag" cols="30" rows="3" class="form-control" placeholder="Tag"  [(ngModel)]="tag">
+                        </div>
+                        <button class="btn" (click)="filterByTag()">Filter by Tag</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
     <div class="row">
         <div class="col-lg">
             <div class="card shadow my-card">
@@ -58,8 +80,8 @@
                                     <h3>{{entry.title}}</h3>
                                     <div class="tab">{{entry.datePosted | date}}</div>
                                     <div class="tab">{{entry.patient.username}}</div>
+                                    <div class="tab">Tag: {{entry.tag}}</div>
                                     <div class="ellipsis">{{entry.body}}</div>
-                                    <div class="tab text-center">{{entry.tags}}</div>
                                 </td>
                                 <td>
                                     <img id="arrow" src="assets/arrow.png">

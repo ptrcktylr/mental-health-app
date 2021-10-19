@@ -12,6 +12,14 @@ import { ProfessionalService } from 'src/app/services/professional/professional.
 export class ViewPublicProfessionalComponent implements OnInit {
 
   entryArray: any[] = [];
+  allEntryArray:any[] = [];
+    //fields for static tag helper
+  public tag = "";
+  public introTag = "introduction";
+  public coroTag = "coronavirus";
+  public helpTag = "healthhelp";
+  public experienceTag = "healthexperience";
+
 
   constructor(private cookie:CookieService, private route:Router,private patS:PatientService,private proS:ProfessionalService) { }
 
@@ -25,8 +33,11 @@ export class ViewPublicProfessionalComponent implements OnInit {
 
     this.proS.getPublicEntries().subscribe(
       (allEntries:any)=>{
-        this.entryArray = allEntries;
-        this.entryArray.reverse();
+        this.allEntryArray = allEntries;
+        let x = this.allEntryArray.sort((a:any, b:any) => (a.datePosted > b.datePosted) ? 1 : -1)
+        console.log(x);
+        this.allEntryArray.reverse();
+        this.entryArray = this.allEntryArray;
         console.log(this.entryArray);
       },
       ()=>{
@@ -34,5 +45,37 @@ export class ViewPublicProfessionalComponent implements OnInit {
       }
     );
   }
+
+
+  //Changing tags
+  changeIntroTag(){
+    this.tag = this.introTag;
+  }
+  changeCoroTag(){
+    this.tag = this.coroTag;
+  }
+  changeExpTag(){
+    this.tag = this.experienceTag;
+  }
+  changeHelpTag(){
+    this.tag = this.helpTag;
+  }
+
+  filterByTag(){
+    if(this.tag ==""){
+      this.entryArray = this.allEntryArray;
+      return;
+    }
+    let tempArray: any[] = [];
+    this.allEntryArray.forEach(element => {
+      console.log(element.tag);
+      if(element.tag == this.tag){
+        tempArray.push(element);
+      }
+    });
+    console.log(tempArray);
+    this.entryArray = tempArray;
+  }
+  
 
 }
