@@ -38,9 +38,6 @@ export class PatientNewComponent implements OnInit {
 
   async addEntry():Promise<void>{
 
-    if(!(this.cookie.check('username') && this.cookie.get('accountType') == 'patient')){
-      this.route.navigate(['/login']);
-    }
     //Check if fields are filled
     if(this.validatePost() == false){
       this.message = "Body and Text fields must be filled"
@@ -63,15 +60,17 @@ export class PatientNewComponent implements OnInit {
 
     this.patS.postEntry(this.newPost).subscribe(
       (allEntries:any)=>{
-        console.log("Sent info")
+        console.log("Sent info");
+        this.renewPost();
+        console.log(this.newPost);
+        this.route.navigate(['/patient/history']);
       },
       ()=>{
         console.log("No information")
       }
     );
 
-    this.renewPost();
-    console.log(this.newPost);
+
     
   }
 
@@ -86,7 +85,7 @@ export class PatientNewComponent implements OnInit {
   }
 
   renewPost():void{
-    this.message = "Success Post";
+    this.message = "Successful Post";
     this.headerInput = "";
     this.bodyInput = "";
     this.tag = "";
