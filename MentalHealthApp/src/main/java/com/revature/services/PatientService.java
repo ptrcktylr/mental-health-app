@@ -139,7 +139,7 @@ public class PatientService {
 			
 			//System.out.println(entry);
 			// if entry is private and isn't this patients
-			if (!sl.isEntryPublicOwnedByPatient(entry, patientId)) {
+			if (!entry.isPublic() && !sl.isEntryOwnedByPatient(entry.getPatient().getId(), patientId)) {
 				//System.out.println("Patient with id: " + patientId + " can not reply to "
 				//		+ "private entry with id: " + entryId);
 				return null;
@@ -148,7 +148,7 @@ public class PatientService {
 			// set entry to this reply
 			reply.setEntry(entry);
 			// set patient to this reply
-			reply.setPatient(patientRepository.getById(patientId));
+			reply.setPatient(patientRepository.findById(patientId).get());
 			// set date posted
 			Date currentDate = new Date();
 			reply.setDatePosted(currentDate);

@@ -172,8 +172,7 @@ public class Reply {
 
 	@Override
 	public String toString() {
-		return "Reply [id=" + id + ", body=" + body + ", datePosted=" + datePosted + ", entry=" + entry + ", patient="
-				+ patient + ", professional=" + professional + "]";
+		return "Reply [id=" + id + ", body=" + body + ", datePosted=" + datePosted + ", entry=" + entry + "]";
 	}
 	
 }
