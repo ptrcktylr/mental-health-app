@@ -21,12 +21,15 @@
     <a class="nav-link normalWords" href="/professional/my-patients"> My Patients </a>
     <a class="nav-link normalWords" href="/professional/all-patients"> Add New Patient <span class="sr-only">(current)</span></a>
     <a class="nav-link normalWords" href="/view-public-professional"> Public <span class="sr-only">(current)</span></a>
-    <div class="nav-link normalWords ml-auto dropdown-container justify-content-center">
-        <p class="text-right">{{username}} <img class="downArrow" src="assets/arrow.png"></p>
-        <ul class="dropdown">
-            <li class="text-right">
-                <a class="nav-link normalWords" (click)="logout()"> LogOut <span class="sr-only">(current)</span></a>
-            </li>
-        </ul>
+    <div class="nav-link normalWords ml-auto dropdown-container justify-content-center" (mouseover)="showMenu=true">
+        <p class="text-right">{{name}} <img class="downArrow" src="assets/arrow.png"></p>
     </div>
 </nav>
+
+<div *ngIf="showMenu" class="text-right" (mouseover)="showMenu=true" (mouseleave)="showMenu=false">
+    <ul class="dropdown my-card">
+        <li class="text-right">
+            <a class="nav-link normalWords" (click)="logout()"> Logout <span class="sr-only">(current)</span></a>
+        </li>
+    </ul>
+</div>

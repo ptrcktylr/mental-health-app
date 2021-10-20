@@ -22,19 +22,24 @@ import com.revature.services.PatientService;
 
 @RestController
 @RequestMapping(value="/patient")
-@CrossOrigin(origins="http://localhost:4200/",allowCredentials="true")
+@CrossOrigin(origins="http://localhost:4200/", allowCredentials="true")
 public class PatientController {
 	
 	// patient service
 	private PatientService patientService;
 	
+	// controller 'library'
+	private ControllerLibrary ch;
+	
 	
 	// constructor injecting service
 	@Autowired
 	public PatientController(
-							 PatientService patientService
+							 PatientService patientService,
+							 ControllerLibrary ch
 							 ) {
 		this.patientService = patientService;
+		this.ch = ch;
 	}
 	
 	
@@ -56,7 +61,7 @@ public class PatientController {
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
 		// if patient not logged in
-		if (loggedInPatientId == null) {
+		if (ch.isIdNull(loggedInPatientId)) {
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -75,7 +80,7 @@ public class PatientController {
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
 		// if patient not logged in
-		if (loggedInPatientId == null) {
+		if (ch.isIdNull(loggedInPatientId)) {
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -96,8 +101,9 @@ public class PatientController {
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
 		// if the patient is not logged in return null
-		if (loggedInPatientId == null) {
-			System.out.println("Patient not logged in!");
+		//if (loggedInPatientId == null) {
+		if (ch.isIdNull(loggedInPatientId)) {
+			//System.out.println("Patient not logged in!");
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -116,8 +122,8 @@ public class PatientController {
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
 		// if the patient is not logged in return null
-		if (loggedInPatientId == null) {
-			System.out.println("Patient not logged in!");
+		if (ch.isIdNull(loggedInPatientId)) {
+			//System.out.println("Patient not logged in!");
 			return ResponseEntity.status(401).body(null);
 		}
 		
@@ -132,8 +138,8 @@ public class PatientController {
 		
 		// get current patient's id
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
-		if (loggedInPatientId == null) {
-			System.out.println("Patient not logged in!");
+		if (ch.isIdNull(loggedInPatientId)) {
+			//System.out.println("Patient not logged in!");
 			return ResponseEntity.status(401).build();
 		}
 		
@@ -155,8 +161,8 @@ public class PatientController {
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
 		// if patient is not logged in, return null
-		if (loggedInPatientId == null) {
-			System.out.println("Patient not logged in!");
+		if (ch.isIdNull(loggedInPatientId)) {
+			//System.out.println("Patient not logged in!");
 			return ResponseEntity.status(401).body(false);
 		}
 		
@@ -178,8 +184,8 @@ public class PatientController {
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
 		// if patient is not logged in, return null
-		if (loggedInPatientId == null) {
-			System.out.println("Patient not logged in!");
+		if (ch.isIdNull(loggedInPatientId)) {
+			//System.out.println("Patient not logged in!");
 			return ResponseEntity.status(401).body(false);
 		}
 		
@@ -191,4 +197,39 @@ public class PatientController {
 			return ResponseEntity.status(400).body(deletedSuccessfully);
 		}
 	}
+	
+	@GetMapping("my-professional")
+	public ResponseEntity<String> getMyProfessional(HttpSession session) {
+		
+		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
+		
+		String professionalName = patientService.getAssignedProfessional(loggedInPatientId);
+		
+		if (professionalName == null) {
+			return ResponseEntity.status(401).body(null);
+		} else {
+			return ResponseEntity.status(200).body(professionalName);
+		}
+		
+	}
+	
+	@GetMapping("my-info")
+	public ResponseEntity<Patient> getMyInfo(HttpSession session) {
+		
+		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
+		
+		if (ch.isIdNull(loggedInPatientId)) {
+			return ResponseEntity.status(401).body(null);
+		}
+		
+		Patient patient = patientService.getPatient(loggedInPatientId);
+		
+		if (patient == null) {
+			return ResponseEntity.status(401).body(null);
+		} else {
+			return ResponseEntity.status(200).body(patient);
+		}
+		
+	}
+	
 }

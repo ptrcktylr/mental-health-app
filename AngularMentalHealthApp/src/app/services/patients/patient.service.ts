@@ -30,4 +30,11 @@ export class PatientService {
     return this.http.post("http://localhost:8080/patient/entry",body,{withCredentials: true}) as Observable<any>;
   }
 
+  getMyProfessional():Observable<any>{
+    return this.http.get("http://localhost:8080/patient/my-professional",{withCredentials: true}) as Observable<any>;
+  }
+
+  getMyInfo():Observable<any>{
+    return this.http.get("http://localhost:8080/patient/my-info",{withCredentials: true}) as Observable<any>;
+  }
 }

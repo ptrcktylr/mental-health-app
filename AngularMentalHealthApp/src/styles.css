@@ -125,15 +125,29 @@ text {
 }
 
 .dropdown{
-    display: none;
+    /* display: none; */
     list-style-type:none;
+    position: absolute;
+    z-index: 1;
+    width: 16%;
+    left: 84%;
+    border-top-width: 1px;
+    border-top-color:#25282c;
+    border-top-style: solid;
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.dropdown:hover{
+/* .ddli{
+    padding: 0px;
+    margin: 0px;
+} */
+
+/*.dropdown:hover{
     display:contents;
     list-style-type:none;
 }
 
 .dropdown-container:hover .dropdown{
     display:contents;
-}
+} */
