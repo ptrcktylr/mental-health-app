@@ -8,3 +8,5 @@ Dependencies:
 * ng add ngx-bootstrap
 * npm install --save deepai
 * npm install sentiment
+* npm install angular-fusioncharts
+* npm install --save ngx-cookie-service
