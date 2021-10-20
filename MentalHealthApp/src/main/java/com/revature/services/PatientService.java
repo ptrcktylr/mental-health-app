@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.revature.daos.EntryRepository;
 import com.revature.daos.PatientRepository;
+import com.revature.daos.ProfessionalRepository;
 import com.revature.daos.ReplyRepository;
 import com.revature.models.Entry;
 import com.revature.models.Patient;
+import com.revature.models.Professional;
 import com.revature.models.Reply;
 
 @Service
@@ -19,20 +21,33 @@ public class PatientService {
 	private PatientRepository patientRepository;
 	private EntryRepository entryRepository;
 	private ReplyRepository replyRepository;
+	private ProfessionalRepository professionalRepository;
+	
+	private ServiceLibrary sl;
 	
 	@Autowired
 	public PatientService(PatientRepository patientRepository, 
+						  ProfessionalRepository professionalRepository,
 						  EntryRepository entryRepository,
-						  ReplyRepository replyRepository
+						  ReplyRepository replyRepository,
+						  ServiceLibrary sl
 						  ) {
 		this.patientRepository = patientRepository;
+		this.professionalRepository = professionalRepository;
 		this.entryRepository = entryRepository;
 		this.replyRepository = replyRepository;
+		this.sl = sl;
 	}
 	
 	// register new user
 	public Patient registerPatient(Patient patient) {
 		try {
+			if (professionalRepository.findProfessionalWithExistingEmail(patient.getEmail()) != null 
+			 || professionalRepository.findProfessionalWithExistingUsername(patient.getUsername()) != null) 
+			{
+				System.out.println("A professional with the same username or email exists already!");
+				return null;
+			}
 			return patientRepository.save(patient);
 		} catch (Exception exception) {
 			System.out.println("Failed to register new patient");
@@ -61,14 +76,15 @@ public class PatientService {
 	// get single entry
 	public Entry getEntry(int entryId, int patientId) {
 		try {
-			Entry entry = entryRepository.getById(entryId);
+			Entry entry = entryRepository.findById(entryId).get();
 			
 			// if it's private and if this entry doesn't belong to this patient return null
-			if (!entry.isPublic() && entry.getPatient().getId() != patientId) {
+			if (sl.isEntryPublic(entry) 
+			  || sl.isEntryOwnedByPatient(entry.getPatient().getId(), patientId)) {
+				return entry;
+			} else {
 				System.out.println("Entry with id: " + entryId + " doesn't belong to patient with id: " + patientId);
 				return null;
-			} else {
-				return entry;
 			}
 			
 		} catch (Exception exception) {
@@ -81,8 +97,8 @@ public class PatientService {
 	public List<Entry> getMyEntries(int patientId) {
 		try {
 			// if patient not logged in return null
-			if (patientId == 0) {
-				System.out.println("Patient not logged in");
+			if (!sl.isPatientLoggedIn(patientId)) {
+				//System.out.println("Patient not logged in");
 				return null;
 			}
 			// get all this patients entries
@@ -98,8 +114,8 @@ public class PatientService {
 	public List<Entry> getAllPublicEntries(int patientId) {
 		try {
 			// if patient not logged in
-			if (patientId == 0) {
-				System.out.println("Patient not logged in");
+			if (!sl.isPatientLoggedIn(patientId)) {
+				//System.out.println("Patient not logged in");
 				return null;
 			}
 			// get all public entries
@@ -114,17 +130,18 @@ public class PatientService {
 	public Reply addReply(Reply reply, int entryId, int patientId) {
 		try {
 			// if patient not logged in
-			if (patientId == 0) {
-				System.out.println("Patient not logged in");
+			if (!sl.isPatientLoggedIn(patientId)) {
+				//System.out.println("Patient not logged in");
 				return null;
 			}
+
+			Entry entry = entryRepository.findById(entryId).get();
 			
-			Entry entry = entryRepository.getById(entryId);
-			
+			//System.out.println(entry);
 			// if entry is private and isn't this patients
-			if (!entry.isPublic() && entry.getPatient().getId() != patientId) {
-				System.out.println("Patient with id: " + patientId + " can not reply to "
-						+ "private entry with id: " + entryId);
+			if (!sl.isEntryPublicOwnedByPatient(entry, patientId)) {
+				//System.out.println("Patient with id: " + patientId + " can not reply to "
+				//		+ "private entry with id: " + entryId);
 				return null;
 			}
 			
@@ -142,6 +159,7 @@ public class PatientService {
 		} catch (Exception exception) {
 			System.out.println("Failed to add reply to entry with id: " + entryId 
 									+ " as patient with id: " + patientId);
+			exception.printStackTrace();
 			return null;
 		}
 	}
@@ -150,23 +168,28 @@ public class PatientService {
 	public Boolean deleteEntry(int entryId, int patientId) {
 		try {
 			// if patient not logged in
-			if (patientId == 0) {
-				System.out.println("Patient not logged in");
+			if (!sl.isPatientLoggedIn(patientId)) {
+				//System.out.println("Patient not logged in");
 				return false;
 			}
 			
-			Entry entry = entryRepository.getById(entryId);
+			Entry entry = entryRepository.findById(entryId).get();
 			
 			// if entry isn't this patients
-			if (entry.getPatient().getId() != patientId) {
-				System.out.println("Entry with id: " + entryId + " doesn't belong to "
-						+ "patient with id: " + patientId);
+			if (!sl.isEntryOwnedByPatient(entry.getPatient().getId(), patientId)) {
+				//System.out.println("Entry with id: " + entryId + " doesn't belong to "
+				//		+ "patient with id: " + patientId);
 				return false;
+			}
+			
+			// remove replies
+			for (Reply reply : entry.getReplies()) {
+				replyRepository.deleteById(reply.getId());
 			}
 			
 			// delete entry
 			entryRepository.deleteById(entryId);
-			System.out.println("Entry with id: " + entryId + " deleted successfully");
+			//System.out.println("Entry with id: " + entryId + " deleted successfully");
 			return true;
 			
 		} catch (Exception exception) {
@@ -180,29 +203,71 @@ public class PatientService {
 	public Boolean deleteReply(int replyId, int patientId) {
 		try {
 			// if patient not logged in
-			if (patientId == 0) {
-				System.out.println("Patient not logged in");
+			if (!sl.isPatientLoggedIn(patientId)) {
+				//System.out.println("Patient not logged in");
 				return false;
 			}
 			
-			Reply reply = replyRepository.getById(replyId);
-			
+			Reply reply = replyRepository.findById(replyId).get();
+
 			// if this reply isn't this patients
-			if (reply.getPatient().getId() != patientId) {
-				System.out.println("Reply with id: " + replyId + " doesn't belong to "
-						+ "patient with id: " + patientId);
+			if (!sl.isReplyOwnedByPatient(reply.getPatient().getId(), patientId)) {
+				//System.out.println("Reply with id: " + replyId + " doesn't belong to "
+				//		+ "patient with id: " + patientId);
+				//System.out.println("failed here bruh");
 				return false;
 			}
-			
+
 			// delete reply
 			replyRepository.deleteById(replyId);
-			System.out.println("Reply with id: " + replyId + " deleted successfully");
+			//System.out.println("Reply with id: " + replyId + " deleted successfully");
 			return true;
 			
 		} catch (Exception exception) {
 			System.out.println("Failed to delete reply with id: " + replyId 
 					+ " as patient with id: " + patientId);
 			return false;
+		}
+	}
+	
+	// get assigned professional
+	public String getAssignedProfessional(int patientId) {
+		try {
+			// if patient not logged in
+			if (!sl.isPatientLoggedIn(patientId)) {
+				return null;
+			}
+			
+			// get professional's name
+			Professional professional = patientRepository.findById(patientId).get().getProfessional();
+			if (professional == null) {
+				return "none";
+			}
+			
+			return professional.getFirstName() + " " + professional.getLastName();
+			
+		} catch (Exception exception) {
+			System.out.println("Failed to get assigned professional from patient with id: " + patientId);
+			return null;
+		}
+	}
+	
+	// get patient object from id
+	public Patient getPatient(int patientId) {
+		try {
+			if (!sl.isPatientLoggedIn(patientId)) {
+				return null;
+			}
+			
+			// get the patient with the id patientId
+			Patient patient = patientRepository.findById(patientId).get();
+			
+			// return
+			return patient;
+			
+		} catch (Exception exception) {
+			System.out.println("Failed to get patient with id: " + patientId);
+			return null;
 		}
 	}
 	

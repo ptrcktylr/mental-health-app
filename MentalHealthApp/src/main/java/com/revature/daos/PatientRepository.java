@@ -21,4 +21,16 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
 	
 	@Query("FROM Patient P WHERE P.professional=null")
 	public List<Patient> findUnassignedPatients();
+	
+	@Query("SELECT P.username FROM Patient P")
+	public List<String> getAllUsernames();
+	
+	@Query("SELECT P.email FROM Patient P")
+	public List<String> getAllEmails();
+	
+	@Query("FROM Patient P WHERE P.username=?1")
+	public Patient findPatientWithExistingUsername(String username);
+	
+	@Query("FROM Patient P WHERE P.email=?1")
+	public Patient findPatientWithExistingEmail(String email);
 }

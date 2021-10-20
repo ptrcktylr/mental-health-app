@@ -2,7 +2,6 @@ package com.revature.models;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,11 +38,11 @@ public class Reply {
 	@JsonIgnore
 	private Entry entry;
 	
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="patient_id")
 	private Patient patient;
 	
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="professional_id")
 	private Professional professional;
 	
@@ -60,6 +59,7 @@ public class Reply {
 		this.patient = patient;
 		this.professional = professional;
 	}
+	
 
 	public Reply(String body, Date datePosted, Entry entry, Patient patient, Professional professional) {
 		super();

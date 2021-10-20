@@ -17,7 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="entries")
@@ -39,15 +38,15 @@ public class Entry {
 			columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
 	private Date datePosted;
 	
+	@Column(name="is_public")
 	private boolean isPublic;
 	
 	private String tag;
 	
 	private int sentiment;
 	
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="patient_id")
-	@JsonIgnore
 	private Patient patient;
 	
 	@OneToMany(mappedBy="entry", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
@@ -56,7 +55,7 @@ public class Entry {
 	public Entry() {
 		super();
 	}
-
+	
 	public Entry(int id, String title, String body, Date datePosted, boolean isPublic, String tag, int sentiment,
 			Patient patient, List<Reply> replies) {
 		super();

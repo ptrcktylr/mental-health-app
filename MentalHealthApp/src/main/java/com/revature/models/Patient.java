@@ -38,16 +38,16 @@ public class Patient {
 	@Column(name="email", nullable=false, unique=true)
 	private String email;
 	
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="professional_id")
 	@JsonIgnore
 	private Professional professional;
 
-	@OneToMany(mappedBy="patient", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="patient", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JsonIgnore
 	private List<Entry> entries;
 	
-	@OneToMany(mappedBy="patient", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="patient", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JsonIgnore
 	private List<Reply> replies;
 	
