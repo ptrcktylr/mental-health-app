@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { PortalService } from 'src/app/services/portal/portal.service';
+import { ProfessionalService } from 'src/app/services/professional/professional.service';
 
 @Component({
   selector: 'app-professional-nav',
@@ -13,9 +14,19 @@ export class ProfessionalNavComponent implements OnInit {
 
   username:String = "get username"
 
-  constructor(private route:Router,private cookie:CookieService,private portalS:PortalService) { }
+  constructor(private route:Router,private cookie:CookieService,private portalS:PortalService, private proS:ProfessionalService) { }
 
   ngOnInit(): void {
+
+    this.proS.getMyInfo().subscribe(
+      (myInfo:any)=>{
+        this.username = myInfo.username;
+      },
+      ()=>{
+        console.log("No user information");
+      }
+    );
+
   }
 
   logout():void{
