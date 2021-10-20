@@ -10,7 +10,7 @@ import { PortalService } from 'src/app/services/portal/portal.service';
 })
 export class PatientNavComponent implements OnInit {
 
-  username:String = this.cookie.get('username');
+  username:String = "get username"
   showMenu:Boolean = true;
 
   constructor(private route:Router,private cookie:CookieService,private portalS:PortalService) { }
