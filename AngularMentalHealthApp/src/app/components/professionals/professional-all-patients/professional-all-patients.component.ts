@@ -10,6 +10,7 @@ import { ProfessionalService } from 'src/app/services/professional/professional.
 export class ProfessionalAllPatientsComponent implements OnInit {
 
   patients:any = []
+  unassignedPatients:any = []
 
   constructor(private route:Router,private proS:ProfessionalService) { }
 
@@ -26,21 +27,11 @@ export class ProfessionalAllPatientsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.proS.getPatients().subscribe(
-      (patientsList:any)=>{
-        this.proS.getMyPatients().subscribe(
-          (myPatients:any)=>{
-            this.patients = this.notMyPatients(myPatients,patientsList);
-          },
-          ()=>{
-            console.log("No information");
-          }
-        );
-      },
-      ()=>{
-        console.log("No information");
+    this.proS.getUnassignedPatients().subscribe(
+      (unassignedPatients:any)=>{
+        this.patients = unassignedPatients;
       }
-    );
+    )
   }
 
   notMyPatients(myArray:any, allArray:any): any{

@@ -26,6 +26,9 @@ export class ProfessionalService {
   getMyPatients():Observable<any>{
     return this.http.get("http://localhost:8080/professional/patients/assigned",{withCredentials: true}) as Observable<any>;
   }
+  getUnassignedPatients():Observable<any>{
+    return this.http.get("http://localhost:8080/professional/patients/unassigned",{withCredentials: true}) as Observable<any>;
+  }
   getPatientEntries(id:number):Observable<any>{
     return this.http.get("http://localhost:8080/professional/patient/" + id + "/entries",{withCredentials: true}) as Observable<any>;
   }
