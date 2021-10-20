@@ -1,1 +1,139 @@
-/* You can add global styles to this file, and also import other style files */
+.my-navbar{
+    background-color: rgb(124, 132, 148, .85);
+    position: sticky;
+}
+.my-card{
+    background-color: rgb(124, 132, 148, .85);
+    color: #f7f8f9;
+}
+
+.normalWords{
+    color: #D7DBE2;
+}
+
+.darkWords{
+    color: #25282c;
+}
+
+#normalWords{
+    color: #acafb5;
+}
+
+.normalWords:hover{
+    color: #f7f8f9;
+    cursor: pointer;
+}
+
+.emphasisWords{
+    color: #fbfbfc;
+}
+
+body{
+    color: #f7f8f9;
+    background: url(assets/constellations-wallpaper.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.btn{
+    background-color: #25282c;
+    color: #D7DBE2;
+}
+
+.btn:hover{
+    background-color: #32353b;
+    color: #f7f8f9;
+}
+
+#error{
+    color: #f7f8f9;
+    background-color: #0C1019;
+}
+
+text {
+    white-space: pre-wrap;
+}
+
+.tab{
+    font-size: .8em;
+    color: #D7DBE2;
+}
+
+.noMargin{
+    padding: 0px;
+    margin: 0px;
+}
+
+.emoji{
+    height: 65px;
+}
+
+.emoji2{
+    height: 36px;
+}
+
+#tableEmojis{
+    vertical-align: top;
+}
+
+.ellipsis{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#arrow{
+    height: 50px;
+}
+
+#arrow:hover{
+    cursor: pointer;
+}
+
+.backArrow {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.downArrow{
+    transform: rotate(90deg);
+    height: .5em;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+  }
+  
+/* .main,
+.sidebar {
+    padding: 15px;
+} */
+
+.main {
+    width: 70%;
+    justify-content: center;
+}
+
+.sidebar {
+    width: 25%;
+}
+
+.dropdown{
+    display: none;
+    list-style-type:none;
+}
+
+.dropdown:hover{
+    display:contents;
+    list-style-type:none;
+}
+
+.dropdown-container:hover .dropdown{
+    display:contents;
+}

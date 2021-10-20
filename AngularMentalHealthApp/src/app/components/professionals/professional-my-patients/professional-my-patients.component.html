@@ -1,0 +1,32 @@
+<app-professional-nav></app-professional-nav>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow my-card">
+                <div class="card-body text-center">
+                    <div id="myPatients">
+                        <h1 class="mb-3">My Patients</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-3" *ngFor = "let patient of patients">
+            <div class="card shadow my-card">
+                <div class="card-body text-center">
+                    <div>
+                        <h3 (click)="changeToPatient(patient.id)" class="normalWords noMargin">{{patient.firstName}} {{patient.lastName}}</h3>
+                        <hr>
+                        <div class="tab">Email: {{patient.email}}</div>
+                        <div class="tab">Username: {{patient.username}}</div>
+                        <br>
+                        <button (click) = "removePatient(patient.id,patient.username)" class="btn">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
