@@ -321,6 +321,24 @@ public class ProfessionalService {
 			return false;
 		}
 	}
+
+	public Professional getProfessional(int professionalId) {
+		
+		try {
+			
+			if (!sl.isProfessionalLoggedIn(professionalId)) {
+				return null;
+			}
+			
+			Professional professional = professionalRepository.findById(professionalId).get();
+			
+			return professional;
+			
+		} catch (Exception exception) {
+			System.out.println("Failed to get professional with id: " + professionalId);
+			return null;
+		}
+	}
 	
 	
 }

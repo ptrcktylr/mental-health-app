@@ -267,5 +267,23 @@ public class ProfessionalController {
 		}
 	}
 	
+	@GetMapping("my-info")
+	public ResponseEntity<Professional> getMyInfo(HttpSession session) {
+		
+		Integer loggedInProfessionalId = (Integer) session.getAttribute("professional_id");
+		
+		if (ch.isIdNull(loggedInProfessionalId)) {
+			return ResponseEntity.status(401).body(null);
+		}
+		
+		Professional professional = professionalService.getProfessional(loggedInProfessionalId);
+		
+		if (professional == null) {
+			return ResponseEntity.status(401).body(null);
+		} else {
+			return ResponseEntity.status(200).body(professional);
+		}
+	}
+	
 	
 }
