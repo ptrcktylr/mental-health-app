@@ -79,11 +79,12 @@ public class PatientService {
 			Entry entry = entryRepository.findById(entryId).get();
 			
 			// if it's private and if this entry doesn't belong to this patient return null
-			if (!sl.isEntryPublicOwnedByPatient(entry, patientId)) {
-				//System.out.println("Entry with id: " + entryId + " doesn't belong to patient with id: " + patientId);
-				return null;
-			} else {
+			if (sl.isEntryPublic(entry) 
+			  || sl.isEntryOwnedByPatient(entry.getPatient().getId(), patientId)) {
 				return entry;
+			} else {
+				System.out.println("Entry with id: " + entryId + " doesn't belong to patient with id: " + patientId);
+				return null;
 			}
 			
 		} catch (Exception exception) {

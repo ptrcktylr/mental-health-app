@@ -28,7 +28,7 @@ public class ServiceLibrary {
 	}
 	
 	public boolean isEntryPublicOwnedByPatient(Entry entry, int id) {
-		return isEntryPublic(entry) && isEntryOwnedByPatient(entry.getPatient().getId(), id);
+		return isEntryPublic(entry) || isEntryOwnedByPatient(entry.getPatient().getId(), id);
 	}
 	
 	public boolean isPatientLoggedIn(int id) {
