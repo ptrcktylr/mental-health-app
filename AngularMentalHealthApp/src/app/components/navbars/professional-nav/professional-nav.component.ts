@@ -11,6 +11,8 @@ import { PortalService } from 'src/app/services/portal/portal.service';
 })
 export class ProfessionalNavComponent implements OnInit {
 
+  username:String = "get username"
+
   constructor(private route:Router,private cookie:CookieService,private portalS:PortalService) { }
 
   ngOnInit(): void {

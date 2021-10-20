@@ -1,20 +1,60 @@
-<nav class="navbar navbar-expand-sm shadow-sm my-navbar">
+<!-- <nav class="navbar navbar-expand-sm shadow-sm my-navbar">
     <a class="navbar-brand" href="/patient/history"><h3><span id="normalWords">Senti</span><span class="emphasisWords">Mental Health</span></h3></a>
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-            <a class="nav-link normalWords" href="/patient/history"> Journal <span class="sr-only">(current)</span></a>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="text-right nav-link normalWords" href="/patient/history"> Journal <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item mr-auto">
             <a class="nav-link normalWords" href="/patient/new"> New Entry <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item mr-auto">
             <a class="nav-link normalWords" href="/patient/progress"> View Progress <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item mr-auto">
             <a class="nav-link normalWords" href="/view-public"> Public <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link normalWords" (click)="logout()"> LogOut <span class="sr-only">(current)</span></a>
         </li>
     </ul>
+</nav> -->
+
+<nav class="navbar navbar-expand-sm my-navbar justify-content-end">
+    <a class="navbar-brand" href="/patient/history"><h3><span id="normalWords">Senti</span><span class="emphasisWords">Mental Health</span></h3></a>
+    <a class="text-right nav-link normalWords" href="/patient/history"> Journal <span class="sr-only">(current)</span></a>
+    <a class="nav-link normalWords" href="/patient/new"> New Entry <span class="sr-only">(current)</span></a>
+    <a class="nav-link normalWords" href="/patient/progress"> View Progress <span class="sr-only">(current)</span></a>
+    <a class="nav-link normalWords" href="/view-public"> Public <span class="sr-only">(current)</span></a>
+    <div class="nav-link normalWords ml-auto dropdown-container justify-content-center">
+        <p class="text-right">{{username}} <img class="downArrow" src="assets/arrow.png"></p>
+        <ul class="dropdown">
+            <li class="text-right">
+                <p>Professional Assigned</p>
+            </li>
+            <li class="text-right">
+                <a class="nav-link normalWords" (click)="logout()"> Logout <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+    <!-- <a class="nav-link normalWords ml-auto mr-1" (click)="logout()"> LogOut <span class="sr-only">(current)</span></a> -->
+    <!-- <select class="form-select ml-auto mr-1">
+        <option disabled selected style="display:none;">Username</option>
+        <option disabled>Assigned Professional</option>
+        <option> <a class="normalWords" (click)="logout()"> LogOut <span class="sr-only">(current)</span></option>
+        <option value="audi">Audi</option>
+    </select> -->
+    <!-- <button class="btn btn-success ml-auto mr-1">Always Visible</button>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
+      <ul class="navbar-nav text-right">
+        <li class="nav-item active">
+          <a class="nav-link" href="https://www.w3docs.com/tool/">Tools</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="https://www.w3docs.com/string-functions/">String Functions </a>
+        </li>
+      </ul>
+    </div> -->
 </nav>

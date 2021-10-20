@@ -99,6 +99,11 @@ text {
     transform: scaleX(-1);
 }
 
+.downArrow{
+    transform: rotate(90deg);
+    height: .5em;
+}
+
 .wrapper {
     display: flex;
     justify-content: space-between;
@@ -117,4 +122,18 @@ text {
 
 .sidebar {
     width: 25%;
+}
+
+.dropdown{
+    display: none;
+    list-style-type:none;
+}
+
+.dropdown:hover{
+    display:contents;
+    list-style-type:none;
+}
+
+.dropdown-container:hover .dropdown{
+    display:contents;
 }
