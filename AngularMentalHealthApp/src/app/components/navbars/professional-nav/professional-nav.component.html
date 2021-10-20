@@ -1,0 +1,32 @@
+<!-- <nav class="navbar navbar-expand-sm shadow-sm my-navbar">
+    <a class="navbar-brand" href="/professional/my-patients"><h3><span id="normalWords">Senti</span><span class="emphasisWords">Mental Health</span></h3></a>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link normalWords" href="/professional/my-patients"> My Patients </a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link normalWords" href="/professional/all-patients"> Add New Patient <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link normalWords" href="/view-public-professional"> Public <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link normalWords" (click)="logout()"> LogOut <span class="sr-only">(current)</span></a>
+        </li>
+    </ul>
+</nav> -->
+
+<nav class="navbar navbar-expand-sm my-navbar justify-content-end">
+    <a class="navbar-brand" href="/professional/my-patients"><h3><span id="normalWords">Senti</span><span class="emphasisWords">Mental Health</span></h3></a>
+    <a class="nav-link normalWords" href="/professional/my-patients"> My Patients </a>
+    <a class="nav-link normalWords" href="/professional/all-patients"> Add New Patient <span class="sr-only">(current)</span></a>
+    <a class="nav-link normalWords" href="/view-public-professional"> Public <span class="sr-only">(current)</span></a>
+    <div class="nav-link normalWords ml-auto dropdown-container justify-content-center">
+        <p class="text-right">{{username}} <img class="downArrow" src="assets/arrow.png"></p>
+        <ul class="dropdown">
+            <li class="text-right">
+                <a class="nav-link normalWords" (click)="logout()"> LogOut <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>

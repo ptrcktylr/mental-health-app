@@ -1,0 +1,74 @@
+<app-patient-nav></app-patient-nav>
+<!-- <div class="container mt-5">
+    <div class="row">
+        <div class="col-lg">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="text-center mb-5" style="color:black">My Journal Entries</h2>
+                    <table class="table text-center">
+                        <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Tags</th>
+                            <th scope="col">Sentiment Score</th>
+                            <th scope="col">View</th>
+                        </tr>
+                        </thead>
+                        <tbody id="entry-table-body">
+                            <tr *ngFor="let entry of entryArray">
+                                <td>{{entry.date}}</td>
+                                <td>{{entry.datePosted.substring(0,10)}}</td>
+                                <td>{{entry.title}}</td>
+                                <td>{{entry.tags}}</td>
+                                <td>{{entry.sentiment}}</td>
+                                <td><button id="newReimbButton" class="btn btn-dark mx-4" [routerLink] = "['/patient/history', entry.entryId]">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg">
+            <div class="card shadow my-card">
+                <div class="card-body">
+                    <h2 class="text-center mb-5 noMargin  d-inline p-2">Journal Entries</h2>
+                    <!--0-19 very negative, 20-39 negative, 40-59 neutral, 60-79 positive, 80-100-->
+                    <!-- <img class="emoji" src="assets/verypositive.png">
+                    <img class="emoji" src="assets/positive.png">
+                    <img class="emoji" src="assets/neutral.png">
+                    <img class="emoji" src="assets/negative.png">
+                    <img class="emoji" src="assets/verynegative.png"> -->
+                    <div *ngFor="let entry of entryArray">
+                        <hr>
+                        <table [routerLink] = "['/patient/history', entry.id]">
+                            <tr>
+                                <td>
+                                    <img *ngIf="entry.sentiment < 20"class="emoji" src="assets/verynegative.png">
+                                    <img *ngIf="entry.sentiment > 19 && entry.sentiment < 40"class="emoji" src="assets/negative.png">
+                                    <img *ngIf="entry.sentiment > 39 && entry.sentiment < 60"class="emoji" src="assets/neutral.png">
+                                    <img *ngIf="entry.sentiment > 59 && entry.sentiment < 80"class="emoji" src="assets/positive.png">
+                                    <img *ngIf="entry.sentiment > 79"class="emoji" src="assets/verypositive.png">
+                                </td>
+                                <td class="col-lg-12">
+                                    <h3>{{entry.title}}</h3>
+                                    <div class="tab">{{entry.datePosted.substring(0,10)}}</div>
+                                    <div class="tab">Tag: {{entry.tag}}</div>
+                                    <div class="ellipsis">{{entry.body}}</div>
+                                </td>
+                                <td>
+                                    <img id="arrow" src="assets/arrow.png">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
