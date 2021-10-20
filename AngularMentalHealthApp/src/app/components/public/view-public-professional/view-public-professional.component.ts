@@ -9,6 +9,7 @@ import { ProfessionalService } from 'src/app/services/professional/professional.
   templateUrl: './view-public-professional.component.html',
   styleUrls: ['./view-public-professional.component.css']
 })
+
 export class ViewPublicProfessionalComponent implements OnInit {
 
   entryArray: any[] = [];
@@ -24,12 +25,6 @@ export class ViewPublicProfessionalComponent implements OnInit {
   constructor(private cookie:CookieService, private route:Router,private patS:PatientService,private proS:ProfessionalService) { }
 
   ngOnInit(): void {
-
-
-    //check if patient cookie exists
-    if(!(this.cookie.check('username') && this.cookie.check('accountType'))){
-      this.route.navigate(['/login']);
-    }
 
     this.proS.getPublicEntries().subscribe(
       (allEntries:any)=>{

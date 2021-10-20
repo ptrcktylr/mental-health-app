@@ -22,6 +22,8 @@
                         <hr>
                         <div class="tab">Email: {{patient.email}}</div>
                         <div class="tab">Username: {{patient.username}}</div>
+                        <br>
+                        <button (click) = "removePatient(patient.id,patient.username)" class="btn">Remove</button>
                     </div>
                 </div>
             </div>

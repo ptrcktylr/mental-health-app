@@ -30,4 +30,18 @@ export class ProfessionalMyPatientsComponent implements OnInit {
     );
   }
 
+  removePatient(id:any,patientUsername:String){
+    if(confirm('Are you going to remove ' + patientUsername)){
+      this.proS.removePatient(id).subscribe(
+        (remove:any)=>{
+          console.log("Remove Successfully");
+          location.reload();
+        },
+        ()=>{
+          console.log("No information");
+        }
+      );
+    }
+  }
+
 }

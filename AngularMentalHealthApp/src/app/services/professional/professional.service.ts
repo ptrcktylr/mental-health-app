@@ -32,5 +32,8 @@ export class ProfessionalService {
   addPatient(id:number):Observable<any>{
     return this.http.post("http://localhost:8080/professional/patient/" + id + "/add",{},{withCredentials: true}) as Observable<any>;
   }
+  removePatient(id:number){
+    return this.http.post("http://localhost:8080/professional/patient/" + id + "/remove",{},{withCredentials: true}) as Observable<any>;
+  }
 
 }

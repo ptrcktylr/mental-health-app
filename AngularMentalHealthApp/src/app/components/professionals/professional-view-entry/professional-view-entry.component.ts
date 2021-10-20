@@ -37,10 +37,6 @@ export class ProfessionalViewEntryComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if(!(this.cookie.check('username') && this.cookie.check('accountType'))){
-      this.route.navigate(['/login']);
-    }
-
     //Add security features to go back to /patient/history if returned entry is null
 
     this.sub = this.aRoute.params.subscribe((params:any) => {
