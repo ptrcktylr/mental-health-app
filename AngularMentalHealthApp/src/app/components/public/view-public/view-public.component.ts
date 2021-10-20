@@ -28,9 +28,6 @@ export class ViewPublicComponent implements OnInit {
 
 
     //check if patient cookie exists
-    if(!(this.cookie.check('username') && this.cookie.check('accountType'))){
-      this.route.navigate(['/login']);
-    }
 
     this.patS.getPublicEntries().subscribe(
       (allEntries:any)=>{
