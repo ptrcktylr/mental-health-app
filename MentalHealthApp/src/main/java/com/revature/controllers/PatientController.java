@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.Entry;
 import com.revature.models.Patient;
+import com.revature.models.Professional;
 import com.revature.models.Reply;
 import com.revature.services.PatientService;
 
@@ -199,16 +200,16 @@ public class PatientController {
 	}
 	
 	@GetMapping("my-professional")
-	public ResponseEntity<String> getMyProfessional(HttpSession session) {
+	public ResponseEntity<Professional> getMyProfessional(HttpSession session) {
 		
 		Integer loggedInPatientId = (Integer) session.getAttribute("patient_id");
 		
-		String professionalName = patientService.getAssignedProfessional(loggedInPatientId);
+		Professional professional = patientService.getAssignedProfessional(loggedInPatientId);
 		
-		if (professionalName == null) {
+		if (professional == null) {
 			return ResponseEntity.status(401).body(null);
 		} else {
-			return ResponseEntity.status(200).body(professionalName);
+			return ResponseEntity.status(200).body(professional);
 		}
 		
 	}

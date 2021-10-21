@@ -231,7 +231,7 @@ public class PatientService {
 	}
 	
 	// get assigned professional
-	public String getAssignedProfessional(int patientId) {
+	public Professional getAssignedProfessional(int patientId) {
 		try {
 			// if patient not logged in
 			if (!sl.isPatientLoggedIn(patientId)) {
@@ -241,10 +241,10 @@ public class PatientService {
 			// get professional's name
 			Professional professional = patientRepository.findById(patientId).get().getProfessional();
 			if (professional == null) {
-				return "none";
+				return null;
 			}
 			
-			return professional.getFirstName() + " " + professional.getLastName();
+			return professional;
 			
 		} catch (Exception exception) {
 			System.out.println("Failed to get assigned professional from patient with id: " + patientId);
