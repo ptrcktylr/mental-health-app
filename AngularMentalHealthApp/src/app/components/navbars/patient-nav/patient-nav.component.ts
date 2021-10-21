@@ -20,7 +20,7 @@ export class PatientNavComponent implements OnInit {
   ngOnInit(): void {
     this.patS.getMyProfessional().subscribe(
       (pro:any)=>{
-        console.log(pro);
+        this.professional = pro.firstName + " " + pro.lastName;
       },
       ()=>{
         console.log("Professional No information")
