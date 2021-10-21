@@ -38,7 +38,7 @@
                 </div>
                 <hr>
                 <div class="card-body">
-                    <div class="text mb-4" *ngFor="let reply of replyArray">
+                    <div class="text mb-4" *ngFor="let reply of replyArray.reverse()">
 
                         <div>
                             <div *ngIf="reply.patient"><strong>{{reply.patient.username}}</strong> &nbsp; &nbsp;<span class="tab">{{reply.datePosted.substring(0,10)}}</span></div>

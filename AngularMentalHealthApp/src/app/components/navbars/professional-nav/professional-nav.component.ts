@@ -2,6 +2,7 @@ import { ɵparseCookieValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { PatientService } from 'src/app/services/patients/patient.service';
 import { PortalService } from 'src/app/services/portal/portal.service';
 import { ProfessionalService } from 'src/app/services/professional/professional.service';
 
@@ -12,21 +13,20 @@ import { ProfessionalService } from 'src/app/services/professional/professional.
 })
 export class ProfessionalNavComponent implements OnInit {
 
-  username:String = "get username"
+  name:String = "";
+  showMenu:Boolean = false;
 
   constructor(private route:Router,private cookie:CookieService,private portalS:PortalService, private proS:ProfessionalService) { }
 
   ngOnInit(): void {
-
     this.proS.getMyInfo().subscribe(
-      (myInfo:any)=>{
-        this.username = myInfo.username;
+      (user:any)=>{
+        this.name = user.firstName + " " + user.lastName;
       },
       ()=>{
-        console.log("No user information");
+        console.log("No information")
       }
     );
-
   }
 
   logout():void{

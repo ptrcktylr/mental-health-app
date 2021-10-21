@@ -19,23 +19,6 @@
     </ul>
 </nav> -->
 
-<nav class="navbar navbar-expand-sm my-navbar justify-content-end">
-    <a class="navbar-brand" href="/patient/history"><h3><span id="normalWords">Senti</span><span class="emphasisWords">Mental Health</span></h3></a>
-    <a class="text-right nav-link normalWords" href="/patient/history"> Journal <span class="sr-only">(current)</span></a>
-    <a class="nav-link normalWords" href="/patient/new"> New Entry <span class="sr-only">(current)</span></a>
-    <a class="nav-link normalWords" href="/patient/progress"> View Progress <span class="sr-only">(current)</span></a>
-    <a class="nav-link normalWords" href="/view-public"> Public <span class="sr-only">(current)</span></a>
-    <div class="nav-link normalWords ml-auto dropdown-container justify-content-center">
-        <p class="text-right">{{username}} <img class="downArrow" src="assets/arrow.png"></p>
-        <ul class="dropdown">
-            <li class="text-right">
-                <p>Professional Assigned</p>
-            </li>
-            <li class="text-right">
-                <a class="nav-link normalWords" (click)="logout()"> Logout <span class="sr-only">(current)</span></a>
-            </li>
-        </ul>
-    </div>
     <!-- <a class="nav-link normalWords ml-auto mr-1" (click)="logout()"> LogOut <span class="sr-only">(current)</span></a> -->
     <!-- <select class="form-select ml-auto mr-1">
         <option disabled selected style="display:none;">Username</option>
@@ -57,4 +40,26 @@
         </li>
       </ul>
     </div> -->
-</nav>
+
+    <nav class="navbar navbar-expand-sm my-navbar justify-content-end">
+        <a class="navbar-brand" href="/patient/history"><h3><span id="normalWords">Senti</span><span class="emphasisWords">Mental Health</span></h3></a>
+        <a class="text-right nav-link normalWords" href="/patient/history"> Journal <span class="sr-only">(current)</span></a>
+        <a class="nav-link normalWords" href="/patient/new"> New Entry <span class="sr-only">(current)</span></a>
+        <a class="nav-link normalWords" href="/patient/progress"> View Progress <span class="sr-only">(current)</span></a>
+        <a class="nav-link normalWords" href="/view-public"> Public <span class="sr-only">(current)</span></a>
+        <div class="nav-link normalWords ml-auto dropdown-container justify-content-center" (mouseover)="showMenu=true">
+            <p class="text-right">{{name}} <img class="downArrow" src="assets/arrow.png"></p>
+        </div>
+    </nav>
+    
+    <div *ngIf="showMenu" class="text-right" (mouseover)="showMenu=true" (mouseleave)="showMenu=false">
+        <ul class="dropdown my-card">
+            <li *ngIf="professional!=''">
+                <p>{{professional}}&nbsp; &nbsp; &nbsp; </p>
+            </li>
+            <br>
+            <li>
+                <a class="nav-link normalWords" (click)="logout()"> Logout <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>

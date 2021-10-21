@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
     this.portalS.patientLogin(this.username,this.password).subscribe(
       (user:any)=>{
         console.log(user);
+        sessionStorage.setItem("username", ""+this.username);
         this.route.navigate(['/patient/history']);
         
       },
@@ -50,6 +51,7 @@ export class LoginComponent implements OnInit {
         this.portalS.professionalLogin(this.username,this.password).subscribe(
           (user:any)=>{
             console.log(user);
+            sessionStorage.setItem("username", ""+this.username);
             this.route.navigate(['/professional/my-patients']);
           },
           ()=>{

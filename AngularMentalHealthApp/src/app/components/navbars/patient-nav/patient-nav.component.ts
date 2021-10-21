@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { PatientService } from 'src/app/services/patients/patient.service';
@@ -11,22 +11,29 @@ import { PortalService } from 'src/app/services/portal/portal.service';
 })
 export class PatientNavComponent implements OnInit {
 
-  username:String = "get username"
-  showMenu:Boolean = true;
+  name:String = "";
+  professional:String = "";
+  showMenu:Boolean = false;
 
-  constructor(private route:Router,private cookie:CookieService,private portalS:PortalService, private patientS:PatientService) { }
+  constructor(private route:Router,private cookie:CookieService,private portalS:PortalService, private patS:PatientService) { }
 
   ngOnInit(): void {
-
-    this.patientS.getMyInfo().subscribe(
-      (myInfo:any)=>{
-        this.username = myInfo.username;
+    this.patS.getMyProfessional().subscribe(
+      (pro:any)=>{
+        this.professional = "Assigned to: " + pro.firstName + " " + pro.lastName;
       },
       ()=>{
-        console.log("No user information");
+        console.log("No Professional information")
       }
     );
-
+    this.patS.getMyInfo().subscribe(
+      (user:any)=>{
+        this.name = user.firstName + " " + user.lastName;
+      },
+      ()=>{
+        console.log("No information")
+      }
+    );
   }
 
   logout():void{
