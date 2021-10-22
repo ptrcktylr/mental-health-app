@@ -1,5 +1,6 @@
 package com.revature.services;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.revature.models.Entry;
 import com.revature.models.Patient;
 import com.revature.models.Professional;
 import com.revature.models.Reply;
+import com.google.common.hash.Hashing;
 
 @Service
 public class PatientService {
@@ -48,6 +50,10 @@ public class PatientService {
 				System.out.println("A professional with the same username or email exists already!");
 				return null;
 			}
+			String plaintext = patient.getPassword();
+			String hash = Hashing.sha256().hashString(plaintext, StandardCharsets.UTF_8).toString();
+			patient.setPassword(hash);
+			
 			return patientRepository.save(patient);
 		} catch (Exception exception) {
 			System.out.println("Failed to register new patient");

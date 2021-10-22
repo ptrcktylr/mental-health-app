@@ -1,11 +1,13 @@
 package com.revature.services;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.common.hash.Hashing;
 import com.revature.daos.EntryRepository;
 import com.revature.daos.PatientRepository;
 import com.revature.daos.ProfessionalRepository;
@@ -51,6 +53,10 @@ public class ProfessionalService {
 				System.out.println("A patient with the same username or email exists already!");
 				return null;
 			}
+			
+			String plaintext = professional.getPassword();
+			String hash = Hashing.sha256().hashString(plaintext, StandardCharsets.UTF_8).toString();
+			professional.setPassword(hash);
 			
 			return professionalRepository.save(professional);
 		} catch (Exception exception) {

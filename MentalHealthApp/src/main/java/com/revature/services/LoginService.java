@@ -1,11 +1,13 @@
 package com.revature.services;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.common.hash.Hashing;
 import com.revature.daos.PatientRepository;
 import com.revature.daos.ProfessionalRepository;
 import com.revature.models.LoginDTO;
@@ -35,9 +37,11 @@ public class LoginService {
 		
 		try {
 			// get patient by credentials
+			String hash = Hashing.sha256().hashString(patientLoginDTO.getPassword(), StandardCharsets.UTF_8).toString();
+			
 			Patient loggedInPatient = patientRepository.validLogin(
 											patientLoginDTO.getUsername(), 
-											patientLoginDTO.getPassword()
+											hash
 									  );
 			
 			// if credentials incorrect
@@ -61,9 +65,11 @@ public class LoginService {
 		
 		try {
 			// get patient by credentials
+			String hash = Hashing.sha256().hashString(professionalLoginDTO.getPassword(), StandardCharsets.UTF_8).toString();
+			
 			Professional loggedInProfessional = professionalRepository.validLogin(
 													professionalLoginDTO.getUsername(), 
-													professionalLoginDTO.getPassword()
+													hash
 												);
 			
 			// if credentials incorrect
