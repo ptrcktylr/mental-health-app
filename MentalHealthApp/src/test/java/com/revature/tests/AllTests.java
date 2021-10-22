@@ -231,7 +231,8 @@ public class AllTests {
 		
 		int patientId = 1;
 		System.out.println(patientService.getAssignedProfessional(patientId));
-		assertEquals("Jane Lee",patientService.getAssignedProfessional(patientId));
+		Professional professional = patientService.getAssignedProfessional(patientId);
+		assertEquals("Jane Lee", professional.getFirstName() + " " + professional.getLastName());
 	}
 	
 	
