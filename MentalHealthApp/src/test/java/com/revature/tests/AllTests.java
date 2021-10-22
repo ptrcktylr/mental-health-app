@@ -4,6 +4,7 @@ package com.revature.tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.google.common.hash.Hashing;
 import com.revature.models.Entry;
 import com.revature.models.LoginDTO;
 import com.revature.models.Patient;
@@ -51,16 +53,19 @@ public class AllTests {
 		Patient patient1 = patientService.registerPatient(new Patient("Tom", "p@ssw0rd", "Tom", "Lee", "tom@example.com"));
 		Patient patient2 = patientService.registerPatient(new Patient("Lucy", "p@ssw0rd", "Lucy", "Smith", "lucy@example.com"));
 		
+		String plaintext = "p@ssw0rd";
+		String hash = Hashing.sha256().hashString(plaintext, StandardCharsets.UTF_8).toString();
+		
 		assertEquals(1, patient1.getId());
 		assertEquals("Tom", patient1.getUsername());
-		assertEquals("p@ssw0rd", patient1.getPassword());
+		assertEquals(hash, patient1.getPassword());
 		assertEquals("Tom", patient1.getFirstName());
 		assertEquals("Lee", patient1.getLastName());
 		assertEquals("tom@example.com", patient1.getEmail());
 		
 		assertEquals(2, patient2.getId());
 		assertEquals("Lucy", patient2.getUsername());
-		assertEquals("p@ssw0rd", patient2.getPassword());
+		assertEquals(hash, patient2.getPassword());
 		assertEquals("Lucy", patient2.getFirstName());
 		assertEquals("Smith", patient2.getLastName());
 		assertEquals("lucy@example.com", patient2.getEmail());
@@ -74,8 +79,11 @@ public class AllTests {
 		
 		Patient patient = loginService.loginPatient(new LoginDTO("Tom", "p@ssw0rd"));
 		
+		String plaintext = "p@ssw0rd";
+		String hash = Hashing.sha256().hashString(plaintext, StandardCharsets.UTF_8).toString();
+		
 		assertEquals("Tom", patient.getUsername());
-		assertEquals("p@ssw0rd", patient.getPassword());
+		assertEquals(hash, patient.getPassword());
 
 	}
 	
@@ -87,8 +95,11 @@ public class AllTests {
 		int patientId = 1;
 		Patient patient = patientService.getPatient(patientId);
 		
+		String plaintext = "p@ssw0rd";
+		String hash = Hashing.sha256().hashString(plaintext, StandardCharsets.UTF_8).toString();
+		
 		assertEquals("Tom", patient.getUsername());
-		assertEquals("p@ssw0rd", patient.getPassword());
+		assertEquals(hash, patient.getPassword());
 		assertEquals("Tom", patient.getFirstName());
 		assertEquals("Lee", patient.getLastName());
 		assertEquals("tom@example.com", patient.getEmail());
@@ -102,10 +113,13 @@ public class AllTests {
 	public void testRegisterProfessional() { 
 		
 		Professional professional = professionalService.registerProfessional(new Professional("Jane", "p@ssw0rd", "Jane", "Lee", "jane@example.com"));
-			
+		
+		String plaintext = "p@ssw0rd";
+		String hash = Hashing.sha256().hashString(plaintext, StandardCharsets.UTF_8).toString();
+		
 		assertEquals(1, professional.getId());
 		assertEquals("Jane", professional.getUsername());
-		assertEquals("p@ssw0rd", professional.getPassword());
+		assertEquals(hash, professional.getPassword());
 		assertEquals("Jane", professional.getFirstName());
 		assertEquals("Lee", professional.getLastName());
 		assertEquals("jane@example.com", professional.getEmail());
@@ -120,8 +134,11 @@ public class AllTests {
 		
 		Professional professional = loginService.loginProfessional(new LoginDTO("Jane", "p@ssw0rd"));
 		
+		String plaintext = "p@ssw0rd";
+		String hash = Hashing.sha256().hashString(plaintext, StandardCharsets.UTF_8).toString();
+		
 		assertEquals("Jane", professional.getUsername());
-		assertEquals("p@ssw0rd", professional.getPassword());
+		assertEquals(hash, professional.getPassword());
 
 	}
 	
