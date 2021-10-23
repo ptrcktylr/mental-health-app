@@ -104,10 +104,17 @@ export class PatientNewComponent implements OnInit {
     let total = 0;
     for(let i = 0; i < scoreJson.output.length; i++){
       //console.log(scoreJson.output[i]);
-      if(scoreJson.output[i].includes("Positive")){
+      
+      if(scoreJson.output[i].includes("Verypositive")){
         total += 1;
       }
+      if(scoreJson.output[i].includes("Positive")){
+        total += 0.85;
+      }
       if(scoreJson.output[i].includes("Negative")){
+        total += .15;
+      }
+      if(scoreJson.output[i].includes("Verynegative")){
         total += .01;
       }
       if(scoreJson.output[i] === "Neutral"){
