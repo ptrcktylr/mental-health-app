@@ -1,6 +1,6 @@
 # SentiMental Health
 
-SentiMental Health is an online mental health blogging application where patients post journal entries, can reply to other patients entries, and have an assigned mental health professional.
+SentiMental Health is an online mental health blogging application where patients post journal entries, reply to other patients entries, and have an assigned mental health professional.
 
 ## Features
 - Users can register for a **patient** or **professional** account.
